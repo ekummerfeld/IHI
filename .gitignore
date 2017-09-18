@@ -5,4 +5,7 @@
 # Session Data files
 .RData
 
-**/clang430
+# ignore clango binary
+# download from the internet
+fredrick/modified_pkg/ASP/clingo430
+fredrick/pkg/ASP/clingo430
