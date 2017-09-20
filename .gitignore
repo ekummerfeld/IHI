@@ -8,4 +8,5 @@
 # ignore clango binary
 # download from the internet
 fredrick/modified_pkg/ASP/clingo430
-fredrick/pkg/ASP/clingo430
+# ignore local files created by clingo
+fredrick/modifed_pkg/tmp/*
