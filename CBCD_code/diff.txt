@@ -1,0 +1,40 @@
+98,99c98,102
+<   tic()    
+<   asp_program<-paste('./../ASP/',encode,sep='')    
+---
+>   tic()
+>   if(OS == "Windows")
+>     asp_program<-paste('.\\..\\ASP\\',encode,sep='')    
+>   else
+>     asp_program<-paste('./../ASP/',encode,sep='')    
+120,121d123
+<   
+<   system(paste('rm','./../tmp/pipeline.ind.clingo'))
+123,128c125,144
+<   system(paste("./../ASP/clingo430",
+<                clingoconf,
+<                './../tmp/pipeline.pre.asp','./../tmp/pipeline.ind',asp_program,
+<                '| tee ./../tmp/pipeline.ind.clingo') )
+<   
+<   sol_file<-"./../tmp/pipeline.ind.clingo"    
+---
+>   if ( OS == "Windows") {
+>     system("cmd.exe", input = paste('del','..\\tmp\\pipeline.ind.clingo'))
+> 
+>     system("cmd.exe", input = paste(".\\..\\ASP\\clingo430",
+>                  clingoconf,
+>                  '.\\..\\tmp\\pipeline.pre.asp','.\\..\\tmp\\pipeline.ind',asp_program,
+>                  '> .\\..\\tmp\\pipeline.ind.clingo') )
+>     
+>     sol_file<-"./../tmp/pipeline.ind.clingo"
+> 
+>   } else {
+>     system(paste('rm','./../tmp/pipeline.ind.clingo'))
+> 
+>     system(paste("./../ASP/clingo430",
+>                  clingoconf,
+>                  './../tmp/pipeline.pre.asp','./../tmp/pipeline.ind',asp_program,
+>                  '| tee ./../tmp/pipeline.ind.clingo') )
+> 
+>     sol_file<-"./../tmp/pipeline.ind.clingo"
+>   }
