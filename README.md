@@ -4,6 +4,10 @@ TODO
 General:
 - [X] Pick the final file structure
   * create a tmp folder for R modified datasets?
+  
+  TETRAD:
+  - [ ] add F score as a statistic (?)
+   * at least add AHP and AHR to the statistics if not
 
 Generate.java
 - [X] Allow parsing in args like nruns, sample size, etc
