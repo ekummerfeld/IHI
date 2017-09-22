@@ -4,10 +4,11 @@ TODO
 General:
 - [X] Pick the final file structure
   * create a tmp folder for R modified datasets?
-  
-  TETRAD:
-  - [ ] add F score as a statistic (?)
-   * at least add AHP and AHR to the statistics if not
+
+TETRAD:
+- [ ] ~~add F score as a statistic (?)~~
+  * ~~at least add AHP and AHR to the statistics if not~~
+- [ ] Code a way to set the seed before generating the data
 
 Generate.java
 - [X] Allow parsing in args like nruns, sample size, etc
@@ -37,9 +38,12 @@ R
 - [X] give option to impute or omit
 - [X] give options on how to create missing data
   - [ ] Tune these methods
-- [ ] input files from /save/1/data, create missing data, and store in R/tmp
-- [ ] rm data in save/1/data, when handling MVs, output to that directory
+- [X] input files from /save/1/data, create missing data, and store in R/tmp
+- [X] rm data in save/1/data, when handling MVs, output to that directory
+ - [ ] need to create impute/omit R scripts ot take files out of tmp so tetrad will run them
 - [ ] Automate collating data and create visualizations
+- [X] Set up main.R to parse in args from bash
+  * Need to add functionality or imputing, or omitting
 
 run.sh
 - [X] get basic script running (call generate, R, analyze)
@@ -53,7 +57,8 @@ File structure
 ```
 simstudy
 │   run.sh
-│
+│   tetrad.out
+|
 └───R
 │   │  main.R
 │   |  methods.R
