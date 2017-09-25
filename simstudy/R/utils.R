@@ -1,6 +1,6 @@
 impute <- function(df) {
   library(mice)
-  complete(mice(df, printFlag = F))
+  complete(mice(df, printFlag = T))
 }
 
 judge <- function(x,p) {
