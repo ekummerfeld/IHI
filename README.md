@@ -1,10 +1,10 @@
 # Simstudy
 TODO
-- [ ] change code so its possible to set a seed
-- [ ] add the code to generate to analyze the data as soon as we generate it
+- [X] change code so its possible to set a seed
+- [ ] ~~add the code to generate to analyze the data as soon as we generate it~~
 - [ ] add the alogrithms we want to use
-- [ ] pick the distrobutions(?)
-- [ ] do some diagnostic timing to see how long run.sh takes to run
+- [ ] pick the distributions
+- [X] do some diagnostic timing to see how long run.sh takes to run
 
 Pipeline
 ```

@@ -2,10 +2,13 @@
 source("R/utils.R")
 source("R/loss.R")
 # R library that does imputation
+library("profvis")
 library("mice")
+library("data.table")
 # library to handle command line arguments
 library("getopt")
 
+# prof <- profvis({
 # set up the args one can pass through via `Rscript`
 spec <- matrix(c(
   'na_handling_method', 'n', 1, 'character',
@@ -46,23 +49,25 @@ if(na_method == "both"){
 
 # loops over all the files in path
 for(file_name in list.files(path = path) ) { 
-  df <- read.csv(paste(path, file_name, sep = ""), sep = "\t")
+  df <- fread(paste(path, file_name, sep = ""), sep = "\t")
   # delete the datafile once it is loaded into R
   system(paste("rm ", path, file_name, sep = ""))
   # generate missing data 
-  df_mv <- loss_func(df, loss_method, p = .99)
+  df_mv <- loss_func(df, loss_method)
   # write the imputed/omited datafiles to impute/ or omit/
   if(na_method == "both") {
-    write.table(na.omit(df_mv), file = paste("omit/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
-    write.table(impute(df_mv), file = paste("impute/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
+    fwrite(na.omit(df_mv), file = paste("omit/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
+    fwrite(impute(df_mv), file = paste("impute/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
   }
 # write file to path
   if(na_method == "impute") {
-    write.table(impute(df_mv), file = paste("impute/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
+    fwrite(impute(df_mv), file = paste("impute/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
     }
 
   if(na_method == "omit") {
     omit_df <- na.omit(df_mv)
-    write.table(omit_df, file = paste("omit/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
+    fwrite(omit_df, file = paste("omit/", file_name, sep = ""), sep = "\t", quote = F, row.names = F)
   }
 }
+# })
+# save(prof, file="prof")

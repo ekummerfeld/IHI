@@ -8,6 +8,7 @@ parse_solution<-function(solver="clingo",encode=NA,
   M<-list()
   M$G<-array(NA,c(global_n,global_n))
   M$Ge<-array(NA,c(global_n,global_n))
+  M$Anc<-array(NA,c(global_n,global_n))
   M$objective <- -1 #for the SAT versions
   
   if ( solver != 'clingo') browser()
@@ -54,9 +55,20 @@ parse_solution<-function(solver="clingo",encode=NA,
       vars<-as.numeric(unlist(strsplit(substr(s,6,nchar(s)-1),',')))
       M$Ge[vars[2],vars[1]]<-M$Ge[vars[1],vars[2]]<-1        
     }
+    
+    
+    
+    else if ( substr(s,1,3) =="th("){
+      vars<-as.numeric(unlist(strsplit(substr(s,4,nchar(s)-1),',')))
+      if(vars[3]==0 && vars[4]==0){
+        M$Anc[vars[2],vars[1]]<-1
+      }
+    }
+    
   }
   M$G[is.na(M$G)]<-0
   M$Ge[is.na(M$Ge)]<-0
+  M$Anc[is.na(M$Anc)]<-0
   cat('\t\tREAD:',substr(sol_lines[sol_i],1,30),'...',substr(sol_lines[sol_i],nchar(sol_lines[sol_i])-30,nchar(sol_lines[sol_i])),'\n')  
   
   #return the model

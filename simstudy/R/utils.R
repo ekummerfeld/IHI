@@ -1,8 +1,9 @@
 impute <- function(df) {
   library(mice)
-  complete(mice(df, printFlag = T))
+  complete(mice(df, printFlag = F))
 }
 
 judge <- function(x,p) {
-  ifelse(runif(1) < p, x, NA)
+  rns <- runif(length(x))
+  ifelse(rns < p, x, NA)
 }
