@@ -1,0 +1,34 @@
+Graph Nodes:
+sum_DTC,sum_AUD,sum_MDD,sum_DYS,sum_GAD,sum_SOC,sum_PAN,sum_PTSD
+
+Graph Edges:
+1. sum_AUD --> sum_DTC
+2. sum_MDD --> sum_DTC
+3. sum_DTC --> sum_MDD
+4. sum_AUD --> sum_MDD
+5. sum_DTC --> sum_DYS
+6. sum_MDD --> sum_DYS
+7. sum_GAD --> sum_SOC
+8. sum_PAN --> sum_SOC
+9. sum_AUD --> sum_PAN
+10. sum_SOC --> sum_PAN
+11. sum_GAD --> sum_PTSD
+12. sum_AUD o-o sum_DTC
+13. sum_MDD o-o sum_DTC
+14. sum_GAD o-o sum_DTC
+15. sum_SOC o-o sum_DTC
+16. sum_PAN o-o sum_DTC
+17. sum_PTSD o-o sum_DTC
+18. sum_MDD o-o sum_AUD
+19. sum_PAN o-o sum_AUD
+20. sum_GAD o-o sum_MDD
+21. sum_SOC o-o sum_MDD
+22. sum_PAN o-o sum_MDD
+23. sum_PTSD o-o sum_MDD
+24. sum_GAD o-o sum_DYS
+25. sum_SOC o-o sum_DYS
+26. sum_PAN o-o sum_DYS
+27. sum_PTSD o-o sum_DYS
+28. sum_SOC o-o sum_GAD
+29. sum_PTSD o-o sum_SOC
+30. sum_PTSD o-o sum_PAN
