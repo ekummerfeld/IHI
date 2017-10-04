@@ -17,3 +17,6 @@ data.[1-9]*.txt
 *graph.[1-9]*.txt
 parameters.txt
 *.out
+
+# IGNORE HCD
+CBCD_code/modified_pkg/AUD_DATA/NESARC_jv_sums_mtz_nzr (1).csv
