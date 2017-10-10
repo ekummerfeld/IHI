@@ -1,9 +1,17 @@
 library("parallel")
 ul <- function(df, p) {
-  print(p)
   as.data.frame(
     mclapply(df, judge, p = p)
     )
+}
+
+lv <- function(df, q) {
+  as.data.frame(
+    mclapply(df, function(x, q) {
+      y = unname(quantile(x, na.rm=T, q))
+      ifelse(x > y, NA, x)
+    }, q = q)
+  )
 }
 
 atl <- function(df) {

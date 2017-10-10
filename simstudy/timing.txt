@@ -1,22 +1,4 @@
--nr 500 -nv 100 -ss 2000 -ad 2 -n omit -l ul -p 1
-generate.java execution time: 1:57.41
-analyze.java execution time: 1:00.08
-main.R execution time: 1:37.91
-analyze.java execution time: 1:03.53
--nr 500 -nv 100 -ss 2000 -ad 2 -seed 123 -n omit -l ul -p 1
-Command exited with non-zero status 130
-generate.java execution time: 0:10.08
--nr 500 -nv 100 -ss 100 -ad 2 -seed 123 -n omit -l ul -p 1
-generate.java execution time: 0:08.96
-Command exited with non-zero status 130
-analyze.java execution time: 0:04.55
--nr 500 -nv 100 -ss 100 -ad 2 -seed 123 -n omit -l ul -p 1
-generate.java execution time: 0:08.78
-analyze.java execution time: 0:03.75
-main.R execution time: 0:15.70
-analyze.java execution time: 0:03.64
--nr 500 -nv 100 -ss 100 -ad 2 -seed 123 -n omit -l ul -p 1
-generate.java execution time: 0:08.48
-analyze.java execution time: 0:03.71
-main.R execution time: 0:15.79
+generate.java execution time: 0:08.86
 analyze.java execution time: 0:03.62
+Command exited with non-zero status 1
+main.R execution time: 4:53:27
