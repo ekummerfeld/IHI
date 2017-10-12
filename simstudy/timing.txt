@@ -1,4 +1,3 @@
-generate.java execution time: 0:08.86
-analyze.java execution time: 0:03.62
+-nr 500 -nv 1000 -ss 100 -ad 2 -seed 1507824181 -n omit -l ul -p .99
 Command exited with non-zero status 1
-main.R execution time: 4:53:27
+generate.java execution time: 2:17.19
