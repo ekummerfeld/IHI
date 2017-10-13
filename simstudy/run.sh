@@ -3,7 +3,7 @@
 #create aliases for the java programs
 GENERATE=edu.cmu.tetrad.algcomparison.simstudy.generate
 ANALYZE=edu.cmu.tetrad.algcomparison.simstudy.analyze
-
+JAVA_ARGS="-Xmx49152m -cp tetrad.jar/tetrad.jar"
 # function to perform error checking
 check_error() {
   if [ $? -eq 0 ]
@@ -18,7 +18,7 @@ check_error() {
 
 
 VARS="10 100 1000"
-SAMPLES="100 1000"
+SAMPLES="100"
 
 ###############################################################################
 #these are the arguments that the R portion needs
@@ -68,7 +68,7 @@ do
   #these arguments set the parameters of the generated data
     NRUNS="500"
     NVARS=$var
-    NSAMPLES="100"
+    NSAMPLES=$sample
     AVGD="2"
     # change this so you can reproduce data
     SEED=$(date +%s)
@@ -76,16 +76,16 @@ do
     GEN_ARGS="-nr $NRUNS -nv $NVARS -ss $NSAMPLES -ad $AVGD -seed $SEED"
     echo $GEN_ARGS $R_ARGS >> "timing.txt"
     # Run generate.java with arguments given by GEN_ARGS
-    echo java -cp jar/tetrad.jar $GENERATE $GEN_ARGS
-    $TIME $TIME_ARGS -f "generate.java execution time: %E" java -cp jar/tetrad.jar $GENERATE $GEN_ARGS >> generate.out
+    echo java $JAVA_ARGS $GENERATE $GEN_ARGS
+    $TIME $TIME_ARGS -f "generate.java execution time: %E" java $JAVA_ARGS $GENERATE $GEN_ARGS >> generate.out
     check_error generate.java "Data saved to save/1/ and generate output written to generate.out"
 
     PREFIX=$SEED.vanilla
     echo "Analyzing the vanilla data..."
-    echo "java -cp jar/tetrad.jar $ANALYZE -prefix $PREFIX. analyze.out"
+    echo "java $JAVA_ARGS $ANALYZE -prefix $PREFIX. analyze.out"
 
     # this analyzes the vanilla data before R does anything
-    $TIME $TIME_ARGS -f "analyze.java execution time: %E" java -cp jar/tetrad.jar $ANALYZE -prefix $PREFIX. >> analyze.out
+    $TIME $TIME_ARGS -f "analyze.java execution time: %E" java $JAVA_ARGS $ANALYZE -prefix $PREFIX. >> analyze.out
 
     check_error analyze.java "algcomparison results can be found in results/$PREFIX.comparison.txt"
 
@@ -104,8 +104,8 @@ do
           PREFIX=$SEED.$NA_HANDLING_METHOD.$LOSS_METHOD$PROBABILITY
           mv -T $dir/ save/1/data/
           echo "moving $dir to save/1/data and running analyze.java..."
-          echo java -cp jar/tetrad.jar $ANALYZE -prefix $PREFIX.
-          $TIME $TIME_ARGS -f "analyze.java execution time: %E" java -cp jar/tetrad.jar $ANALYZE -prefix $PREFIX. >> analyze.out
+          echo java $JAVA_ARGS $ANALYZE -prefix $PREFIX.
+          $TIME $TIME_ARGS -f "analyze.java execution time: %E" java $JAVA_ARGS $ANALYZE -prefix $PREFIX. >> analyze.out
           check_error analyze.java "algcomparison results can be found in results/$PREFIX.comparison.txt"
       fi
     done
