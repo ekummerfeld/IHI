@@ -3,7 +3,7 @@
 #create aliases for the java programs
 GENERATE=edu.cmu.tetrad.algcomparison.simstudy.generate
 ANALYZE=edu.cmu.tetrad.algcomparison.simstudy.analyze
-JAVA_ARGS="-Xmx49152m -cp tetrad.jar/tetrad.jar"
+JAVA_ARGS="-Xmx49152m -cp jar/tetrad.jar"
 # function to perform error checking
 check_error() {
   if [ $? -eq 0 ]
@@ -18,7 +18,7 @@ check_error() {
 
 
 VARS="10 100 1000"
-SAMPLES="100"
+SAMPLES="100 1000 10000"
 
 ###############################################################################
 #these are the arguments that the R portion needs
