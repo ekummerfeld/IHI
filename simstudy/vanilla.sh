@@ -1,3 +1,4 @@
+#!/bin/bash
 ANALYZE=edu.cmu.tetrad.algcomparison.simstudy.analyze
 JAVA_ARGS="-Xmx49152m -cp jar/tetrad.jar"
 # function to perform error checking
@@ -14,15 +15,14 @@ check_error() {
 TIME=/usr/bin/time
 TIME_ARGS="-o timing.txt --append"
 
-
 #these arguments are what go into generate.java
 DIRS=$(ls ./generate)
 
 for dir in $DIRS
 do
-  PREFIX=vanilla
-  PATH=test/$dir
+  PREFIX="vanilla."
+  FOLDER="generate/$dir"
   echo "Analyzing the vanilla data..."
-  echo "java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp $PATH analyze.out"
-  $TIME $TIME_ARGS -f "analyze.java execution time: %E" java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp $PATH >> analyze.out
+  echo "java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp $FOLDER analyze.out"
+  $TIME $TIME_ARGS -f "analyze.java execution time: %E" java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp $FOLDER >> analyze.out
 done

@@ -19,3 +19,4 @@ parameters.txt
 *.out
 # Ignore results from simstudy
 **/results/*.txt
+**/timing.txt

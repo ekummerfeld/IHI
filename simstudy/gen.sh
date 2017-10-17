@@ -21,8 +21,8 @@ check_error() {
 }
 
 
-VARS="10 100 1000"
-SAMPLES="100 1000 10000"
+VARS="10 100"
+SAMPLES="100 1000"
 
 for var in $VARS
 do
