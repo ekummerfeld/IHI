@@ -21,8 +21,8 @@ check_error() {
 }
 
 
-VARS="10 100"
-SAMPLES="100 1000"
+VARS="10 100 1000"
+SAMPLES="100 1000 10000"
 
 for var in $VARS
 do
@@ -54,3 +54,5 @@ do
     check_error generate.java "Data saved to save/1/ and generate output written to generate.out"
   done
 done
+
+echo "The seed for these calculations was $SEED"

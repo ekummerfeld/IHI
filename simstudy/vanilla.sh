@@ -21,7 +21,8 @@ DIRS=$(ls ./generate)
 for dir in $DIRS
 do
   PREFIX=vanilla
+  PATH=test/$dir
   echo "Analyzing the vanilla data..."
-  echo "java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp generate/$dir analyze.out"
-  $TIME $TIME_ARGS -f "analyze.java execution time: %E" java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp "generate/$dir" >> analyze.out
+  echo "java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp $PATH analyze.out"
+  $TIME $TIME_ARGS -f "analyze.java execution time: %E" java $JAVA_ARGS $ANALYZE -prefix $PREFIX -dp $PATH >> analyze.out
 done

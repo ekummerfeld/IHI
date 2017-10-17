@@ -1,2 +1,2 @@
--nr 500 -nv 1000 -ss 10000 -ad 2 -seed 1507838552 -n omit -l ul -p .99
-generate.java execution time: 3:29:53
+-nr 500 -nv 10 -ss 100 -ad 2 -seed 1508262672
+generate.java execution time: 0:00.28
