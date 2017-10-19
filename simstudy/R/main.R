@@ -37,15 +37,15 @@ loss_method <- match.arg(args$loss_method, loss_methods)
 
 prob <- args$prob
 
-if (is.null( prob) && ( loss_method == "ul" || loss_method == "lv")) {
-  write("If you wish to use uniform loss, you must specifiy the probability",
+if (is.null( prob) && (loss_method == "lv")) {
+  write("If you wish to use large value loss, you must specifiy the probability",
     stderr()
   )
   quit(status = 1)
 }
 
 # set loss_func to the function as given by loss_method
-loss_func <- function(df, loss_method, p = prob)  {
+loss_func <- function(df, loss_method, p)  {
   switch(loss_method, lv = lv(df, p), ul = ul(df, p), atl = atl(df))
 }
 
@@ -62,7 +62,10 @@ for (file_name in list.files(path = path) ) {
   df <- fread(paste(path, file_name, sep = ""), sep = "\t")
   
   # generate missing data
-  df_mv <- loss_func(df, loss_method)
+  if(loss_method == "ul") {
+    prob <- 1 - 1/length(df)
+  }
+  df_mv <- loss_func(df, loss_method, prob )
   # write the imputed/omited datafiles to impute/ or omit/
 
 # write file to path

@@ -1,6 +1,6 @@
 NA_HANDLING_METHOD="omit"
 #what algorithm to use to generate missing data
-LOSS_METHOD="lv"
+LOSS_METHOD="ul"
 #currently only needed if loss method = ul
 PROBABILITY=".99"
 
