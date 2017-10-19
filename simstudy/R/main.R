@@ -55,7 +55,7 @@ save <- "save/1/data/"
 path <- paste(dir, "/", save, sep = "")
 # create the relevant directories to store the files, depending on the value of na_handle
 
-SCRATCHPATH <- paste("./SCRATCH/", save, sep = "")
+ROUT <- paste("./rout/", args$dir,"/", save, sep = "")
 prof <- profvis({
 # loops over all the files in path
 for (file_name in list.files(path = path) ) {
@@ -67,17 +67,17 @@ for (file_name in list.files(path = path) ) {
 
 # write file to path
   if (na_method == "impute") {
-    fwrite(impute(df_mv), file = paste(SCRATCHPATH, file_name, sep = ""),
+    fwrite(impute(df_mv), file = paste(ROUT, file_name, sep = ""),
       sep = "\t", quote = F, row.names = F
     )
   }
 
   if (na_method == "omit") {
     omit_df <- na.omit(df_mv)
-    fwrite(omit_df, file = paste(SCRATCHPATH, file_name, sep = ""),
+    fwrite(omit_df, file = paste(ROUT, file_name, sep = ""),
       sep = "\t", quote = F, row.names = F
     )
   }
 }
 })
-save(prof, file = "prof")
+save(prof, file = paste("./rout/", args$dir, "/", "prof", sep = ""))
