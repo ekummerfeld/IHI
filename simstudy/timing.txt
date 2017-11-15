@@ -1,2 +1,0 @@
--nr 500 -nv 10 -ss 100 -ad 2 -seed 1508262672
-generate.java execution time: 0:00.28
