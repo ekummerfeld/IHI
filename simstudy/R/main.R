@@ -1,12 +1,14 @@
 # load the other functions
 source("R/utils.R")
 source("R/loss.R")
-# R library that does imputation
-library("profvis")
-library("data.table")
+
 # library to handle command line arguments
 library("getopt")
-
+# faster I/O
+library("data.table")
+# libraries for parallel computing
+library("foreach")
+library("doMC")
 
 # set up the args one can pass through via `Rscript`
 spec <- matrix(c(
@@ -20,7 +22,7 @@ args <- getopt(spec)
 
 dir <- paste("generate/", args$dir, sep = "")
 
-if(!(dir %in% list.dirs("generate", recursive = F))) {
+if (!(dir %in% list.dirs("generate", recursive = F))) {
   write(dir, stderr())
   write(" directory not found",
         stderr()
@@ -29,7 +31,7 @@ if(!(dir %in% list.dirs("generate", recursive = F))) {
 }
 
 # parse input to make sure its legit
-na_methods <- c("omit", "impute")
+na_methods <- c("omit", "impute", "both")
 na_method <- match.arg(args$na_handling_method, na_methods)
 
 loss_methods <- c("ul", "atl", "lv")
@@ -55,32 +57,35 @@ save <- "save/1/data/"
 path <- paste(dir, "/", save, sep = "")
 # create the relevant directories to store the files, depending on the value of na_handle
 
-ROUT <- paste("./rout/", args$dir,"/", save, sep = "")
-prof <- profvis({
-# loops over all the files in path
-for (file_name in list.files(path = path) ) {
-  df <- fread(paste(path, file_name, sep = ""), sep = "\t")
-  
-  # generate missing data
-  if(loss_method == "ul") {
-    prob <- 1 - 1/length(df)
-  }
-  df_mv <- loss_func(df, loss_method, prob )
-  # write the imputed/omited datafiles to impute/ or omit/
+OMIT <- paste("./omit/", args$dir, "/", save, sep = "")
+IMPUTE <- paste("./impute/", args$dir, "/", save, sep = "")
 
-# write file to path
-  if (na_method == "impute") {
-    fwrite(impute(df_mv), file = paste(ROUT, file_name, sep = ""),
-      sep = "\t", quote = F, row.names = F
-    )
-  }
 
-  if (na_method == "omit") {
-    omit_df <- na.omit(df_mv)
-    fwrite(omit_df, file = paste(ROUT, file_name, sep = ""),
-      sep = "\t", quote = F, row.names = F
-    )
-  }
-}
+
+registerDoMC(4)
+invisible(
+  foreach(file_name = list.files(path = path), .packages = "mice") %dopar% {
+  # Read in files (in parallel)
+    df <- fread(paste(path, file_name, sep = ""), sep = "\t")
+
+    write(paste("Core", Sys.getpid(), "is making a mess of", file_name), stdout())
+    # generate missing data
+   if (loss_method == "ul") {
+     prob <- 1 - 1 / length(df)
+   }
+#   prob <- args$prob
+    # create missing values using the loss method set by bash
+    df_mv <- loss_func(df, loss_method, prob)
+
+    if (na_method == "impute" || na_method == "both") {
+      write(paste("Core", Sys.getpid(), "is imputing", file_name), stdout())
+      fwrite(impute(df_mv), file = paste(IMPUTE, file_name, sep = ""),
+      sep = "\t", quote = F, row.names = F, na = NA)
+    }
+    if (na_method == "omit" || na_method == "both") {
+            write(paste("Core", Sys.getpid(), "is dropping NAs in", file_name), stdout())
+      fwrite(na.omit(df_mv), file = paste(OMIT, file_name, sep = ""),
+             sep = "\t", quote = F, row.names = F
+      )
+    }
 })
-save(prof, file = paste("./rout/", args$dir, "/", "prof", sep = ""))
