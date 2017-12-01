@@ -1,6 +1,6 @@
 
 run <- function(file, schedule, p) {
-  runData("../AUD_DATA/NESARC_jv_sums_mtz_nzr (1).csv", e = rep(0,8), encode = "new_wmaxsat.pl", test = "BIC", p = p, schedule = schedule, sep = "," ,header = T)
+  runData("../../../kcd/data/kcd.csv", e = rep(0,10), encode = "new_wmaxsat.pl", test = "BIC", p = p, schedule = schedule, sep = "," ,header = T)
   foo <-parse_solution(encode="new_wmaxsat.pl", sol_file = "../tmp/pipeline.ind.clingo")
   nm <- c("sum_DTC","sum_AUD","sum_MDD","sum_DYS","sum_GAD","sum_SOC","sum_PAN","sum_PTSD")
   write("Graph Nodes:", file=file, append = F)

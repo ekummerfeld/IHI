@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/331095/7704be4b7c4f4bafacd46109d6f5f289
+bundleId: https://api.rpubs.com/api/v1/document/331095/7704be4b7c4f4bafacd46109d6f5f289
+url: http://rpubs.com/arix/331095
+when: 1510872892.3573

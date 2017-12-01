@@ -1,0 +1,93 @@
+---
+title: "Adding Latents to RAISE Dataset by Ommiting Missing Data "
+output: html_notebook
+author: Alexander Rix
+date: "November 20, 2017"
+---
+
+```{r, echo = T}
+suppressPackageStartupMessages(
+library(tidyverse)
+)
+setwd("~/work/RAISE")
+```
+
+```{r}
+RAISE <- suppressMessages(
+read_csv("./alldata.csv", progress = F)
+)
+# turn NaNs into NAs
+library("parallel")
+RAISE <-  as.data.frame(
+  mclapply(RAISE, function(x) {ifelse(is.nan(x), NA, x)}
+  )
+)
+```
+
+```{r fig1, fig.width=11, fig.height=5.5, out.width=11, out.height=5.5}
+VARS_WE_CARE_ABOUT <- select(RAISE, c(SRF026.B, SRF006.B, SRF022.B, SRF030.B, SRF072.B, SRF062.B, SRF063.B, SRF004.B, SRF010.B, SRF033.B, SRF035.B, SRF002.B , SRF018.B, SRF032.B, SRF001.B, SRF039.B, SRF064.B, SRF071.B, SRF061.B, SRF020.B, SRF003.B, SRF038.B, SRF070.B, SRF065.B))
+
+library(VIM)
+aggr(VARS_WE_CARE_ABOUT, col=c('white','red'), numbers = T, sortVars = T, labels = names(VARS_WE_CARE_ABOUT), prop = F, 
+    cex.axis = 1, gap = 2, ylab = c("Histogram of missing data","Pattern of missing data"))
+```
+
+```{r}
+# hack to drop those missing obs from the dataset(s)
+RAISE <- RAISE %>% drop_na(names(VARS_WE_CARE_ABOUT))
+VARS_WE_CARE_ABOUT <- VARS_WE_CARE_ABOUT %>% drop_na()
+```
+
+```{r}
+VARS_WE_CARE_ABOUT <- as.data.frame(
+  mclapply(VARS_WE_CARE_ABOUT, function(x) {as.ordered(x)}
+  )
+)
+# This variable is an integer from 1-100 (really its 1-59). 
+# It is on the different scale then the rest, so I'm going to normalize it after I impute it
+VARS_WE_CARE_ABOUT <- VARS_WE_CARE_ABOUT %>% mutate(SRF072.B = as.double(SRF072.B)) %>% 
+  mutate(SRF072.B = SRF072.B - mean(SRF072.B)) %>% 
+  mutate(SRF072.B = SRF072.B/sd(SRF072.B))
+
+
+```
+
+
+```{r}
+library(lavaan)
+
+models <- c(
+'L9 =~ SRF026.B + SRF006.B + SRF022.B + SRF030.B + SRF072.B + SRF062.B + SRF063.B',
+'L10 =~ SRF004.B + SRF010.B + SRF033.B + SRF035.B + SRF002.B',
+'L7 =~ SRF018.B + SRF032.B + SRF001.B + SRF039.B + SRF064.B + SRF071.B',
+'L4 =~ SRF061.B + SRF020.B + SRF003.B + SRF038.B + SRF070.B + SRF065.B'
+)
+
+ lv.model2 <- 'L9 =~ SRF026.B + SRF006.B + SRF022.B + SRF030.B + SRF072.B + SRF062.B + SRF063.B
+             L10 =~ SRF004.B + SRF010.B + SRF033.B + SRF035.B + SRF002.B
+             L7 =~ SRF018.B + SRF032.B + SRF001.B + SRF039.B + SRF064.B + SRF071.B
+             L4 =~ SRF061.B + SRF020.B + SRF003.B + SRF038.B + SRF070.B + SRF065.B
+            L9 ~~ .0*L10
+            L9 ~~ 0*L4
+            L9 ~~ 0*L7
+            L10 ~~ 0*L4
+            L10 ~~ 0*L7
+            L4 ~~ 0*L7
+            L9 ~~ 0*L9
+            L4 ~~ 0*L4
+            L10 ~~ 0*L10
+            L7 ~~ L7
+            '
+ cfa(lv.model2, data = VARS_WE_CARE_ABOUT)
+ 
+for (model in models) {
+  # perform cfa on each imputed dataset for the given models
+  fit <- cfa(model, data = VARS_WE_CARE_ABOUT)
+  summary(fit, fit.measures = T, estimates = F)
+  RAISE <- cbind(RAISE, predict(fit))
+}
+```
+```{r}
+write_csv(RAISE, "RAISE_PLAT.csv")
+```
+```

@@ -20,8 +20,8 @@ DIRS=$(ls ./generate)
 
 for dir in $DIRS
 do
-  NRUNS="200"
-  PREFIX="vanilla"
+  NRUNS="100"
+  PREFIX="vanilla."
   FOLDER="generate/$dir"
 
   echo "Analyzing the data in $FOLDER"

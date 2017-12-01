@@ -1,0 +1,253 @@
+---
+title: "Causal Network of JAP Manuscript Data"
+author: "Justin Anker"
+date: "February 27, 2017"
+output:
+  html_document: default
+---
+
+```{r, echo=FALSE, warning=FALSE, error=FALSE, message=FALSE}
+library(foreign)
+Bayesian_Network_JAP_MS_Data <- read.spss("~/R/Projects/Kushner.Sample.Projects/Bayesian.Network.of.JAP.MS.Data/Bayesian.Network.JAP.MS.Data.sav", to.data.frame = TRUE)
+```
+
+
+```{r,  warning=FALSE, error=FALSE, message=FALSE}
+library(knitr)
+library(qgraph)
+library(bootnet)
+library(bnlearn)
+library(corrplot)
+library(Rgraphviz)
+```
+
+```{r, warning=FALSE, error=FALSE, message=FALSE}
+df.Bayesian<- subset (Bayesian_Network_JAP_MS_Data, select = c("bpss_tot","bPENNtot", "bPDSStot", "bSPStot","bMobInvtot", "bBDItot", "bocds1", "sit_nege_tot", "DTC_NE", "AlcB_TOT"))
+df.Bayesian<-na.omit(df.Bayesian)
+```
+
+```{r, warning=FALSE, error=FALSE, message=FALSE}
+colnames(df.Bayesian)<-c("STR", "GA", "PAN", "SOC",  "AGR", "DEP", "CRA", "SEL", "DTC","DRI")
+```
+
+
+
+# Correlation Structure
+
+```{r}
+cormat <- cor(df.Bayesian)
+corrplot(cormat, method = "circle")
+```
+#GLASSO Network
+
+```{r}
+glassoFit <- EBICglasso(cormat, n = nrow(df.Bayesian))
+```
+
+
+```{r}
+glassoNet <- qgraph(glassoFit, layout = "spring", vsize=10, vertex.label.font=1, sampleSize = nrow(df.Bayesian),color=c("yellow", "lightblue", "red", "red", "red", "lightblue", "hotpink", "yellow", "yellow", "hotpink"), label.scale = TRUE, labels = colnames(df.Bayesian), title="GLASSO Data (N=363)")
+```
+
+```{r}
+cmeasures <- centrality(glassoNet) 
+```
+
+```{r}
+cDF <- data.frame(degree = cmeasures$OutDegree, closeness = cmeasures$Closeness, betweenness = 
+cmeasures$Betweenness)
+```
+
+
+
+```{r}
+round(cDF, 4)   
+```
+
+# Centrality Measures
+
+```{r}
+centralityPlot(glassoNet)         
+```
+
+
+```{r}
+glassoFit2 <- estimateNetwork(df.Bayesian, default = "EBICglasso", prepFun = "cor")  
+```
+
+# Edge Weight Accuracy
+
+```{r}
+ set.seed(123)
+ glassoBoot1 <- bootnet(glassoFit2, nBoots = 1000)
+ summary(glassoBoot1)
+```
+
+```{r}
+plot(glassoBoot1, labels = TRUE, order = "sample")  
+```
+
+* The red line indicates the sample values and the gray area the bootstrapped CIs. 
+* Each horizontal line represents one edge of the network, ordered from the edge with the highest edge-weight to the edge with the lowest edge-weight.
+* We see which edge weights differ significantly from each other.
+
+```{r}
+ plot(glassoBoot1, labels = FALSE, order = "sample")  
+```
+
+#Significance Test of Differences Between Edge Weights (First Figure) and Strength of Network Elements 
+
+```{r}
+plot(glassoBoot1, "edge", plot = "difference", onlyNonZero = TRUE, order = "sample")
+plot(glassoBoot1, "strength")
+```
+
+* Bootstrapped difference tests between edge-weights that were non-zero
+* In the estimated network (first plot) and node strength of the symptoms (second plot):
+* Gray boxes indicate nodes or edges that do not differ significantly from one another and black boxes represent nodes or edges that do differ significantly from one another. 
+* Note: white boxes in the second plot show the value of node strength.
+
+# Centrality Stability
+```{r}
+set.seed(123)
+glassoBoot2 <- bootnet(glassoFit2, nBoots = 1000, type = "person")
+plot(glassoBoot2)
+```
+
+* Average correlations between centrality indices of networks sampled with persons dropped and the original sample. Lines indicate the means and areas indicate the range from the 2.5th quantile to the 97.5th quantile
+* Result: Centrality estimates are highly stable
+
+#Bayesian Network
+Fit a first Bayesian network, based on 50 random re-starts and 100 perturbations for each re-start. 
+
+##Methods from McNally et al. 2017 - Co-morbid obsessive-compulsive disorder and depression: a Bayesian network approach
+
+We computed a Bayesian network, embodied in a DAG, by running the hill-climbing algorithm provided by the R package, bnlearn (Scutari, 2010). As implemented by bnlearn, the bootstrap function computes the structural aspect of the network by adding edges, removing them, and reversing their direction to optimize a goodness-of-fit target score (e.g. BIC). This step only determines whether an edge exists or not; no edge weights are computed yet. We randomly restarted the process with different candidate edges linking different symptom pairs, perturbing the system, and so forth 3 . As this iterative procedure unfolds, the algorithm discerns the structure of the network.
+
+To ensure that the resultant network was stable, we conducted bootstrapping by extracting 1000 samples with replacement, computing a network for each sample, and then averaging them to obtain the resultant network. There are two steps to this procedure. First, we ascertained how frequently an edge appears in the 1000 bootstrapped networks. If an edge appeared in at least 85% of these networks (Sachs et al. 2005), we retained it in the final, averaged DAG. Accordingly, such a sparse DAG depicts only those edges nearly certain to be genuine.
+
+Second, we ascertained the direction of each edge in the 1000 bootstrapped networks. For example, if an edge runs from symptom X to symptom Y in at least 51% of the bootstrapped networks, then this direction will appear in the final, averaged network. In summary, we first determined the structure of the network (i.e. symptom to symptom connections), and then determined the direction of each edge.
+
+The bnlearn program provides a BIC value for each edge. The larger the absolute BIC value, the more damaging it would be to model fit if one were to remove the edge from the network. Accordingly, high absolute BIC values indicate how important an edge is to the model that best characterizes the structure of the data. The thickness of an edge reflects the magnitude of its BIC value. We computed the identical network, but had edge thickness reflect the probability that the depicted direction of the edge occurred as shown in the graph. For example, if an edge went from symptom X to symptom Y in 95% of the 1000 bootstrapped networks, it would appear very thick. If it went from symptom X to symptom Y in only 55% of the bootstrapped networks, it would appear relatively thin.
+
+Finally, Scutari & Nagarajan (2013) have devised a statistically motivated procedure for identifying edges for retention in Bayesian networks that matches ad hoc methods (e.g. Sachs et al. 2005) in terms of specificity (i.e. rejecting false edges) and outperforms them in terms of sensitivity (i.e. retaining true edges). On the other hand, their method results in less sparse networks. We used both methods.
+
+```{r}
+ set.seed(123)
+ fitBN1 <- hc(df.Bayesian, restart = 50, perturb = 100) 
+ fitBN1
+```
+
+## global network score
+```{r}
+bnlearn::score(fitBN1, data = df.Bayesian)          
+```
+
+```{r}
+astr <- arc.strength(fitBN1, df.Bayesian, "bic-g")  
+```
+
+## sorted edge strength from strongest to weakest
+
+The bnlearn program provides a BIC value for each edge. The larger the absolute BIC value, the more damaging it would be to model fit if one were to remove the edge from the network. Accordingly, high absolute BIC values indicate how important an edge is to the model that best characterizes the structure of the data. The thickness of an edge reflects the magnitude of its BIC value. We computed the identical network, but had edge thickness reflect the probability that the depicted direction of the edge occurred as shown in the graph. For example, if an edge went from symptom X to symptom Y in 95% of the 1000 bootstrapped networks, it would appear very thick. If it went from symptom X to symptom Y in only 55% of the bootstrapped networks, it would appear relatively thin.
+
+```{r}
+astr[order(astr[,3]), ]  
+```
+
+We computed a Bayesian network (1), embodied in a DAG, by running the hill-climbing algorithm provided by the R package, bnlearn (Scutari, 2010). As implemented by bnlearn, the bootstrap function computes the structural aspect of the network by adding edges, removing them, and reversing their direction to optimize a goodness-of-fit target score (e.g. BIC). This step only determines whether an edge exists or not; no edge weights are computed yet. We randomly restarted the process with different candidate edges linking different symptom pairs, perturbing the system, and so forth (2). As this iterative procedure unfolds, the algorithm discerns the structure of the network.
+
+* 1 - The network counts as 'Bayesian' in that we estimate a joint posterior for the graph structure and the parameter estimates, given the data (Scutari & Denis, 2015, pp. 95-111). The procedure has two parts: a structure-learning part and a parameter-learning part. Hence, a Bayesian learning network is fully characterized by the following product: P(G, ??|D) = P(G|D)P(??|G, D). For the first part, let G denote the structure of the graph (i.e. DAG), and D the data. Therefore, P(G|D) is the posterior probability of the DAG given the data, that is, P(G|D) proportional to P(G)P(D|G). For this first part, we used the score-based, hill-climbing algorithm because it is reasonably fast and it learns directed graphs. Once we have learned the structure, we proceed to the parameter-learning part whereby we let ?? denote the parameter vector such that P(??|G, D). Either Bayesian or maximum likelihood approaches can be used to compute the second part of the process.
+
+* 2 - Occasionally the algorithm for fitting Bayesian learning networks ends up in a poor local maximum. Depending on where the algorithm starts, the network structure and the corresponding parameter estimates may vary across networks. Indeed, this happened in our preliminary analyses. Therefore, to eliminate this problem, we used different random restarts to avoid local maxima. We explored five of them for the bootstrapped network. For each of these five restarts, we performed 10 perturbations, which reflect 10 attempts to insert, delete or reverse an edge. The function then returns the best-fitting network based on this random restart/perturbation procedure.
+
+```{r}
+strength.plot(fitBN1, astr, shape = "ellipse")
+```
+
+##Network stablization across multiple samples (1000) through bootstrapping:
+*  To ensure the network above is stable, bootstrapping was conducted by extracting 1000 samples with replacement, computing a network with replacement for each sample, and then averaging them to obtain the resultant network.  
+
+###There are two steps to this procedure that corresonds to estimating edges and arrow direction: 
+* The frequency in which in edge appears in the 1000 bootsrapped networks was calculated and is shown the table below.  
+- The values under strength and direction correspond to the frequency in which the specified edge and corresponding arrow direction appeared in the 1000 bootstrapped networks 
++ Step 1 - Probability of Connection/Edge Strength: e.g. 0.86 means that this connection appears in 86% of the fitted networks
++ Step 2 - Probability of Arrow Direction: Probability of the direction, e.g. 0.57 means that in 57% of the fitted networks the connection goes in the direction depicted in the graph.
+
+boot.strength estimates the strength of each arc as its empirical frequency over a set of networks learned from bootstrap samples. It computes the probability of each arc (modulo its direction) and the probabilities of each arc's directions conditional on the arc being present in the graph (in either direction).
+
+
+```{r}
+set.seed(123)
+bootnet <- boot.strength(df.Bayesian, R = 1000, algorithm = "hc", algorithm.args = list(restart = 5, perturb = 10), debug = TRUE)  
+head(bootnet)
+```
+
+## Filtering the ones with an edge strength larger than 0.85 and a direction probability > 0.5
+
+```{r}
+ bootnet[bootnet$strength > 0.85 & bootnet$direction > 0.5, ]
+```
+
+##net1: build the average network using a 0.85 threshold (Sachs et al., 2005, Science)
+
+```{r}
+avgnet1 <- averaged.network(bootnet, threshold = 0.85)
+avgnet1
+bnlearn::score(avgnet1, data = df.Bayesian)
+astr1 <- arc.strength(avgnet1, df.Bayesian, "bic-g")
+astr1
+```
+
+```{r}
+ strength.plot(avgnet1, astr1, shape = "ellipse")
+```
+
+## net4: use net1 threshold, edge strengths are determined by direction probability
+
+```{r}
+ boottab <- bootnet[bootnet$strength > 0.85 & bootnet$direction > 0.5, ]  
+ boottab
+ astr4 <- boottab   
+ astr4$strength <- astr4$direction  
+```
+ 
+```{r}
+strength.plot(avgnet1, astr4, shape = "ellipse")
+```
+
+thick arrows indicate high directional probabilties, thin arrows low directional probabilities
+ 
+
+## net2: use the optimal cutpoint according to Scurati & Nagarajan (2013) Artificial Intelligence in Medicine
+```{r}
+ avgnet2 <- averaged.network(bootnet)
+ avgnet2      
+ bnlearn::score(avgnet2, data = df.Bayesian)
+ thresh <- avgnet2$learning$args[[1]]
+ thresh                                 
+ astr2 <- arc.strength(avgnet2, df.Bayesian, "bic-g")   
+ astr2
+
+```
+
+```{r}
+ suppressWarnings(strength.plot(avgnet2, astr2, shape = "ellipse", threshold = 0.5))
+```
+
+
+## net3: use net2 threshold, edge strengths are determined by direction probability
+```{r}
+boottab <- bootnet[bootnet$strength > thresh & bootnet$direction > 0.5, ]  
+boottab
+astr3 <- boottab  
+astr3$strength <- astr3$direction  
+```
+
+
+```{r}
+ strength.plot(avgnet2, astr3, shape = "ellipse")
+```
+
+thick arrows indicate high directional probabilties, thin arrows low directional probabilities
+

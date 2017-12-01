@@ -21,8 +21,8 @@ check_error() {
 }
 
 
-VARS="30 100"
-SAMPLES="100 200 300 400 500 600 700 800 900 1000"
+VARS="100"
+SAMPLES="500"
 
 for var in $VARS
 do
@@ -30,7 +30,7 @@ do
   do
     # this script redirects stdout when running tetrad or main.R to a *.out
     # So, delete the files if they exist to keep info only relevant to current sim
-    NRUNS="200"
+    NRUNS="100"
     NVARS=$var
     NSAMPLES=$sample
     AVGD="2"
