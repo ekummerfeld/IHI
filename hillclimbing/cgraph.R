@@ -68,10 +68,10 @@ import_from_tetrad_file <- function(file) {
 }
 
 adjacency_precision <- function(true_graph, est_graph) {
-  if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
-    stop("at least of the graphs are not the correct type!")
-  if (!setequal(true_graph$names,est_graph$names))
-    stop ("the nodes do not match!")
+  # if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
+  #   stop("at least of the graphs are not the correct type!")
+  # if (!setequal(true_graph$names,est_graph$names))
+  #   stop ("the nodes do not match!")
   # get the number of predicted adjacencies
   n_pred_adjs <- sum(lengths(est_graph$skeleton)) 
   n_correct <- 0
@@ -84,10 +84,10 @@ adjacency_precision <- function(true_graph, est_graph) {
 }
 
 adjacency_recall <- function(true_graph, est_graph) {
-  if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
-    stop("at least of the graphs are not the correct type!")
-  if (!setequal(true_graph$names,est_graph$names))
-    stop ("the nodes do not match!")
+  # if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
+  #   stop("at least of the graphs are not the correct type!")
+  # if (!setequal(true_graph$names,est_graph$names))
+  #   stop ("the nodes do not match!")
   n_true_adjs <- sum(lengths(true_graph$skeleton)) 
   n_correct <- 0
   # for each node, calculate the intersection true graph neighborhood and the estimated graph neighborhood
@@ -107,10 +107,10 @@ is_row_in_matrix <- function(matrix, row) {
 }
 
 arrowhead_precision <- function(true_graph, est_graph) {
-  if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
-    stop("at least of the graphs are not the correct type!")
-  if (!setequal(true_graph$names,est_graph$names))
-    stop ("names of the nodes do not match!")
+  # if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
+  #   stop("at least of the graphs are not the correct type!")
+  # if (!setequal(true_graph$names,est_graph$names))
+  #   stop ("names of the nodes do not match!")
   n_pred_arrows <- length(est_graph$edges[,1])
   # TODO(arix) comment this later
   n_correct <- sum(apply(true_graph$edges, 1, function(edge_in_tg) {
@@ -120,10 +120,10 @@ arrowhead_precision <- function(true_graph, est_graph) {
 }
 
 arrowhead_recall <- function(true_graph, est_graph) {
-  if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
-    stop("at least of the graphs are not the correct type!")
-  if (!setequal(true_graph$names,est_graph$names))
-    stop ("names of the nodes do not match!")
+  # if (class(true_graph) != "cgraph" || class(est_graph) != "cgraph")
+  #   stop("at least of the graphs are not the correct type!")
+  # if (!setequal(true_graph$names,est_graph$names))
+  #   stop ("names of the nodes do not match!")
   n_true_arrows <- length(true_graph$edges[,1])
   # TODO(arix) comment this later
   n_correct <- sum(apply(true_graph$edges, 1, function(edge_in_tg) {
