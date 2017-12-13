@@ -9,23 +9,25 @@ source("cgraph.R")
 source("bnlearntotetrad.R")
 
 
-dir <- "../sim_framework/generate/ss2000nv100/save/1/data/"
+dir <- "../sim_framework/generate/ss100nv70/save/1/data/"
 files <- list.files(dir)
-invisible(
-mcMap(files, mc.cores = 8, f = function(file) {
+
+times <-mcMap(files, mc.cores = 8, f = function(file) {
   # read in dataset
   suppressMessages(
     data <- read_delim(paste(dir, file, sep = ""), "\t", escape_double = FALSE, trim_ws = TRUE)
   )
   # run  boostrapped hc
-  bs <- boot.strength(data, R = 100, algorithm = "hc", algorithm.args = list(restart = 5, perturb = 10), debug = TRUE) 
+  time <- unname(system.time(
+  bs <- boot.strength(data, R = 100, algorithm = "hc", algorithm.args = list(restart = 5, perturb = 10), debug = TRUE)
+  )[1])
   agg_hc <- averaged.network(bs[bs$strength > .85 & bs$direction > .5,])
   # export learned bn graph to tetrad compatible format
   output_file <- paste("hc_graphs/", sub("data", "graph", file), sep = "")
   export_bnlearn_object_to_tetrad(output_file, agg_hc)
+  return(time)
 })
-)
-dir <- "../sim_framework/generate/ss2000nv100/save/1/graph/"
+dir <- "../sim_framework/generate/ss100nv70/save/1/graph/"
 
 files <- list.files(dir)
 # fancy for loop that can be easily parallized by using mclapply instead
@@ -49,11 +51,5 @@ df <- data.frame(matrix(unlist(df), ncol = 5, byrow =T))
 names(df) <- c("GID","AP", "AR", "AHP", "AHR")
 
 # plot distributions
-library(ggplot2)
-library(reshape2)
 
-m.df <- melt(df[,-1])
-
-ggplot(m.df, aes(x = value, fill = variable)) + geom_histogram( position = "identity", alpha = .75) + theme_minimal()
-
-colMeans(df[,-1])
+c(colMeans(df[,-1]), mean(unlist(times)))
