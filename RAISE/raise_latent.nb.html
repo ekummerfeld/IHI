@@ -179,7 +179,9 @@ $(document).ready(function () {
 <ul>
 <li><a href="#intro">Intro</a></li>
 <li><a href="#looking-at-the-missing-values">Looking at the missing values</a><ul>
+<li><a href="#update-182018.-rhumtella2012-seems-to-imply-that-these-varaibles-can-be-treated-as-continuous">UPDATE 1/8/2018. Rhumtella(2012) seems to imply that these varaibles can be treated as continuous</a></li>
 <li><a href="#performing-cfa-with-lavaan">Performing CFA with <code>lavaan</code></a></li>
+<li><a href="#update-182018-rhumtella2012-suggests-the-mlm-estimator">UPDATE 1/8/2018 Rhumtella(2012) suggests the MLM estimator</a></li>
 </ul></li>
 <li><a href="#trying-to-work-around-the-errors">Trying to work around the errors</a><ul>
 <li><a href="#fitting-each-latent-model-separately.">Fitting each latent model separately.</a></li>
@@ -206,16 +208,11 @@ $(document).ready(function () {
 <h2>Looking at the missing values</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKFxubGlicmFyeSh0aWR5dmVyc2UpXG4pXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKFxubGlicmFyeSh0aWR5dmVyc2UpXG4pXG5zZXR3ZChcIn4vd29yay8vSUhJL1JBSVNFXCIpXG5gYGAifQ== -->
 <pre class="r"><code>suppressPackageStartupMessages(
 library(tidyverse)
-)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTm90ZTogdGhlIHNwZWNpZmljYXRpb24gZm9yIFMzIGNsYXNzIOKAnGRpZmZ0aW1l4oCdIGluIHBhY2thZ2Ug4oCYbHVicmlkYXRl4oCZIHNlZW1zIGVxdWl2YWxlbnQgdG8gb25lIGZyb20gcGFja2FnZSDigJhobXPigJk6IG5vdCB0dXJuaW5nIG9uIGR1cGxpY2F0ZSBjbGFzcyBkZWZpbml0aW9ucyBmb3IgdGhpcyBjbGFzcy5cbiJ9 -->
-<pre><code>Note: the specification for S3 class “difftime” in package ‘lubridate’ seems equivalent to one from package ‘hms’: not turning on duplicate class definitions for this class.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0d2QoXCJ+L3dvcmsvUkFJU0VcIilcbmBgYCJ9 -->
-<pre class="r"><code>setwd(&quot;~/work/RAISE&quot;)</code></pre>
+)
+setwd(&quot;~/work//IHI/RAISE&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
@@ -235,11 +232,9 @@ RAISE &lt;-  as.data.frame(
 <p>I think the first thing to do is to the missing data pattern in the variables of interest.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVkFSU19XRV9DQVJFX0FCT1VUIDwtIHNlbGVjdChSQUlTRSwgYyhTUkYwMjYuQiwgU1JGMDA2LkIsIFNSRjAyMi5CLCBTUkYwMzAuQiwgU1JGMDcyLkIsIFNSRjA2Mi5CLCBTUkYwNjMuQiwgU1JGMDA0LkIsIFNSRjAxMC5CLCBTUkYwMzMuQiwgU1JGMDM1LkIsIFNSRjAwMi5CICwgU1JGMDE4LkIsIFNSRjAzMi5CLCBTUkYwMDEuQiwgU1JGMDM5LkIsIFNSRjA2NC5CLCBTUkYwNzEuQiwgU1JGMDYxLkIsIFNSRjAyMC5CLCBTUkYwMDMuQiwgU1JGMDM4LkIsIFNSRjA3MC5CLCBTUkYwNjUuQikpXG5zdXBwcmVzc1BhY2thZ2VTdGFydHVwTWVzc2FnZXMoXG5saWJyYXJ5KFZJTSlcbilcbmFnZ3IoVkFSU19XRV9DQVJFX0FCT1VULCBjb2w9Yygnd2hpdGUnLCdyZWQnKSwgbnVtYmVycyA9IFQsIHNvcnRWYXJzID0gVCwgbGFiZWxzID0gbmFtZXMoVkFSU19XRV9DQVJFX0FCT1VUKSwgcHJvcCA9IEYsIFxuICAgIGNleC5heGlzID0gMSwgZ2FwID0gMiwgeWxhYiA9IGMoXCJIaXN0b2dyYW0gb2YgbWlzc2luZyBkYXRhXCIsXCJQYXR0ZXJuIG9mIG1pc3NpbmcgZGF0YVwiKSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVkFSU19XRV9DQVJFX0FCT1VUIDwtIHNlbGVjdChSQUlTRSwgYyhTUkYwMjYuQiwgU1JGMDA2LkIsIFNSRjAyMi5CLCBTUkYwMzAuQiwgU1JGMDcyLkIsIFNSRjA2Mi5CLCBTUkYwNjMuQiwgU1JGMDA0LkIsIFNSRjAxMC5CLCBTUkYwMzMuQiwgU1JGMDM1LkIsIFNSRjAwMi5CICwgU1JGMDE4LkIsIFNSRjAzMi5CLCBTUkYwMDEuQiwgU1JGMDM5LkIsIFNSRjA2NC5CLCBTUkYwNzEuQiwgU1JGMDYxLkIsIFNSRjAyMC5CLCBTUkYwMDMuQiwgU1JGMDM4LkIsIFNSRjA3MC5CLCBTUkYwNjUuQikpXG5saWJyYXJ5KFZJTSlcbmFnZ3IoVkFSU19XRV9DQVJFX0FCT1VULCBjb2w9Yygnd2hpdGUnLCdyZWQnKSwgbnVtYmVycyA9IFQsIHNvcnRWYXJzID0gVCwgbGFiZWxzID0gbmFtZXMoVkFSU19XRV9DQVJFX0FCT1VUKSwgcHJvcCA9IEYsIFxuICAgIGNleC5heGlzID0gMSwgZ2FwID0gMiwgeWxhYiA9IGMoXCJIaXN0b2dyYW0gb2YgbWlzc2luZyBkYXRhXCIsXCJQYXR0ZXJuIG9mIG1pc3NpbmcgZGF0YVwiKSlcbmBgYCJ9 -->
 <pre class="r"><code>VARS_WE_CARE_ABOUT &lt;- select(RAISE, c(SRF026.B, SRF006.B, SRF022.B, SRF030.B, SRF072.B, SRF062.B, SRF063.B, SRF004.B, SRF010.B, SRF033.B, SRF035.B, SRF002.B , SRF018.B, SRF032.B, SRF001.B, SRF039.B, SRF064.B, SRF071.B, SRF061.B, SRF020.B, SRF003.B, SRF038.B, SRF070.B, SRF065.B))
-suppressPackageStartupMessages(
 library(VIM)
-)
 aggr(VARS_WE_CARE_ABOUT, col=c('white','red'), numbers = T, sortVars = T, labels = names(VARS_WE_CARE_ABOUT), prop = F, 
     cex.axis = 1, gap = 2, ylab = c(&quot;Histogram of missing data&quot;,&quot;Pattern of missing data&quot;))</code></pre>
 <!-- rnb-source-end -->
@@ -284,10 +279,10 @@ aggr(VARS_WE_CARE_ABOUT, col=c('white','red'), numbers = T, sortVars = T, labels
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBoYWNrIHRvIGRyb3AgdGhvc2UgbWlzc2luZyBvYnMgZnJvbSB0aGUgZGF0YXNldChzKVxuUkFJU0UgPC0gUkFJU0UgJT4lIGRyb3BfbmEobmFtZXMoVkFSU19XRV9DQVJFX0FCT1VUKSlcblZBUlNfV0VfQ0FSRV9BQk9VVCA8LSBWQVJTX1dFX0NBUkVfQUJPVVQgJT4lIGRyb3BfbmEoKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBoYWNrIHRvIGRyb3AgdGhvc2UgbWlzc2luZyBvYnMgZnJvbSB0aGUgZGF0YXNldChzKVxuUkFJU0UgPC0gUkFJU0UgJT4lIGRyb3BfbmEoU1JGMDMyLkIpXG5WQVJTX1dFX0NBUkVfQUJPVVQgPC0gVkFSU19XRV9DQVJFX0FCT1VUICU+JSBkcm9wX25hKFNSRjAzMi5CKVxuYGBgIn0= -->
 <pre class="r"><code># hack to drop those missing obs from the dataset(s)
-RAISE &lt;- RAISE %&gt;% drop_na(names(VARS_WE_CARE_ABOUT))
-VARS_WE_CARE_ABOUT &lt;- VARS_WE_CARE_ABOUT %&gt;% drop_na()</code></pre>
+RAISE &lt;- RAISE %&gt;% drop_na(SRF032.B)
+VARS_WE_CARE_ABOUT &lt;- VARS_WE_CARE_ABOUT %&gt;% drop_na(SRF032.B)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -303,41 +298,37 @@ VARS_WE_CARE_ABOUT &lt;- VARS_WE_CARE_ABOUT %&gt;% drop_na()</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Relatively few entries are missing. So, I think imputing will perform well here.</p>
+<div id="update-182018.-rhumtella2012-seems-to-imply-that-these-varaibles-can-be-treated-as-continuous" class="section level3">
+<h3>UPDATE 1/8/2018. Rhumtella(2012) seems to imply that these varaibles can be treated as continuous</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsYXZhYW4gd291bGQgbGlrZSB0aGVzZSB0byBiZSBrZXB0IGFzIG9yZGVyZWQgdmFyaWFibGVzIGluc3RlYWQgb2YgY29udGludW91c1xuVkFSU19XRV9DQVJFX0FCT1VUIDwtIGFzLmRhdGEuZnJhbWUoXG4gIG1jbGFwcGx5KFZBUlNfV0VfQ0FSRV9BQk9VVCwgZnVuY3Rpb24oeCkge2FzLm9yZGVyZWQoeCl9XG4gIClcbilcbiMgVGhpcyB2YXJpYWJsZSBpcyBhbiBpbnRlZ2VyIGZyb20gMS0xMDAgKHJlYWxseSBpdHMgMS01OSkuIFxuIyBJdCBpcyBvbiB0aGUgZGlmZmVyZW50IHNjYWxlIHRoZW4gdGhlIHJlc3QsIHNvIEknbSBnb2luZyB0byBub3JtYWxpemUgaXQgYWZ0ZXIgSSBpbXB1dGUgaXRcblZBUlNfV0VfQ0FSRV9BQk9VVCRTUkYwNzIuQiA8LSBhcy5kb3VibGUoVkFSU19XRV9DQVJFX0FCT1VUJFNSRjA3Mi5CKVxubGlicmFyeShtaWNlKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsYXZhYW4gd291bGQgbGlrZSB0aGVzZSB0byBiZSBrZXB0IGFzIG9yZGVyZWQgdmFyaWFibGVzIGluc3RlYWQgb2YgY29udGludW91c1xuI1ZBUlNfV0VfQ0FSRV9BQk9VVCA8LSBhcy5kYXRhLmZyYW1lKFxuIyAgbWNsYXBwbHkoVkFSU19XRV9DQVJFX0FCT1VULCBmdW5jdGlvbih4KSB7YXMub3JkZXJlZCh4KX1cbiMgIClcbiMpXG4jIFRoaXMgdmFyaWFibGUgaXMgYW4gaW50ZWdlciBmcm9tIDEtMTAwIChyZWFsbHkgaXRzIDEtNTkpLiBcbiMgSXQgaXMgb24gdGhlIGRpZmZlcmVudCBzY2FsZSB0aGVuIHRoZSByZXN0LCBzbyBJJ20gZ29pbmcgdG8gbm9ybWFsaXplIGl0IGFmdGVyIEkgaW1wdXRlIGl0XG4jVkFSU19XRV9DQVJFX0FCT1VUJFNSRjA3Mi5CIDwtIGFzLmRvdWJsZShWQVJTX1dFX0NBUkVfQUJPVVQkU1JGMDcyLkIpXG5ub3JtYWxpemUgPC0gZnVuY3Rpb24oZGYpIHtcbiAgYXMuZGF0YS5mcmFtZShhcHBseShkZiwgMiwgZnVuY3Rpb24oeCkge1xuICAgIG11IDwtIG1lYW4oeClcbiAgICBzZCA8LSBzZCh4KVxuICAgIHJldHVybigoeC1tdSkvc2QpXG4gIH0pKVxufVxubGlicmFyeShtaWNlKVxuUkFJU0VfaW1wIDwtIG1pY2UoVkFSU19XRV9DQVJFX0FCT1VULCBtID0gNSwgcHJpbnRGbGFnID0gRiApXG5taWNlLmltcCA8LSBOVUxMXG5mb3IgKGkgaW4gMTo1KSB7XG4gIG1pY2UuaW1wW1tpXV0gPC0gY29tcGxldGUoUkFJU0VfaW1wLCBpLCBpbmM9RkFMU0UpICBcbiAgbWljZS5pbXBbW2ldXSA8LSBub3JtYWxpemUobWljZS5pbXBbW2ldXSkgXG59XG5gYGAifQ== -->
 <pre class="r"><code># lavaan would like these to be kept as ordered variables instead of continuous
-VARS_WE_CARE_ABOUT &lt;- as.data.frame(
-  mclapply(VARS_WE_CARE_ABOUT, function(x) {as.ordered(x)}
-  )
-)
+#VARS_WE_CARE_ABOUT &lt;- as.data.frame(
+#  mclapply(VARS_WE_CARE_ABOUT, function(x) {as.ordered(x)}
+#  )
+#)
 # This variable is an integer from 1-100 (really its 1-59). 
 # It is on the different scale then the rest, so I'm going to normalize it after I impute it
-VARS_WE_CARE_ABOUT$SRF072.B &lt;- as.double(VARS_WE_CARE_ABOUT$SRF072.B)
-library(mice)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBsYXR0aWNlXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJhtaWNl4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6dGlkeXLigJk6XG5cbiAgICBjb21wbGV0ZVxuIn0= -->
-<pre><code>Loading required package: lattice
-
-Attaching package: ‘mice’
-
-The following object is masked from ‘package:tidyr’:
-
-    complete</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuUkFJU0VfaW1wIDwtIG1pY2UoVkFSU19XRV9DQVJFX0FCT1VULCBtID0gNSwgcHJpbnRGbGFnID0gRiApXG5taWNlLmltcCA8LSBOVUxMXG5mb3IgKGkgaW4gMTo1KSB7XG4gIG1pY2UuaW1wW1tpXV0gPC0gY29tcGxldGUoUkFJU0VfaW1wLCBpLCBpbmM9RkFMU0UpICBcbiAgbXUgPC0gbWVhbihtaWNlLmltcFtbaV1dJFNSRjA3Mi5CKVxuICBzZCA8LSBzZChtaWNlLmltcFtbaV1dJFNSRjA3Mi5CKVxuICBtaWNlLmltcFtbaV1dJFNSRjA3Mi5CIDwtIDEvc2QgKiAobWljZS5pbXBbW2ldXSRTUkYwNzIuQiAtIG11KSBcbn1cbnJtKG11LCBzZCkgIFxuYGBgIn0= -->
-<pre class="r"><code>RAISE_imp &lt;- mice(VARS_WE_CARE_ABOUT, m = 5, printFlag = F )
+#VARS_WE_CARE_ABOUT$SRF072.B &lt;- as.double(VARS_WE_CARE_ABOUT$SRF072.B)
+normalize &lt;- function(df) {
+  as.data.frame(apply(df, 2, function(x) {
+    mu &lt;- mean(x)
+    sd &lt;- sd(x)
+    return((x-mu)/sd)
+  }))
+}
+library(mice)
+RAISE_imp &lt;- mice(VARS_WE_CARE_ABOUT, m = 5, printFlag = F )
 mice.imp &lt;- NULL
 for (i in 1:5) {
   mice.imp[[i]] &lt;- complete(RAISE_imp, i, inc=FALSE)  
-  mu &lt;- mean(mice.imp[[i]]$SRF072.B)
-  sd &lt;- sd(mice.imp[[i]]$SRF072.B)
-  mice.imp[[i]]$SRF072.B &lt;- 1/sd * (mice.imp[[i]]$SRF072.B - mu) 
-}
-rm(mu, sd)  </code></pre>
+  mice.imp[[i]] &lt;- normalize(mice.imp[[i]]) 
+}</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
 <div id="performing-cfa-with-lavaan" class="section level3">
 <h3>Performing CFA with <code>lavaan</code></h3>
 <p>Now, we need to specify the latent variable model given by Erich’s graph. In <code>lavaan</code>, the syntax is</p>
@@ -353,41 +344,85 @@ rm(mu, sd)  </code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Now, we are ready to fit the models</p>
+</div>
+<div id="update-182018-rhumtella2012-suggests-the-mlm-estimator" class="section level3">
+<h3>UPDATE 1/8/2018 Rhumtella(2012) suggests the MLM estimator</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsYXZhYW4pXG5gYGAifQ== -->
-<pre class="r"><code>library(lavaan)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiVGhpcyBpcyBsYXZhYW4gMC41LTIzLjEwOTdcbmxhdmFhbiBpcyBCRVRBIHNvZnR3YXJlISBQbGVhc2UgcmVwb3J0IGFueSBidWdzLlxuIn0= -->
-<pre><code>This is lavaan 0.5-23.1097
-lavaan is BETA software! Please report any bugs.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZml0cyA8LSBjKFxuY2ZhKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzFdXSksXG5jZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMl1dKSxcbmNmYShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s0XV0pLFxuY2ZhKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzNdXSksXG5jZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbNV1dKVxuKVxuYGBgIn0= -->
-<pre class="r"><code>fits &lt;- c(
-cfa(lv.model, data = mice.imp[[1]]),
-cfa(lv.model, data = mice.imp[[2]]),
-cfa(lv.model, data = mice.imp[[4]]),
-cfa(lv.model, data = mice.imp[[3]]),
-cfa(lv.model, data = mice.imp[[5]])
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsYXZhYW4pXG5maXRzIDwtIGMoXG5jZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMV1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbmNmYShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1syXV0sIGVzdGltYXRvciA9IFwiTUxNXCIpLFxuY2ZhKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzRdXSwgZXN0aW1hdG9yID0gXCJNTE1cIiksXG5jZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbM11dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbmNmYShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s1XV0sIGVzdGltYXRvciA9IFwiTUxNXCIpXG4pXG5gYGAifQ== -->
+<pre class="r"><code>library(lavaan)
+fits &lt;- c(
+cfa(lv.model, data = mice.imp[[1]], estimator = &quot;MLM&quot;),
+cfa(lv.model, data = mice.imp[[2]], estimator = &quot;MLM&quot;),
+cfa(lv.model, data = mice.imp[[4]], estimator = &quot;MLM&quot;),
+cfa(lv.model, data = mice.imp[[3]], estimator = &quot;MLM&quot;),
+cfa(lv.model, data = mice.imp[[5]], estimator = &quot;MLM&quot;)
 )</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDE4MyBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiAxODIgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5sYXZhYW4gV0FSTklORzogMTgxIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogY292YXJpYW5jZSBtYXRyaXggb2YgbGF0ZW50IHZhcmlhYmxlc1xuICAgICAgICAgICAgICAgIGlzIG5vdCBwb3NpdGl2ZSBkZWZpbml0ZTtcbiAgICAgICAgICAgICAgICB1c2UgaW5zcGVjdChmaXQsXCJjb3YubHZcIikgdG8gaW52ZXN0aWdhdGUubGF2YWFuIFdBUk5JTkc6IDE4MyBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiAxODIgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5cbiJ9 -->
-<pre><code>lavaan WARNING: 183 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5sYXZhYW4gV0FSTklORzogY292YXJpYW5jZSBtYXRyaXggb2YgbGF0ZW50IHZhcmlhYmxlc1xuICAgICAgICAgICAgICAgIGlzIG5vdCBwb3NpdGl2ZSBkZWZpbml0ZTtcbiAgICAgICAgICAgICAgICB1c2UgaW5zcGVjdChmaXQsXCJjb3YubHZcIikgdG8gaW52ZXN0aWdhdGUubGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5cbiJ9 -->
+<pre><code>lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 182 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 181 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 183 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 182 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
                 use inspect(fit,&quot;cov.lv&quot;) to investigate.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShmaXRzW1sxXV0sIGZpdC5tZWFzdXJlcyA9IFQsIGVzdGltYXRlcyA9IEYpXG5gYGAifQ== -->
+<pre class="r"><code>summary(fits[[1]], fit.measures = T, estimates = F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuICgwLjUtMjMuMTA5NykgY29udmVyZ2VkIG5vcm1hbGx5IGFmdGVyICA4NiBpdGVyYXRpb25zXG5cbiAgTnVtYmVyIG9mIG9ic2VydmF0aW9ucyAgICAgICAgICAgICAgICAgICAgICAgICAgIDQwMlxuXG4gIEVzdGltYXRvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTUwgICAgICBSb2J1c3RcbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAxMDYyLjYyNiAgICAgODY2LjIzOFxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMjQ2ICAgICAgICAgMjQ2XG4gIFAtdmFsdWUgKENoaS1zcXVhcmUpICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMDAgICAgICAgMC4wMDBcbiAgU2NhbGluZyBjb3JyZWN0aW9uIGZhY3RvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxLjIyN1xuICAgIGZvciB0aGUgU2F0b3JyYS1CZW50bGVyIGNvcnJlY3Rpb25cblxuTW9kZWwgdGVzdCBiYXNlbGluZSBtb2RlbDpcblxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgIDI4NDMuMTM0ICAgIDI0MDAuNTMxXG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAyNzYgICAgICAgICAyNzZcbiAgUC12YWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgICAwLjAwMFxuXG5Vc2VyIG1vZGVsIHZlcnN1cyBiYXNlbGluZSBtb2RlbDpcblxuICBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgIDAuNjgyICAgICAgIDAuNzA4XG4gIFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgMC42NDMgICAgICAgMC42NzJcblxuICBSb2J1c3QgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAgICAgIDAuNjk4XG4gIFJvYnVzdCBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC42NjFcblxuTG9nbGlrZWxpaG9vZCBhbmQgSW5mb3JtYXRpb24gQ3JpdGVyaWE6XG5cbiAgTG9nbGlrZWxpaG9vZCB1c2VyIG1vZGVsIChIMCkgICAgICAgICAgICAgLTEyNzg3LjY1MCAgLTEyNzg3LjY1MFxuICBMb2dsaWtlbGlob29kIHVucmVzdHJpY3RlZCBtb2RlbCAoSDEpICAgICAtMTIyNTYuMzM3ICAtMTIyNTYuMzM3XG5cbiAgTnVtYmVyIG9mIGZyZWUgcGFyYW1ldGVycyAgICAgICAgICAgICAgICAgICAgICAgICA3OCAgICAgICAgICA3OFxuICBBa2Fpa2UgKEFJQykgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMjU3MzEuMzAwICAgMjU3MzEuMzAwXG4gIEJheWVzaWFuIChCSUMpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAyNjA0My4wMjMgICAyNjA0My4wMjNcbiAgU2FtcGxlLXNpemUgYWRqdXN0ZWQgQmF5ZXNpYW4gKEJJQykgICAgICAgIDI1Nzk1LjUyMiAgIDI1Nzk1LjUyMlxuXG5Sb290IE1lYW4gU3F1YXJlIEVycm9yIG9mIEFwcHJveGltYXRpb246XG5cbiAgUk1TRUEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA5MSAgICAgICAwLjA3OVxuICA5MCBQZXJjZW50IENvbmZpZGVuY2UgSW50ZXJ2YWwgICAgICAgICAgMC4wODUgIDAuMDk3ICAgICAgIDAuMDc0ICAwLjA4NFxuICBQLXZhbHVlIFJNU0VBIDw9IDAuMDUgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDAwICAgICAgIDAuMDAwXG5cbiAgUm9idXN0IFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA4OFxuICA5MCBQZXJjZW50IENvbmZpZGVuY2UgSW50ZXJ2YWwgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDgxICAwLjA5NFxuXG5TdGFuZGFyZGl6ZWQgUm9vdCBNZWFuIFNxdWFyZSBSZXNpZHVhbDpcblxuICBTUk1SICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDc2ICAgICAgIDAuMDc2XG4ifQ== -->
+<pre><code>lavaan (0.5-23.1097) converged normally after  86 iterations
+
+  Number of observations                           402
+
+  Estimator                                         ML      Robust
+  Minimum Function Test Statistic             1062.626     866.238
+  Degrees of freedom                               246         246
+  P-value (Chi-square)                           0.000       0.000
+  Scaling correction factor                                  1.227
+    for the Satorra-Bentler correction
+
+Model test baseline model:
+
+  Minimum Function Test Statistic             2843.134    2400.531
+  Degrees of freedom                               276         276
+  P-value                                        0.000       0.000
+
+User model versus baseline model:
+
+  Comparative Fit Index (CFI)                    0.682       0.708
+  Tucker-Lewis Index (TLI)                       0.643       0.672
+
+  Robust Comparative Fit Index (CFI)                         0.698
+  Robust Tucker-Lewis Index (TLI)                            0.661
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)             -12787.650  -12787.650
+  Loglikelihood unrestricted model (H1)     -12256.337  -12256.337
+
+  Number of free parameters                         78          78
+  Akaike (AIC)                               25731.300   25731.300
+  Bayesian (BIC)                             26043.023   26043.023
+  Sample-size adjusted Bayesian (BIC)        25795.522   25795.522
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.091       0.079
+  90 Percent Confidence Interval          0.085  0.097       0.074  0.084
+  P-value RMSEA &lt;= 0.05                          0.000       0.000
+
+  Robust RMSEA                                               0.088
+  90 Percent Confidence Interval                             0.081  0.094
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.076       0.076</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -397,34 +432,34 @@ cfa(lv.model, data = mice.imp[[5]])
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5zcGVjdChmaXRzW1sxXV0sIFwiY292Lmx2XCIpXG5gYGAifQ== -->
 <pre class="r"><code>inspect(fits[[1]], &quot;cov.lv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgIEw5ICAgIEwxMCAgIEw3ICAgIEw0ICAgXG5MOSAgMC40MjAgICAgICAgICAgICAgICAgICBcbkwxMCAwLjIwOCAwLjExNyAgICAgICAgICAgIFxuTDcgIDAuMjc2IDAuMTk3IDAuMTkzICAgICAgXG5MNCAgMC4xNjIgMC4xMDkgMC4xNjYgMC4wNjFcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgIEw5ICAgIEwxMCAgIEw3ICAgIEw0ICAgXG5MOSAgMC4zOTAgICAgICAgICAgICAgICAgICBcbkwxMCAwLjE4MSAwLjA5NiAgICAgICAgICAgIFxuTDcgIDAuMjY0IDAuMTc5IDAuMjExICAgICAgXG5MNCAgMC4xMzUgMC4wNzYgMC4xMjQgMC4wNDVcbiJ9 -->
 <pre><code>    L9    L10   L7    L4   
-L9  0.420                  
-L10 0.208 0.117            
-L7  0.276 0.197 0.193      
-L4  0.162 0.109 0.166 0.061</code></pre>
+L9  0.390                  
+L10 0.181 0.096            
+L7  0.264 0.179 0.211      
+L4  0.135 0.076 0.124 0.045</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBub3QgZ29vZFxuZWlnZW4oaW5zcGVjdChmaXRzW1sxXV0sIFwiY292Lmx2XCIpKSR2YWx1ZXNcbmBgYCJ9 -->
 <pre class="r"><code># not good
 eigen(inspect(fits[[1]], &quot;cov.lv&quot;))$values</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAwLjgxOTY4OTYyICAwLjA1NjMyODkyIC0wLjAyMjE3NTQzIC0wLjA2MjU3NTE2XG4ifQ== -->
-<pre><code>[1]  0.81968962  0.05632892 -0.02217543 -0.06257516</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAwLjc0Mjg0NjcwICAwLjA0ODg3MDc3IC0wLjAxMDIwNjI1IC0wLjAzODkzNDg3XG4ifQ== -->
+<pre><code>[1]  0.74284670  0.04887077 -0.01020625 -0.03893487</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBub3RpY2UgaG93IGVzdGltYXRlZCBjb3JyZWxhdGlvbiBtYXRyaXggaGFzIHZhbHVlcyA+IDFcbmluc3BlY3QoZml0c1tbMV1dLCBcImNvci5sdlwiKVxuYGBgIn0= -->
 <pre class="r"><code># notice how estimated correlation matrix has values &gt; 1
 inspect(fits[[1]], &quot;cor.lv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgIEw5ICAgIEwxMCAgIEw3ICAgIEw0ICAgXG5MOSAgMS4wMDAgICAgICAgICAgICAgICAgICBcbkwxMCAwLjkzOCAxLjAwMCAgICAgICAgICAgIFxuTDcgIDAuOTcxIDEuMzExIDEuMDAwICAgICAgXG5MNCAgMS4wMDcgMS4yODggMS41MjggMS4wMDBcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgIEw5ICAgIEwxMCAgIEw3ICAgIEw0ICAgXG5MOSAgMS4wMDAgICAgICAgICAgICAgICAgICBcbkwxMCAwLjkzMyAxLjAwMCAgICAgICAgICAgIFxuTDcgIDAuOTE4IDEuMjU1IDEuMDAwICAgICAgXG5MNCAgMS4wMjYgMS4xNjIgMS4yNzYgMS4wMDBcbiJ9 -->
 <pre><code>    L9    L10   L7    L4   
 L9  1.000                  
-L10 0.938 1.000            
-L7  0.971 1.311 1.000      
-L4  1.007 1.288 1.528 1.000</code></pre>
+L10 0.933 1.000            
+L7  0.918 1.255 1.000      
+L4  1.026 1.162 1.276 1.000</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Assuming all the variable are actually continuous instead of ordered will allow <code>lavaan</code> to make predictions (Also: there is a paper I need to read that seems to suggest I <em>can</em> do this), but the problem of non positive definiteness remains, so I do not trust the predictions.</p>
+<p>The non positive definiteness is a problem, so I do not trust the predictions.</p>
 <p>I don’t know a whole lot about CFAs, or SEM, but from what I’m reading on the internet, it seems like the model isn’t correctly specified. I don’t know if that means that we need to specify the covariances between latents, or if there’s something off elsewhere.</p>
 </div>
 </div>
@@ -433,30 +468,25 @@ L4  1.007 1.288 1.528 1.000</code></pre>
 <p>After talking to Erich, he suggested to try fitting with <code>sem()</code> instead of <code>cfa()</code>, and try to fit each independently. ### Fitting SEM instead of a CFA</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZml0cyA8LSBjKFxuc2VtKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzFdXSksXG5zZW0obHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMl1dKSxcbnNlbShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s0XV0pLFxuc2VtKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzNdXSksXG5zZW0obHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbNV1dKVxuKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZml0cyA8LSBjKFxuc2VtKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzFdXSwgZXN0aW1hdG9yID0gXCJNTE1cIiksXG5zZW0obHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMl1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbnNlbShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s0XV0sIGVzdGltYXRvciA9IFwiTUxNXCIpLFxuc2VtKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzNdXSwgZXN0aW1hdG9yID0gXCJNTE1cIiksXG5zZW0obHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbNV1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKVxuKVxuYGBgIn0= -->
 <pre class="r"><code>fits &lt;- c(
-sem(lv.model, data = mice.imp[[1]]),
-sem(lv.model, data = mice.imp[[2]]),
-sem(lv.model, data = mice.imp[[4]]),
-sem(lv.model, data = mice.imp[[3]]),
-sem(lv.model, data = mice.imp[[5]])
+sem(lv.model, data = mice.imp[[1]], estimator = &quot;MLM&quot;),
+sem(lv.model, data = mice.imp[[2]], estimator = &quot;MLM&quot;),
+sem(lv.model, data = mice.imp[[4]], estimator = &quot;MLM&quot;),
+sem(lv.model, data = mice.imp[[3]], estimator = &quot;MLM&quot;),
+sem(lv.model, data = mice.imp[[5]], estimator = &quot;MLM&quot;)
 )</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDE4MyBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiAxODIgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5sYXZhYW4gV0FSTklORzogMTgxIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogY292YXJpYW5jZSBtYXRyaXggb2YgbGF0ZW50IHZhcmlhYmxlc1xuICAgICAgICAgICAgICAgIGlzIG5vdCBwb3NpdGl2ZSBkZWZpbml0ZTtcbiAgICAgICAgICAgICAgICB1c2UgaW5zcGVjdChmaXQsXCJjb3YubHZcIikgdG8gaW52ZXN0aWdhdGUubGF2YWFuIFdBUk5JTkc6IDE4MyBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiAxODIgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5cbiJ9 -->
-<pre><code>lavaan WARNING: 183 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5sYXZhYW4gV0FSTklORzogY292YXJpYW5jZSBtYXRyaXggb2YgbGF0ZW50IHZhcmlhYmxlc1xuICAgICAgICAgICAgICAgIGlzIG5vdCBwb3NpdGl2ZSBkZWZpbml0ZTtcbiAgICAgICAgICAgICAgICB1c2UgaW5zcGVjdChmaXQsXCJjb3YubHZcIikgdG8gaW52ZXN0aWdhdGUubGF2YWFuIFdBUk5JTkc6IGNvdmFyaWFuY2UgbWF0cml4IG9mIGxhdGVudCB2YXJpYWJsZXNcbiAgICAgICAgICAgICAgICBpcyBub3QgcG9zaXRpdmUgZGVmaW5pdGU7XG4gICAgICAgICAgICAgICAgdXNlIGluc3BlY3QoZml0LFwiY292Lmx2XCIpIHRvIGludmVzdGlnYXRlLmxhdmFhbiBXQVJOSU5HOiBjb3ZhcmlhbmNlIG1hdHJpeCBvZiBsYXRlbnQgdmFyaWFibGVzXG4gICAgICAgICAgICAgICAgaXMgbm90IHBvc2l0aXZlIGRlZmluaXRlO1xuICAgICAgICAgICAgICAgIHVzZSBpbnNwZWN0KGZpdCxcImNvdi5sdlwiKSB0byBpbnZlc3RpZ2F0ZS5cbiJ9 -->
+<pre><code>lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 182 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 181 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 183 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
-                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: 182 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: covariance matrix of latent variables
+                use inspect(fit,&quot;cov.lv&quot;) to investigate.lavaan WARNING: covariance matrix of latent variables
                 is not positive definite;
                 use inspect(fit,&quot;cov.lv&quot;) to investigate.</code></pre>
 <!-- rnb-output-end -->
@@ -467,7 +497,7 @@ sem(lv.model, data = mice.imp[[5]])
 <h3>Fitting each latent model separately.</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxzIDwtIGMoXG4nTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkInLFxuJ0wxMCA9fiBTUkYwMDQuQiArIFNSRjAxMC5CICsgU1JGMDMzLkIgKyBTUkYwMzUuQiArIFNSRjAwMi5CJyxcbidMNyA9fiBTUkYwMTguQiArIFNSRjAzMi5CICsgU1JGMDAxLkIgKyBTUkYwMzkuQiArIFNSRjA2NC5CICsgU1JGMDcxLkInLFxuJ0w0ID1+IFNSRjA2MS5CICsgU1JGMDIwLkIgKyBTUkYwMDMuQiArIFNSRjAzOC5CICsgU1JGMDcwLkIgKyBTUkYwNjUuQidcbilcbmZpdHMgPC0gYyhcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbMV1dKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbMl1dKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbNF1dKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbM11dKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbNV1dKVxuKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxzIDwtIGMoXG4nTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkInLFxuJ0wxMCA9fiBTUkYwMDQuQiArIFNSRjAxMC5CICsgU1JGMDMzLkIgKyBTUkYwMzUuQiArIFNSRjAwMi5CJyxcbidMNyA9fiBTUkYwMTguQiArIFNSRjAzMi5CICsgU1JGMDAxLkIgKyBTUkYwMzkuQiArIFNSRjA2NC5CICsgU1JGMDcxLkInLFxuJ0w0ID1+IFNSRjA2MS5CICsgU1JGMDIwLkIgKyBTUkYwMDMuQiArIFNSRjAzOC5CICsgU1JGMDcwLkIgKyBTUkYwNjUuQidcbilcbmZpdHMgPC0gYyhcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbMV1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbMl1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbNF1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbM11dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbNV1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKVxuKVxubGF0ZW50X2VzdGltYXRlIDwtIGMoKVxuZm9yICggZml0IGluIGZpdHMpIHtcbmxhdGVudF9lc3RpbWF0ZSA8LSBjYmluZChsYXRlbnRfZXN0aW1hdGUsIHByZWRpY3QoZml0KSlcbn1cbmBgYCJ9 -->
 <pre class="r"><code>models &lt;- c(
 'L9 =~ SRF026.B + SRF006.B + SRF022.B + SRF030.B + SRF072.B + SRF062.B + SRF063.B',
 'L10 =~ SRF004.B + SRF010.B + SRF033.B + SRF035.B + SRF002.B',
@@ -475,23 +505,13 @@ sem(lv.model, data = mice.imp[[5]])
 'L4 =~ SRF061.B + SRF020.B + SRF003.B + SRF038.B + SRF070.B + SRF065.B'
 )
 fits &lt;- c(
-cfa(models[1], data = mice.imp[[1]]),
-cfa(models[1], data = mice.imp[[2]]),
-cfa(models[1], data = mice.imp[[4]]),
-cfa(models[1], data = mice.imp[[3]]),
-cfa(models[1], data = mice.imp[[5]])
-)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDEyIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTEgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiAxMSBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDEyIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTAgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKVxuIn0= -->
-<pre><code>lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 11 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 11 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 10 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGF0ZW50X2VzdGltYXRlIDwtIGMoKVxuZm9yICggZml0IGluIGZpdHMpIHtcbmxhdGVudF9lc3RpbWF0ZSA8LSBjYmluZChsYXRlbnRfZXN0aW1hdGUsIHByZWRpY3QoZml0KSlcbn1cbmBgYCJ9 -->
-<pre class="r"><code>latent_estimate &lt;- c()
+cfa(models[1], data = mice.imp[[1]], estimator = &quot;MLM&quot;),
+cfa(models[1], data = mice.imp[[2]], estimator = &quot;MLM&quot;),
+cfa(models[1], data = mice.imp[[4]], estimator = &quot;MLM&quot;),
+cfa(models[1], data = mice.imp[[3]], estimator = &quot;MLM&quot;),
+cfa(models[1], data = mice.imp[[5]], estimator = &quot;MLM&quot;)
+)
+latent_estimate &lt;- c()
 for ( fit in fits) {
 latent_estimate &lt;- cbind(latent_estimate, predict(fit))
 }</code></pre>
@@ -505,13 +525,13 @@ latent_estimate &lt;- cbind(latent_estimate, predict(fit))
 <pre class="r"><code>colnames(latent_estimate) = paste(colnames(latent_estimate), &quot;_&quot; , seq(1:5) , sep = &quot;&quot;)
 cov(latent_estimate)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgIEw5XzEgICAgICBMOV8yICAgICAgTDlfMyAgICAgIEw5XzQgICAgICBMOV81XG5MOV8xIDAuMzMyMTk4MSAwLjMyOTA0OTUgMC4zMzA3NjU2IDAuMzMyMDczOCAwLjMzMDIxOTFcbkw5XzIgMC4zMjkwNDk1IDAuMzI2NDE1OCAwLjMyNzczODggMC4zMjg5NDk3IDAuMzI3MjY2NFxuTDlfMyAwLjMzMDc2NTYgMC4zMjc3Mzg4IDAuMzMwMjU1OSAwLjMzMDgwNDYgMC4zMjkwMzExXG5MOV80IDAuMzMyMDczOCAwLjMyODk0OTcgMC4zMzA4MDQ2IDAuMzMyMjg2NyAwLjMzMDEwMDJcbkw5XzUgMC4zMzAyMTkxIDAuMzI3MjY2NCAwLjMyOTAzMTEgMC4zMzAxMDAyIDAuMzI4NTQyNVxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgIEw5XzEgICAgICBMOV8yICAgICAgTDlfMyAgICAgIEw5XzQgICAgICBMOV81XG5MOV8xIDAuMjg3ODk5NCAwLjI4NzU2NzMgMC4yODc4MTc0IDAuMjg3MDEwNCAwLjI4NTU1Nzlcbkw5XzIgMC4yODc1NjczIDAuMjg4MDU2MSAwLjI4NzYxMzkgMC4yODY1OTcxIDAuMjg1Mzc5MVxuTDlfMyAwLjI4NzgxNzQgMC4yODc2MTM5IDAuMjg5MjYzNSAwLjI4NzIzMjIgMC4yODYwNDY3XG5MOV80IDAuMjg3MDEwNCAwLjI4NjU5NzEgMC4yODcyMzIyIDAuMjg2NjI0MSAwLjI4NDk2NjRcbkw5XzUgMC4yODU1NTc5IDAuMjg1Mzc5MSAwLjI4NjA0NjcgMC4yODQ5NjY0IDAuMjg0MzE1NlxuIn0= -->
 <pre><code>          L9_1      L9_2      L9_3      L9_4      L9_5
-L9_1 0.3321981 0.3290495 0.3307656 0.3320738 0.3302191
-L9_2 0.3290495 0.3264158 0.3277388 0.3289497 0.3272664
-L9_3 0.3307656 0.3277388 0.3302559 0.3308046 0.3290311
-L9_4 0.3320738 0.3289497 0.3308046 0.3322867 0.3301002
-L9_5 0.3302191 0.3272664 0.3290311 0.3301002 0.3285425</code></pre>
+L9_1 0.2878994 0.2875673 0.2878174 0.2870104 0.2855579
+L9_2 0.2875673 0.2880561 0.2876139 0.2865971 0.2853791
+L9_3 0.2878174 0.2876139 0.2892635 0.2872322 0.2860467
+L9_4 0.2870104 0.2865971 0.2872322 0.2866241 0.2849664
+L9_5 0.2855579 0.2853791 0.2860467 0.2849664 0.2843156</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -522,7 +542,7 @@ L9_5 0.3302191 0.3272664 0.3290311 0.3301002 0.3285425</code></pre>
 <p>This code fits 4 1-factor models (is this the correct way to say it?) and appends them to RAISE. It prints out the fit statistics (<a href="http://davidakenny.net/cm/fit.htm">an explanation of them can be found here</a>) on each model and the above covariance matrix for latent. <strong>BE SURE TO READ TILL THE END</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxzIDwtIGMoXG4nTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkInLFxuJ0wxMCA9fiBTUkYwMDQuQiArIFNSRjAxMC5CICsgU1JGMDMzLkIgKyBTUkYwMzUuQiArIFNSRjAwMi5CJyxcbidMNyA9fiBTUkYwMTguQiArIFNSRjAzMi5CICsgU1JGMDAxLkIgKyBTUkYwMzkuQiArIFNSRjA2NC5CICsgU1JGMDcxLkInLFxuJ0w0ID1+IFNSRjA2MS5CICsgU1JGMDIwLkIgKyBTUkYwMDMuQiArIFNSRjAzOC5CICsgU1JGMDcwLkIgKyBTUkYwNjUuQidcbilcbmZvciAobW9kZWwgaW4gbW9kZWxzKSB7XG4gICMgcGVyZm9ybSBjZmEgb24gZWFjaCBpbXB1dGVkIGRhdGFzZXQgZm9yIHRoZSBnaXZlbiBtb2RlbHNcbiAgZml0cyA8LSBjKFxuICBjZmEobW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMV1dKSxcbiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzJdXSksXG4gIGNmYShtb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s0XV0pLFxuICBjZmEobW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbM11dKSxcbiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzVdXSlcbiAgKVxuICAjIHByZWRpY3QgdmFsdWUgb2YgbGF0ZW50cyBmcm9tIGVhY2ggZml0XG4gIGxhdGVudF9lc3RpbWF0ZXMgPC0gYygpXG4gIGZvciAoZml0IGluIGZpdHMpIHtcbiAgbGF0ZW50X2VzdGltYXRlcyA8LSBjYmluZChsYXRlbnRfZXN0aW1hdGVzLCBwcmVkaWN0KGZpdCkpXG4gIH1cbiAgIyBoYWNrIHRvIGdldCBuYW1lIG9mIGxhdGVudFxudmFyX25hbWUgPC0gY29sbmFtZXMobGF0ZW50X2VzdGltYXRlcylbMV1cbmNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpIDwtIHBhc3RlKGNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpLCBcIl9cIiAsIHNlcSgxOjUpICwgc2VwID0gXCJcIilcbnN1bW1hcnkoZml0LCBmaXQubWVhc3VyZXMgPSBULCBlc3RpbWF0ZXMgPSBGKVxucHJpbnQoY292KGxhdGVudF9lc3RpbWF0ZXMpKVxuZXN0aW1hdGUgPC0gcm93TWVhbnMobGF0ZW50X2VzdGltYXRlcylcblJBSVNFW3Zhcl9uYW1lXSA8LSBlc3RpbWF0ZVxud3JpdGVfY3N2KFJBSVNFLCBcIlJBSVNFX0xBVC5jc3ZcIilcbn1cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxzIDwtIGMoXG4nTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkInLFxuJ0wxMCA9fiBTUkYwMDQuQiArIFNSRjAxMC5CICsgU1JGMDMzLkIgKyBTUkYwMzUuQiArIFNSRjAwMi5CJyxcbidMNyA9fiBTUkYwMTguQiArIFNSRjAzMi5CICsgU1JGMDAxLkIgKyBTUkYwMzkuQiArIFNSRjA2NC5CICsgU1JGMDcxLkInLFxuJ0w0ID1+IFNSRjA2MS5CICsgU1JGMDIwLkIgKyBTUkYwMDMuQiArIFNSRjAzOC5CICsgU1JGMDcwLkIgKyBTUkYwNjUuQidcbilcbmZvciAobW9kZWwgaW4gbW9kZWxzKSB7XG4gICMgcGVyZm9ybSBjZmEgb24gZWFjaCBpbXB1dGVkIGRhdGFzZXQgZm9yIHRoZSBnaXZlbiBtb2RlbHNcbiAgZml0cyA8LSBjKFxuICBjZmEobW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMV1dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzJdXSwgZXN0aW1hdG9yID0gXCJNTE1cIiksXG4gIGNmYShtb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s0XV0sIGVzdGltYXRvciA9IFwiTUxNXCIpLFxuICBjZmEobW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbM11dLCBlc3RpbWF0b3IgPSBcIk1MTVwiKSxcbiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzVdXSwgZXN0aW1hdG9yID0gXCJNTE1cIilcbiAgKVxuICAjIHByZWRpY3QgdmFsdWUgb2YgbGF0ZW50cyBmcm9tIGVhY2ggZml0XG4gIGxhdGVudF9lc3RpbWF0ZXMgPC0gYygpXG4gIGZvciAoZml0IGluIGZpdHMpIHtcbiAgbGF0ZW50X2VzdGltYXRlcyA8LSBjYmluZChsYXRlbnRfZXN0aW1hdGVzLCBwcmVkaWN0KGZpdCkpXG4gIH1cbiAgIyBoYWNrIHRvIGdldCBuYW1lIG9mIGxhdGVudFxudmFyX25hbWUgPC0gY29sbmFtZXMobGF0ZW50X2VzdGltYXRlcylbMV1cbmNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpIDwtIHBhc3RlKGNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpLCBcIl9cIiAsIHNlcSgxOjUpICwgc2VwID0gXCJcIilcbnN1bW1hcnkoZml0LCBmaXQubWVhc3VyZXMgPSBULCBlc3RpbWF0ZXMgPSBGKVxucHJpbnQoY292KGxhdGVudF9lc3RpbWF0ZXMpKVxuZXN0aW1hdGUgPC0gcm93TWVhbnMobGF0ZW50X2VzdGltYXRlcylcblJBSVNFW3Zhcl9uYW1lXSA8LSBlc3RpbWF0ZVxud3JpdGVfY3N2KFJBSVNFLCBcIlJBSVNFX0xBVC5jc3ZcIilcbn1cbmBgYCJ9 -->
 <pre class="r"><code>models &lt;- c(
 'L9 =~ SRF026.B + SRF006.B + SRF022.B + SRF030.B + SRF072.B + SRF062.B + SRF063.B',
 'L10 =~ SRF004.B + SRF010.B + SRF033.B + SRF035.B + SRF002.B',
@@ -532,11 +552,11 @@ L9_5 0.3302191 0.3272664 0.3290311 0.3301002 0.3285425</code></pre>
 for (model in models) {
   # perform cfa on each imputed dataset for the given models
   fits &lt;- c(
-  cfa(model, data = mice.imp[[1]]),
-  cfa(model, data = mice.imp[[2]]),
-  cfa(model, data = mice.imp[[4]]),
-  cfa(model, data = mice.imp[[3]]),
-  cfa(model, data = mice.imp[[5]])
+  cfa(model, data = mice.imp[[1]], estimator = &quot;MLM&quot;),
+  cfa(model, data = mice.imp[[2]], estimator = &quot;MLM&quot;),
+  cfa(model, data = mice.imp[[4]], estimator = &quot;MLM&quot;),
+  cfa(model, data = mice.imp[[3]], estimator = &quot;MLM&quot;),
+  cfa(model, data = mice.imp[[5]], estimator = &quot;MLM&quot;)
   )
   # predict value of latents from each fit
   latent_estimates &lt;- c()
@@ -553,237 +573,219 @@ RAISE[var_name] &lt;- estimate
 write_csv(RAISE, &quot;RAISE_LAT.csv&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDEyIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTEgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiAxMSBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDEyIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTAgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKVxuIn0= -->
-<pre><code>lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 11 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 11 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 10 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuICgwLjUtMjMuMTA5NykgY29udmVyZ2VkIG5vcm1hbGx5IGFmdGVyICAxNSBpdGVyYXRpb25zXG5cbiAgTnVtYmVyIG9mIG9ic2VydmF0aW9ucyAgICAgICAgICAgICAgICAgICAgICAgICAgIDQwMlxuXG4gIEVzdGltYXRvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIERXTFMgICAgICBSb2J1c3RcbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAgIDE3Ljg3NiAgICAgIDMxLjIxNVxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDE0ICAgICAgICAgIDE0XG4gIFAtdmFsdWUgKENoaS1zcXVhcmUpICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4yMTIgICAgICAgMC4wMDVcbiAgU2NhbGluZyBjb3JyZWN0aW9uIGZhY3RvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjU5MlxuICBTaGlmdCBwYXJhbWV0ZXIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEuMDA3XG4gICAgZm9yIHNpbXBsZSBzZWNvbmQtb3JkZXIgY29ycmVjdGlvbiAoTXBsdXMgdmFyaWFudClcblxuTW9kZWwgdGVzdCBiYXNlbGluZSBtb2RlbDpcblxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgIDEwOTAuOTU5ICAgICA3NjQuNjQyXG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMjEgICAgICAgICAgMjFcbiAgUC12YWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgICAwLjAwMFxuXG5Vc2VyIG1vZGVsIHZlcnN1cyBiYXNlbGluZSBtb2RlbDpcblxuICBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgIDAuOTk2ICAgICAgIDAuOTc3XG4gIFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgMC45OTUgICAgICAgMC45NjVcblxuICBSb2J1c3QgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5BXG4gIFJvYnVzdCBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcblxuUm9vdCBNZWFuIFNxdWFyZSBFcnJvciBvZiBBcHByb3hpbWF0aW9uOlxuXG4gIFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMjYgICAgICAgMC4wNTVcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgIDAuMDAwICAwLjA1OCAgICAgICAwLjAyOSAgMC4wODJcbiAgUC12YWx1ZSBSTVNFQSA8PSAwLjA1ICAgICAgICAgICAgICAgICAgICAgICAgICAwLjg3NSAgICAgICAwLjMzM1xuXG4gIFJvYnVzdCBSTVNFQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBOQSAgICAgTkFcblxuU3RhbmRhcmRpemVkIFJvb3QgTWVhbiBTcXVhcmUgUmVzaWR1YWw6XG5cbiAgU1JNUiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAzNiAgICAgICAwLjAzNlxuXG5XZWlnaHRlZCBSb290IE1lYW4gU3F1YXJlIFJlc2lkdWFsOlxuXG4gIFdSTVIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC41NTUgICAgICAgMC41NTVcbiAgICAgICAgICBMOV8xICAgICAgTDlfMiAgICAgIEw5XzMgICAgICBMOV80ICAgICAgTDlfNVxuTDlfMSAwLjMzMjE5ODEgMC4zMjkwNDk1IDAuMzMwNzY1NiAwLjMzMjA3MzggMC4zMzAyMTkxXG5MOV8yIDAuMzI5MDQ5NSAwLjMyNjQxNTggMC4zMjc3Mzg4IDAuMzI4OTQ5NyAwLjMyNzI2NjRcbkw5XzMgMC4zMzA3NjU2IDAuMzI3NzM4OCAwLjMzMDI1NTkgMC4zMzA4MDQ2IDAuMzI5MDMxMVxuTDlfNCAwLjMzMjA3MzggMC4zMjg5NDk3IDAuMzMwODA0NiAwLjMzMjI4NjcgMC4zMzAxMDAyXG5MOV81IDAuMzMwMjE5MSAwLjMyNzI2NjQgMC4zMjkwMzExIDAuMzMwMTAwMiAwLjMyODU0MjVcbiJ9 -->
-<pre><code>lavaan (0.5-23.1097) converged normally after  15 iterations
+<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuICgwLjUtMjMuMTA5NykgY29udmVyZ2VkIG5vcm1hbGx5IGFmdGVyICAyMyBpdGVyYXRpb25zXG5cbiAgTnVtYmVyIG9mIG9ic2VydmF0aW9ucyAgICAgICAgICAgICAgICAgICAgICAgICAgIDQwMlxuXG4gIEVzdGltYXRvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTUwgICAgICBSb2J1c3RcbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAgIDIyLjYxOSAgICAgIDE5LjI4MVxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDE0ICAgICAgICAgIDE0XG4gIFAtdmFsdWUgKENoaS1zcXVhcmUpICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNjcgICAgICAgMC4xNTRcbiAgU2NhbGluZyBjb3JyZWN0aW9uIGZhY3RvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxLjE3M1xuICAgIGZvciB0aGUgU2F0b3JyYS1CZW50bGVyIGNvcnJlY3Rpb25cblxuTW9kZWwgdGVzdCBiYXNlbGluZSBtb2RlbDpcblxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgICA0MzcuMDY0ICAgICAzOTAuMTUzXG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMjEgICAgICAgICAgMjFcbiAgUC12YWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgICAwLjAwMFxuXG5Vc2VyIG1vZGVsIHZlcnN1cyBiYXNlbGluZSBtb2RlbDpcblxuICBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgIDAuOTc5ICAgICAgIDAuOTg2XG4gIFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgMC45NjkgICAgICAgMC45NzlcblxuICBSb2J1c3QgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAgICAgIDAuOTg1XG4gIFJvYnVzdCBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC45NzhcblxuTG9nbGlrZWxpaG9vZCBhbmQgSW5mb3JtYXRpb24gQ3JpdGVyaWE6XG5cbiAgTG9nbGlrZWxpaG9vZCB1c2VyIG1vZGVsIChIMCkgICAgICAgICAgICAgIC0zNzgyLjE2NiAgIC0zNzgyLjE2NlxuICBMb2dsaWtlbGlob29kIHVucmVzdHJpY3RlZCBtb2RlbCAoSDEpICAgICAgLTM3NzAuODU3ICAgLTM3NzAuODU3XG5cbiAgTnVtYmVyIG9mIGZyZWUgcGFyYW1ldGVycyAgICAgICAgICAgICAgICAgICAgICAgICAyMSAgICAgICAgICAyMVxuICBBa2Fpa2UgKEFJQykgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDc2MDYuMzMzICAgIDc2MDYuMzMzXG4gIEJheWVzaWFuIChCSUMpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgNzY5MC4yNTggICAgNzY5MC4yNThcbiAgU2FtcGxlLXNpemUgYWRqdXN0ZWQgQmF5ZXNpYW4gKEJJQykgICAgICAgICA3NjIzLjYyNCAgICA3NjIzLjYyNFxuXG5Sb290IE1lYW4gU3F1YXJlIEVycm9yIG9mIEFwcHJveGltYXRpb246XG5cbiAgUk1TRUEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAzOSAgICAgICAwLjAzMVxuICA5MCBQZXJjZW50IENvbmZpZGVuY2UgSW50ZXJ2YWwgICAgICAgICAgMC4wMDAgIDAuMDY4ICAgICAgIDAuMDAwICAwLjA1OVxuICBQLXZhbHVlIFJNU0VBIDw9IDAuMDUgICAgICAgICAgICAgICAgICAgICAgICAgIDAuNzAyICAgICAgIDAuODU1XG5cbiAgUm9idXN0IFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAzM1xuICA5MCBQZXJjZW50IENvbmZpZGVuY2UgSW50ZXJ2YWwgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDAwICAwLjA2NlxuXG5TdGFuZGFyZGl6ZWQgUm9vdCBNZWFuIFNxdWFyZSBSZXNpZHVhbDpcblxuICBTUk1SICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDMwICAgICAgIDAuMDMwXG4gICAgICAgICAgTDlfMSAgICAgIEw5XzIgICAgICBMOV8zICAgICAgTDlfNCAgICAgIEw5XzVcbkw5XzEgMC4yODc4OTk0IDAuMjg3NTY3MyAwLjI4NzgxNzQgMC4yODcwMTA0IDAuMjg1NTU3OVxuTDlfMiAwLjI4NzU2NzMgMC4yODgwNTYxIDAuMjg3NjEzOSAwLjI4NjU5NzEgMC4yODUzNzkxXG5MOV8zIDAuMjg3ODE3NCAwLjI4NzYxMzkgMC4yODkyNjM1IDAuMjg3MjMyMiAwLjI4NjA0Njdcbkw5XzQgMC4yODcwMTA0IDAuMjg2NTk3MSAwLjI4NzIzMjIgMC4yODY2MjQxIDAuMjg0OTY2NFxuTDlfNSAwLjI4NTU1NzkgMC4yODUzNzkxIDAuMjg2MDQ2NyAwLjI4NDk2NjQgMC4yODQzMTU2XG5sYXZhYW4gKDAuNS0yMy4xMDk3KSBjb252ZXJnZWQgbm9ybWFsbHkgYWZ0ZXIgIDI4IGl0ZXJhdGlvbnNcblxuICBOdW1iZXIgb2Ygb2JzZXJ2YXRpb25zICAgICAgICAgICAgICAgICAgICAgICAgICAgNDAyXG5cbiAgRXN0aW1hdG9yICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBNTCAgICAgIFJvYnVzdFxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgICAgIDIuNzg0ICAgICAgIDIuMjkyXG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDUgICAgICAgICAgIDVcbiAgUC12YWx1ZSAoQ2hpLXNxdWFyZSkgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjczMyAgICAgICAwLjgwN1xuICBTY2FsaW5nIGNvcnJlY3Rpb24gZmFjdG9yICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEuMjE0XG4gICAgZm9yIHRoZSBTYXRvcnJhLUJlbnRsZXIgY29ycmVjdGlvblxuXG5Nb2RlbCB0ZXN0IGJhc2VsaW5lIG1vZGVsOlxuXG4gIE1pbmltdW0gRnVuY3Rpb24gVGVzdCBTdGF0aXN0aWMgICAgICAgICAgICAgIDE4MS4wNzcgICAgIDE1MS4wNzRcbiAgRGVncmVlcyBvZiBmcmVlZG9tICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxMCAgICAgICAgICAxMFxuICBQLXZhbHVlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDAwICAgICAgIDAuMDAwXG5cblVzZXIgbW9kZWwgdmVyc3VzIGJhc2VsaW5lIG1vZGVsOlxuXG4gIENvbXBhcmF0aXZlIEZpdCBJbmRleCAoQ0ZJKSAgICAgICAgICAgICAgICAgICAgMS4wMDAgICAgICAgMS4wMDBcbiAgVHVja2VyLUxld2lzIEluZGV4IChUTEkpICAgICAgICAgICAgICAgICAgICAgICAxLjAyNiAgICAgICAxLjAzOFxuXG4gIFJvYnVzdCBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgICAgICAgMS4wMDBcbiAgUm9idXN0IFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAxLjAzOVxuXG5Mb2dsaWtlbGlob29kIGFuZCBJbmZvcm1hdGlvbiBDcml0ZXJpYTpcblxuICBMb2dsaWtlbGlob29kIHVzZXIgbW9kZWwgKEgwKSAgICAgICAgICAgICAgLTI3NjAuNDE3ICAgLTI3NjAuNDE3XG4gIExvZ2xpa2VsaWhvb2QgdW5yZXN0cmljdGVkIG1vZGVsIChIMSkgICAgICAtMjc1OS4wMjUgICAtMjc1OS4wMjVcblxuICBOdW1iZXIgb2YgZnJlZSBwYXJhbWV0ZXJzICAgICAgICAgICAgICAgICAgICAgICAgIDE1ICAgICAgICAgIDE1XG4gIEFrYWlrZSAoQUlDKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgNTU1MC44MzMgICAgNTU1MC44MzNcbiAgQmF5ZXNpYW4gKEJJQykgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA1NjEwLjc4MCAgICA1NjEwLjc4MFxuICBTYW1wbGUtc2l6ZSBhZGp1c3RlZCBCYXllc2lhbiAoQklDKSAgICAgICAgIDU1NjMuMTg0ICAgIDU1NjMuMTg0XG5cblJvb3QgTWVhbiBTcXVhcmUgRXJyb3Igb2YgQXBwcm94aW1hdGlvbjpcblxuICBSTVNFQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDAwICAgICAgIDAuMDAwXG4gIDkwIFBlcmNlbnQgQ29uZmlkZW5jZSBJbnRlcnZhbCAgICAgICAgICAwLjAwMCAgMC4wNTAgICAgICAgMC4wMDAgIDAuMDM3XG4gIFAtdmFsdWUgUk1TRUEgPD0gMC4wNSAgICAgICAgICAgICAgICAgICAgICAgICAgMC45NTAgICAgICAgMC45ODJcblxuICBSb2J1c3QgUk1TRUEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDAwXG4gIDkwIFBlcmNlbnQgQ29uZmlkZW5jZSBJbnRlcnZhbCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMDAgIDAuMDQ4XG5cblN0YW5kYXJkaXplZCBSb290IE1lYW4gU3F1YXJlIFJlc2lkdWFsOlxuXG4gIFNSTVIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMTQgICAgICAgMC4wMTRcbiAgICAgICAgICAgTDEwXzEgICAgICBMMTBfMiAgICAgIEwxMF8zICAgICAgTDEwXzQgICAgICBMMTBfNVxuTDEwXzEgMC4wNzkzNDY3MCAwLjA4MjAxNDQxIDAuMDgxNzEyODYgMC4wODA2ODk0MiAwLjA4MjA1OTU1XG5MMTBfMiAwLjA4MjAxNDQxIDAuMDg1MTc0OTggMC4wODQ3MzY4OCAwLjA4MzQ0NTE5IDAuMDg0ODczNjNcbkwxMF8zIDAuMDgxNzEyODYgMC4wODQ3MzY4OCAwLjA4NDU5MDUwIDAuMDgzMTEyNTkgMC4wODQ1MzI5OVxuTDEwXzQgMC4wODA2ODk0MiAwLjA4MzQ0NTE5IDAuMDgzMTEyNTkgMC4wODIyNjU4MiAwLjA4MzIyODkxXG5MMTBfNSAwLjA4MjA1OTU1IDAuMDg0ODczNjMgMC4wODQ1MzI5OSAwLjA4MzIyODkxIDAuMDg1MjM2NDlcbmxhdmFhbiAoMC41LTIzLjEwOTcpIGNvbnZlcmdlZCBub3JtYWxseSBhZnRlciAgMzUgaXRlcmF0aW9uc1xuXG4gIE51bWJlciBvZiBvYnNlcnZhdGlvbnMgICAgICAgICAgICAgICAgICAgICAgICAgICA0MDJcblxuICBFc3RpbWF0b3IgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE1MICAgICAgUm9idXN0XG4gIE1pbmltdW0gRnVuY3Rpb24gVGVzdCBTdGF0aXN0aWMgICAgICAgICAgICAgICAgNS45ODEgICAgICAgNC44OTRcbiAgRGVncmVlcyBvZiBmcmVlZG9tICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOSAgICAgICAgICAgOVxuICBQLXZhbHVlIChDaGktc3F1YXJlKSAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuNzQyICAgICAgIDAuODQzXG4gIFNjYWxpbmcgY29ycmVjdGlvbiBmYWN0b3IgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMS4yMjJcbiAgICBmb3IgdGhlIFNhdG9ycmEtQmVudGxlciBjb3JyZWN0aW9uXG5cbk1vZGVsIHRlc3QgYmFzZWxpbmUgbW9kZWw6XG5cbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAgMTA3LjQ4MyAgICAgIDkyLjY1MlxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDE1ICAgICAgICAgIDE1XG4gIFAtdmFsdWUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMDAgICAgICAgMC4wMDBcblxuVXNlciBtb2RlbCB2ZXJzdXMgYmFzZWxpbmUgbW9kZWw6XG5cbiAgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAxLjAwMCAgICAgICAxLjAwMFxuICBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgIDEuMDU0ICAgICAgIDEuMDg4XG5cbiAgUm9idXN0IENvbXBhcmF0aXZlIEZpdCBJbmRleCAoQ0ZJKSAgICAgICAgICAgICAgICAgICAgICAgICAxLjAwMFxuICBSb2J1c3QgVHVja2VyLUxld2lzIEluZGV4IChUTEkpICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEuMDkzXG5cbkxvZ2xpa2VsaWhvb2QgYW5kIEluZm9ybWF0aW9uIENyaXRlcmlhOlxuXG4gIExvZ2xpa2VsaWhvb2QgdXNlciBtb2RlbCAoSDApICAgICAgICAgICAgICAtMzM2OC43MjUgICAtMzM2OC43MjVcbiAgTG9nbGlrZWxpaG9vZCB1bnJlc3RyaWN0ZWQgbW9kZWwgKEgxKSAgICAgIC0zMzY1LjczNSAgIC0zMzY1LjczNVxuXG4gIE51bWJlciBvZiBmcmVlIHBhcmFtZXRlcnMgICAgICAgICAgICAgICAgICAgICAgICAgMTggICAgICAgICAgMThcbiAgQWthaWtlIChBSUMpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA2NzczLjQ1MCAgICA2NzczLjQ1MFxuICBCYXllc2lhbiAoQklDKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDY4NDUuMzg2ICAgIDY4NDUuMzg2XG4gIFNhbXBsZS1zaXplIGFkanVzdGVkIEJheWVzaWFuIChCSUMpICAgICAgICAgNjc4OC4yNzEgICAgNjc4OC4yNzFcblxuUm9vdCBNZWFuIFNxdWFyZSBFcnJvciBvZiBBcHByb3hpbWF0aW9uOlxuXG4gIFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMDAgICAgICAgMC4wMDBcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgIDAuMDAwICAwLjA0MSAgICAgICAwLjAwMCAgMC4wMjdcbiAgUC12YWx1ZSBSTVNFQSA8PSAwLjA1ICAgICAgICAgICAgICAgICAgICAgICAgICAwLjk4MCAgICAgICAwLjk5NlxuXG4gIFJvYnVzdCBSTVNFQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMDBcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgMC4wMzZcblxuU3RhbmRhcmRpemVkIFJvb3QgTWVhbiBTcXVhcmUgUmVzaWR1YWw6XG5cbiAgU1JNUiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAyMCAgICAgICAwLjAyMFxuICAgICAgICAgICBMN18xICAgICAgIEw3XzIgICAgICAgTDdfMyAgICAgICBMN180ICAgICAgIEw3XzVcbkw3XzEgMC4wNzkxNDM0NyAwLjA4MTgxODcwIDAuMDgwMDgxODEgMC4wODA1MzE5MyAwLjA4MTk1MjEwXG5MN18yIDAuMDgxODE4NzAgMC4wODUxODY2NSAwLjA4Mjk5NDY3IDAuMDgzNjUwNTEgMC4wODQ5NjQ5NlxuTDdfMyAwLjA4MDA4MTgxIDAuMDgyOTk0NjcgMC4wODE1MTc4NCAwLjA4MTU4NDE2IDAuMDgzMTI4NTJcbkw3XzQgMC4wODA1MzE5MyAwLjA4MzY1MDUxIDAuMDgxNTg0MTYgMC4wODI2NzYxOSAwLjA4Mzc1NDU4XG5MN181IDAuMDgxOTUyMTAgMC4wODQ5NjQ5NiAwLjA4MzEyODUyIDAuMDgzNzU0NTggMC4wODUyODI5MVxubGF2YWFuICgwLjUtMjMuMTA5NykgY29udmVyZ2VkIG5vcm1hbGx5IGFmdGVyICA0NiBpdGVyYXRpb25zXG5cbiAgTnVtYmVyIG9mIG9ic2VydmF0aW9ucyAgICAgICAgICAgICAgICAgICAgICAgICAgIDQwMlxuXG4gIEVzdGltYXRvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTUwgICAgICBSb2J1c3RcbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAgIDE3LjQ1NCAgICAgIDE1LjAwNlxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA5ICAgICAgICAgICA5XG4gIFAtdmFsdWUgKENoaS1zcXVhcmUpICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNDIgICAgICAgMC4wOTFcbiAgU2NhbGluZyBjb3JyZWN0aW9uIGZhY3RvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxLjE2M1xuICAgIGZvciB0aGUgU2F0b3JyYS1CZW50bGVyIGNvcnJlY3Rpb25cblxuTW9kZWwgdGVzdCBiYXNlbGluZSBtb2RlbDpcblxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgICAxNTcuMDYzICAgICAxMzQuMDMyXG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTUgICAgICAgICAgMTVcbiAgUC12YWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgICAwLjAwMFxuXG5Vc2VyIG1vZGVsIHZlcnN1cyBiYXNlbGluZSBtb2RlbDpcblxuICBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgIDAuOTQwICAgICAgIDAuOTUwXG4gIFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgMC45MDEgICAgICAgMC45MTZcblxuICBSb2J1c3QgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAgICAgIDAuOTUwXG4gIFJvYnVzdCBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC45MTdcblxuTG9nbGlrZWxpaG9vZCBhbmQgSW5mb3JtYXRpb24gQ3JpdGVyaWE6XG5cbiAgTG9nbGlrZWxpaG9vZCB1c2VyIG1vZGVsIChIMCkgICAgICAgICAgICAgIC0zMzQ5LjY3MSAgIC0zMzQ5LjY3MVxuICBMb2dsaWtlbGlob29kIHVucmVzdHJpY3RlZCBtb2RlbCAoSDEpICAgICAgLTMzNDAuOTQ0ICAgLTMzNDAuOTQ0XG5cbiAgTnVtYmVyIG9mIGZyZWUgcGFyYW1ldGVycyAgICAgICAgICAgICAgICAgICAgICAgICAxOCAgICAgICAgICAxOFxuICBBa2Fpa2UgKEFJQykgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDY3MzUuMzQzICAgIDY3MzUuMzQzXG4gIEJheWVzaWFuIChCSUMpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgNjgwNy4yNzkgICAgNjgwNy4yNzlcbiAgU2FtcGxlLXNpemUgYWRqdXN0ZWQgQmF5ZXNpYW4gKEJJQykgICAgICAgICA2NzUwLjE2MyAgICA2NzUwLjE2M1xuXG5Sb290IE1lYW4gU3F1YXJlIEVycm9yIG9mIEFwcHJveGltYXRpb246XG5cbiAgUk1TRUEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA0OCAgICAgICAwLjA0MVxuICA5MCBQZXJjZW50IENvbmZpZGVuY2UgSW50ZXJ2YWwgICAgICAgICAgMC4wMDkgIDAuMDgyICAgICAgIDAuMDAwICAwLjA3M1xuICBQLXZhbHVlIFJNU0VBIDw9IDAuMDUgICAgICAgICAgICAgICAgICAgICAgICAgIDAuNDgzICAgICAgIDAuNjM4XG5cbiAgUm9idXN0IFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA0NFxuICA5MCBQZXJjZW50IENvbmZpZGVuY2UgSW50ZXJ2YWwgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDAwICAwLjA4MlxuXG5TdGFuZGFyZGl6ZWQgUm9vdCBNZWFuIFNxdWFyZSBSZXNpZHVhbDpcblxuICBTUk1SICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDM1ICAgICAgIDAuMDM1XG4gICAgICAgICAgIEw0XzEgICAgICAgTDRfMiAgICAgICBMNF8zICAgICAgIEw0XzQgICAgICAgTDRfNVxuTDRfMSAwLjAyMDgxNzk3IDAuMDIwNTAyMjggMC4wMTk4NjA1MiAwLjAxODU2MjkyIDAuMDIwMTc3OTdcbkw0XzIgMC4wMjA1MDIyOCAwLjAyMDI5ODI5IDAuMDE5NTk3NzkgMC4wMTgyOTY4MSAwLjAxOTkwMzkyXG5MNF8zIDAuMDE5ODYwNTIgMC4wMTk1OTc3OSAwLjAxOTAyOTYzIDAuMDE3NzQ1ODMgMC4wMTkzMDQ4NFxuTDRfNCAwLjAxODU2MjkyIDAuMDE4Mjk2ODEgMC4wMTc3NDU4MyAwLjAxNjYxOTM1IDAuMDE4MDE5NTlcbkw0XzUgMC4wMjAxNzc5NyAwLjAxOTkwMzkyIDAuMDE5MzA0ODQgMC4wMTgwMTk1OSAwLjAxOTY2OTA0XG4ifQ== -->
+<pre><code>lavaan (0.5-23.1097) converged normally after  23 iterations
 
   Number of observations                           402
 
-  Estimator                                       DWLS      Robust
-  Minimum Function Test Statistic               17.876      31.215
+  Estimator                                         ML      Robust
+  Minimum Function Test Statistic               22.619      19.281
   Degrees of freedom                                14          14
-  P-value (Chi-square)                           0.212       0.005
-  Scaling correction factor                                  0.592
-  Shift parameter                                            1.007
-    for simple second-order correction (Mplus variant)
+  P-value (Chi-square)                           0.067       0.154
+  Scaling correction factor                                  1.173
+    for the Satorra-Bentler correction
 
 Model test baseline model:
 
-  Minimum Function Test Statistic             1090.959     764.642
+  Minimum Function Test Statistic              437.064     390.153
   Degrees of freedom                                21          21
   P-value                                        0.000       0.000
 
 User model versus baseline model:
 
-  Comparative Fit Index (CFI)                    0.996       0.977
-  Tucker-Lewis Index (TLI)                       0.995       0.965
+  Comparative Fit Index (CFI)                    0.979       0.986
+  Tucker-Lewis Index (TLI)                       0.969       0.979
 
-  Robust Comparative Fit Index (CFI)                            NA
-  Robust Tucker-Lewis Index (TLI)                               NA
+  Robust Comparative Fit Index (CFI)                         0.985
+  Robust Tucker-Lewis Index (TLI)                            0.978
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3782.166   -3782.166
+  Loglikelihood unrestricted model (H1)      -3770.857   -3770.857
+
+  Number of free parameters                         21          21
+  Akaike (AIC)                                7606.333    7606.333
+  Bayesian (BIC)                              7690.258    7690.258
+  Sample-size adjusted Bayesian (BIC)         7623.624    7623.624
 
 Root Mean Square Error of Approximation:
 
-  RMSEA                                          0.026       0.055
-  90 Percent Confidence Interval          0.000  0.058       0.029  0.082
-  P-value RMSEA &lt;= 0.05                          0.875       0.333
+  RMSEA                                          0.039       0.031
+  90 Percent Confidence Interval          0.000  0.068       0.000  0.059
+  P-value RMSEA &lt;= 0.05                          0.702       0.855
 
-  Robust RMSEA                                                  NA
-  90 Percent Confidence Interval                                NA     NA
+  Robust RMSEA                                               0.033
+  90 Percent Confidence Interval                             0.000  0.066
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.036       0.036
-
-Weighted Root Mean Square Residual:
-
-  WRMR                                           0.555       0.555
+  SRMR                                           0.030       0.030
           L9_1      L9_2      L9_3      L9_4      L9_5
-L9_1 0.3321981 0.3290495 0.3307656 0.3320738 0.3302191
-L9_2 0.3290495 0.3264158 0.3277388 0.3289497 0.3272664
-L9_3 0.3307656 0.3277388 0.3302559 0.3308046 0.3290311
-L9_4 0.3320738 0.3289497 0.3308046 0.3322867 0.3301002
-L9_5 0.3302191 0.3272664 0.3290311 0.3301002 0.3285425</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDYgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiA2IGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogNiBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDYgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiA2IGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilcbiJ9 -->
-<pre><code>lavaan WARNING: 6 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 6 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 6 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 6 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 6 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuICgwLjUtMjMuMTA5NykgY29udmVyZ2VkIG5vcm1hbGx5IGFmdGVyICAyMCBpdGVyYXRpb25zXG5cbiAgTnVtYmVyIG9mIG9ic2VydmF0aW9ucyAgICAgICAgICAgICAgICAgICAgICAgICAgIDQwMlxuXG4gIEVzdGltYXRvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIERXTFMgICAgICBSb2J1c3RcbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAgICAyLjE1NCAgICAgICAzLjYwMVxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA1ICAgICAgICAgICA1XG4gIFAtdmFsdWUgKENoaS1zcXVhcmUpICAgICAgICAgICAgICAgICAgICAgICAgICAgMC44MjcgICAgICAgMC42MDhcbiAgU2NhbGluZyBjb3JyZWN0aW9uIGZhY3RvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjYyNVxuICBTaGlmdCBwYXJhbWV0ZXIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMTU0XG4gICAgZm9yIHNpbXBsZSBzZWNvbmQtb3JkZXIgY29ycmVjdGlvbiAoTXBsdXMgdmFyaWFudClcblxuTW9kZWwgdGVzdCBiYXNlbGluZSBtb2RlbDpcblxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgICA0MzYuNzQ2ICAgICAzNTEuOTkxXG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTAgICAgICAgICAgMTBcbiAgUC12YWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgICAwLjAwMFxuXG5Vc2VyIG1vZGVsIHZlcnN1cyBiYXNlbGluZSBtb2RlbDpcblxuICBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgIDEuMDAwICAgICAgIDEuMDAwXG4gIFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgMS4wMTMgICAgICAgMS4wMDhcblxuICBSb2J1c3QgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5BXG4gIFJvYnVzdCBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcblxuUm9vdCBNZWFuIFNxdWFyZSBFcnJvciBvZiBBcHByb3hpbWF0aW9uOlxuXG4gIFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMDAgICAgICAgMC4wMDBcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgIDAuMDAwICAwLjA0MSAgICAgICAwLjAwMCAgMC4wNThcbiAgUC12YWx1ZSBSTVNFQSA8PSAwLjA1ICAgICAgICAgICAgICAgICAgICAgICAgICAwLjk3MiAgICAgICAwLjkxMVxuXG4gIFJvYnVzdCBSTVNFQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgTkFcblxuU3RhbmRhcmRpemVkIFJvb3QgTWVhbiBTcXVhcmUgUmVzaWR1YWw6XG5cbiAgU1JNUiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAxNyAgICAgICAwLjAxN1xuXG5XZWlnaHRlZCBSb290IE1lYW4gU3F1YXJlIFJlc2lkdWFsOlxuXG4gIFdSTVIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4yNDEgICAgICAgMC4yNDFcbiAgICAgICAgICBMMTBfMSAgICAgTDEwXzIgICAgIEwxMF8zICAgICBMMTBfNCAgICAgTDEwXzVcbkwxMF8xIDAuMTAwODAwNSAwLjEwMDczMzEgMC4xMDIyODQwIDAuMTAwODg4NSAwLjEwMDkyNDhcbkwxMF8yIDAuMTAwNzMzMSAwLjEwMDcxODIgMC4xMDIyMTQ0IDAuMTAwODczMyAwLjEwMDg1NzdcbkwxMF8zIDAuMTAyMjg0MCAwLjEwMjIxNDQgMC4xMDQwNzM4IDAuMTAyNDA5NyAwLjEwMjQzNDZcbkwxMF80IDAuMTAwODg4NSAwLjEwMDg3MzMgMC4xMDI0MDk3IDAuMTAxMDM5OSAwLjEwMTAxNjVcbkwxMF81IDAuMTAwOTI0OCAwLjEwMDg1NzcgMC4xMDI0MzQ2IDAuMTAxMDE2NSAwLjEwMTA1MjBcbiJ9 -->
-<pre><code>lavaan (0.5-23.1097) converged normally after  20 iterations
+L9_1 0.2878994 0.2875673 0.2878174 0.2870104 0.2855579
+L9_2 0.2875673 0.2880561 0.2876139 0.2865971 0.2853791
+L9_3 0.2878174 0.2876139 0.2892635 0.2872322 0.2860467
+L9_4 0.2870104 0.2865971 0.2872322 0.2866241 0.2849664
+L9_5 0.2855579 0.2853791 0.2860467 0.2849664 0.2843156
+lavaan (0.5-23.1097) converged normally after  28 iterations
 
   Number of observations                           402
 
-  Estimator                                       DWLS      Robust
-  Minimum Function Test Statistic                2.154       3.601
+  Estimator                                         ML      Robust
+  Minimum Function Test Statistic                2.784       2.292
   Degrees of freedom                                 5           5
-  P-value (Chi-square)                           0.827       0.608
-  Scaling correction factor                                  0.625
-  Shift parameter                                            0.154
-    for simple second-order correction (Mplus variant)
+  P-value (Chi-square)                           0.733       0.807
+  Scaling correction factor                                  1.214
+    for the Satorra-Bentler correction
 
 Model test baseline model:
 
-  Minimum Function Test Statistic              436.746     351.991
+  Minimum Function Test Statistic              181.077     151.074
   Degrees of freedom                                10          10
   P-value                                        0.000       0.000
 
 User model versus baseline model:
 
   Comparative Fit Index (CFI)                    1.000       1.000
-  Tucker-Lewis Index (TLI)                       1.013       1.008
+  Tucker-Lewis Index (TLI)                       1.026       1.038
 
-  Robust Comparative Fit Index (CFI)                            NA
-  Robust Tucker-Lewis Index (TLI)                               NA
+  Robust Comparative Fit Index (CFI)                         1.000
+  Robust Tucker-Lewis Index (TLI)                            1.039
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -2760.417   -2760.417
+  Loglikelihood unrestricted model (H1)      -2759.025   -2759.025
+
+  Number of free parameters                         15          15
+  Akaike (AIC)                                5550.833    5550.833
+  Bayesian (BIC)                              5610.780    5610.780
+  Sample-size adjusted Bayesian (BIC)         5563.184    5563.184
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.000       0.000
-  90 Percent Confidence Interval          0.000  0.041       0.000  0.058
-  P-value RMSEA &lt;= 0.05                          0.972       0.911
+  90 Percent Confidence Interval          0.000  0.050       0.000  0.037
+  P-value RMSEA &lt;= 0.05                          0.950       0.982
 
-  Robust RMSEA                                                  NA
-  90 Percent Confidence Interval                             0.000     NA
+  Robust RMSEA                                               0.000
+  90 Percent Confidence Interval                             0.000  0.048
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.017       0.017
-
-Weighted Root Mean Square Residual:
-
-  WRMR                                           0.241       0.241
-          L10_1     L10_2     L10_3     L10_4     L10_5
-L10_1 0.1008005 0.1007331 0.1022840 0.1008885 0.1009248
-L10_2 0.1007331 0.1007182 0.1022144 0.1008733 0.1008577
-L10_3 0.1022840 0.1022144 0.1040738 0.1024097 0.1024346
-L10_4 0.1008885 0.1008733 0.1024097 0.1010399 0.1010165
-L10_5 0.1009248 0.1008577 0.1024346 0.1010165 0.1010520</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDEwIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTEgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiAxMSBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDEwIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTAgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKVxuIn0= -->
-<pre><code>lavaan WARNING: 10 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 11 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 11 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 10 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 10 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuICgwLjUtMjMuMTA5NykgY29udmVyZ2VkIG5vcm1hbGx5IGFmdGVyICAyMyBpdGVyYXRpb25zXG5cbiAgTnVtYmVyIG9mIG9ic2VydmF0aW9ucyAgICAgICAgICAgICAgICAgICAgICAgICAgIDQwMlxuXG4gIEVzdGltYXRvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIERXTFMgICAgICBSb2J1c3RcbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAgICA2LjE0MiAgICAgICA3Ljg3NlxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA5ICAgICAgICAgICA5XG4gIFAtdmFsdWUgKENoaS1zcXVhcmUpICAgICAgICAgICAgICAgICAgICAgICAgICAgMC43MjYgICAgICAgMC41NDdcbiAgU2NhbGluZyBjb3JyZWN0aW9uIGZhY3RvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjgwMFxuICBTaGlmdCBwYXJhbWV0ZXIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMjAzXG4gICAgZm9yIHNpbXBsZSBzZWNvbmQtb3JkZXIgY29ycmVjdGlvbiAoTXBsdXMgdmFyaWFudClcblxuTW9kZWwgdGVzdCBiYXNlbGluZSBtb2RlbDpcblxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgICAyNDUuMzEwICAgICAyMjUuNTc5XG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTUgICAgICAgICAgMTVcbiAgUC12YWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgICAwLjAwMFxuXG5Vc2VyIG1vZGVsIHZlcnN1cyBiYXNlbGluZSBtb2RlbDpcblxuICBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgIDEuMDAwICAgICAgIDEuMDAwXG4gIFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgMS4wMjEgICAgICAgMS4wMDlcblxuICBSb2J1c3QgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5BXG4gIFJvYnVzdCBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcblxuUm9vdCBNZWFuIFNxdWFyZSBFcnJvciBvZiBBcHByb3hpbWF0aW9uOlxuXG4gIFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMDAgICAgICAgMC4wMDBcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgIDAuMDAwICAwLjA0MiAgICAgICAwLjAwMCAgMC4wNTFcbiAgUC12YWx1ZSBSTVNFQSA8PSAwLjA1ICAgICAgICAgICAgICAgICAgICAgICAgICAwLjk3OCAgICAgICAwLjk0NFxuXG4gIFJvYnVzdCBSTVNFQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgTkFcblxuU3RhbmRhcmRpemVkIFJvb3QgTWVhbiBTcXVhcmUgUmVzaWR1YWw6XG5cbiAgU1JNUiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAyNiAgICAgICAwLjAyNlxuXG5XZWlnaHRlZCBSb290IE1lYW4gU3F1YXJlIFJlc2lkdWFsOlxuXG4gIFdSTVIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4zNTQgICAgICAgMC4zNTRcbiAgICAgICAgICAgTDdfMSAgICAgICBMN18yICAgICAgIEw3XzMgICAgICAgTDdfNCAgICAgICBMN181XG5MN18xIDAuMDk5MzA2NjMgMC4wOTgyNDExMiAwLjA5OTE0Mjk1IDAuMDk3OTc1NzkgMC4wOTc3NjQ4NFxuTDdfMiAwLjA5ODI0MTEyIDAuMDk3NTQ1MjQgMC4wOTgxNjkyMyAwLjA5NzE1NTM1IDAuMDk2OTQ0OTBcbkw3XzMgMC4wOTkxNDI5NSAwLjA5ODE2OTIzIDAuMDk5MTc3ODMgMC4wOTc5MDYxNCAwLjA5NzcwMjA4XG5MN180IDAuMDk3OTc1NzkgMC4wOTcxNTUzNSAwLjA5NzkwNjE0IDAuMDk2OTgxNjMgMC4wOTY3NzE5MVxuTDdfNSAwLjA5Nzc2NDg0IDAuMDk2OTQ0OTAgMC4wOTc3MDIwOCAwLjA5Njc3MTkxIDAuMDk2NTg4NDFcbiJ9 -->
-<pre><code>lavaan (0.5-23.1097) converged normally after  23 iterations
+  SRMR                                           0.014       0.014
+           L10_1      L10_2      L10_3      L10_4      L10_5
+L10_1 0.07934670 0.08201441 0.08171286 0.08068942 0.08205955
+L10_2 0.08201441 0.08517498 0.08473688 0.08344519 0.08487363
+L10_3 0.08171286 0.08473688 0.08459050 0.08311259 0.08453299
+L10_4 0.08068942 0.08344519 0.08311259 0.08226582 0.08322891
+L10_5 0.08205955 0.08487363 0.08453299 0.08322891 0.08523649
+lavaan (0.5-23.1097) converged normally after  35 iterations
 
   Number of observations                           402
 
-  Estimator                                       DWLS      Robust
-  Minimum Function Test Statistic                6.142       7.876
+  Estimator                                         ML      Robust
+  Minimum Function Test Statistic                5.981       4.894
   Degrees of freedom                                 9           9
-  P-value (Chi-square)                           0.726       0.547
-  Scaling correction factor                                  0.800
-  Shift parameter                                            0.203
-    for simple second-order correction (Mplus variant)
+  P-value (Chi-square)                           0.742       0.843
+  Scaling correction factor                                  1.222
+    for the Satorra-Bentler correction
 
 Model test baseline model:
 
-  Minimum Function Test Statistic              245.310     225.579
+  Minimum Function Test Statistic              107.483      92.652
   Degrees of freedom                                15          15
   P-value                                        0.000       0.000
 
 User model versus baseline model:
 
   Comparative Fit Index (CFI)                    1.000       1.000
-  Tucker-Lewis Index (TLI)                       1.021       1.009
+  Tucker-Lewis Index (TLI)                       1.054       1.088
 
-  Robust Comparative Fit Index (CFI)                            NA
-  Robust Tucker-Lewis Index (TLI)                               NA
+  Robust Comparative Fit Index (CFI)                         1.000
+  Robust Tucker-Lewis Index (TLI)                            1.093
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3368.725   -3368.725
+  Loglikelihood unrestricted model (H1)      -3365.735   -3365.735
+
+  Number of free parameters                         18          18
+  Akaike (AIC)                                6773.450    6773.450
+  Bayesian (BIC)                              6845.386    6845.386
+  Sample-size adjusted Bayesian (BIC)         6788.271    6788.271
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.000       0.000
-  90 Percent Confidence Interval          0.000  0.042       0.000  0.051
-  P-value RMSEA &lt;= 0.05                          0.978       0.944
+  90 Percent Confidence Interval          0.000  0.041       0.000  0.027
+  P-value RMSEA &lt;= 0.05                          0.980       0.996
 
-  Robust RMSEA                                                  NA
-  90 Percent Confidence Interval                             0.000     NA
+  Robust RMSEA                                               0.000
+  90 Percent Confidence Interval                             0.000  0.036
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.026       0.026
-
-Weighted Root Mean Square Residual:
-
-  WRMR                                           0.354       0.354
+  SRMR                                           0.020       0.020
            L7_1       L7_2       L7_3       L7_4       L7_5
-L7_1 0.09930663 0.09824112 0.09914295 0.09797579 0.09776484
-L7_2 0.09824112 0.09754524 0.09816923 0.09715535 0.09694490
-L7_3 0.09914295 0.09816923 0.09917783 0.09790614 0.09770208
-L7_4 0.09797579 0.09715535 0.09790614 0.09698163 0.09677191
-L7_5 0.09776484 0.09694490 0.09770208 0.09677191 0.09658841</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDEyIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTIgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKWxhdmFhbiBXQVJOSU5HOiAxMiBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDEyIGJpdmFyaWF0ZSB0YWJsZXMgaGF2ZSBlbXB0eSBjZWxsczsgdG8gc2VlIHRoZW0sIHVzZTpcbiAgICAgICAgICAgICAgICAgIGxhdkluc3BlY3QoZml0LCBcInplcm8uY2VsbC50YWJsZXNcIilsYXZhYW4gV0FSTklORzogMTIgYml2YXJpYXRlIHRhYmxlcyBoYXZlIGVtcHR5IGNlbGxzOyB0byBzZWUgdGhlbSwgdXNlOlxuICAgICAgICAgICAgICAgICAgbGF2SW5zcGVjdChmaXQsIFwiemVyby5jZWxsLnRhYmxlc1wiKVxuIn0= -->
-<pre><code>lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 12 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuICgwLjUtMjMuMTA5NykgY29udmVyZ2VkIG5vcm1hbGx5IGFmdGVyICAyNiBpdGVyYXRpb25zXG5cbiAgTnVtYmVyIG9mIG9ic2VydmF0aW9ucyAgICAgICAgICAgICAgICAgICAgICAgICAgIDQwMlxuXG4gIEVzdGltYXRvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIERXTFMgICAgICBSb2J1c3RcbiAgTWluaW11bSBGdW5jdGlvbiBUZXN0IFN0YXRpc3RpYyAgICAgICAgICAgICAgIDE3LjUzMCAgICAgIDIzLjQ3MlxuICBEZWdyZWVzIG9mIGZyZWVkb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA5ICAgICAgICAgICA5XG4gIFAtdmFsdWUgKENoaS1zcXVhcmUpICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNDEgICAgICAgMC4wMDVcbiAgU2NhbGluZyBjb3JyZWN0aW9uIGZhY3RvciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjc2M1xuICBTaGlmdCBwYXJhbWV0ZXIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuNDk0XG4gICAgZm9yIHNpbXBsZSBzZWNvbmQtb3JkZXIgY29ycmVjdGlvbiAoTXBsdXMgdmFyaWFudClcblxuTW9kZWwgdGVzdCBiYXNlbGluZSBtb2RlbDpcblxuICBNaW5pbXVtIEZ1bmN0aW9uIFRlc3QgU3RhdGlzdGljICAgICAgICAgICAgICAzMTYuMzM1ICAgICAyNzkuMzQ5XG4gIERlZ3JlZXMgb2YgZnJlZWRvbSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTUgICAgICAgICAgMTVcbiAgUC12YWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAwMCAgICAgICAwLjAwMFxuXG5Vc2VyIG1vZGVsIHZlcnN1cyBiYXNlbGluZSBtb2RlbDpcblxuICBDb21wYXJhdGl2ZSBGaXQgSW5kZXggKENGSSkgICAgICAgICAgICAgICAgICAgIDAuOTcyICAgICAgIDAuOTQ1XG4gIFR1Y2tlci1MZXdpcyBJbmRleCAoVExJKSAgICAgICAgICAgICAgICAgICAgICAgMC45NTMgICAgICAgMC45MDlcblxuICBSb2J1c3QgQ29tcGFyYXRpdmUgRml0IEluZGV4IChDRkkpICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5BXG4gIFJvYnVzdCBUdWNrZXItTGV3aXMgSW5kZXggKFRMSSkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcblxuUm9vdCBNZWFuIFNxdWFyZSBFcnJvciBvZiBBcHByb3hpbWF0aW9uOlxuXG4gIFJNU0VBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNDkgICAgICAgMC4wNjNcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgIDAuMDEwICAwLjA4MiAgICAgICAwLjAzMiAgMC4wOTVcbiAgUC12YWx1ZSBSTVNFQSA8PSAwLjA1ICAgICAgICAgICAgICAgICAgICAgICAgICAwLjQ3OCAgICAgICAwLjIxMlxuXG4gIFJvYnVzdCBSTVNFQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkFcbiAgOTAgUGVyY2VudCBDb25maWRlbmNlIEludGVydmFsICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBOQSAgICAgTkFcblxuU3RhbmRhcmRpemVkIFJvb3QgTWVhbiBTcXVhcmUgUmVzaWR1YWw6XG5cbiAgU1JNUiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA0NCAgICAgICAwLjA0NFxuXG5XZWlnaHRlZCBSb290IE1lYW4gU3F1YXJlIFJlc2lkdWFsOlxuXG4gIFdSTVIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC41OTIgICAgICAgMC41OTJcbiAgICAgICAgICAgTDRfMSAgICAgICBMNF8yICAgICAgIEw0XzMgICAgICAgTDRfNCAgICAgICBMNF81XG5MNF8xIDAuMDQzNTUzMTQgMC4wNDU4Njg3NyAwLjA0MzA3MDcyIDAuMDQ1MjUwOTggMC4wNDQ0MDQyMlxuTDRfMiAwLjA0NTg2ODc3IDAuMDQ4NTcwMTIgMC4wNDUzODEwNSAwLjA0Nzc2MjExIDAuMDQ2ODg0NDRcbkw0XzMgMC4wNDMwNzA3MiAwLjA0NTM4MTA1IDAuMDQyNjk4NzIgMC4wNDQ3NTA3NCAwLjA0MzkyMzc5XG5MNF80IDAuMDQ1MjUwOTggMC4wNDc3NjIxMSAwLjA0NDc1MDc0IDAuMDQ3MDY1NzEgMC4wNDYxODUzOFxuTDRfNSAwLjA0NDQwNDIyIDAuMDQ2ODg0NDQgMC4wNDM5MjM3OSAwLjA0NjE4NTM4IDAuMDQ1MzQ3MDZcbiJ9 -->
-<pre><code>lavaan (0.5-23.1097) converged normally after  26 iterations
+L7_1 0.07914347 0.08181870 0.08008181 0.08053193 0.08195210
+L7_2 0.08181870 0.08518665 0.08299467 0.08365051 0.08496496
+L7_3 0.08008181 0.08299467 0.08151784 0.08158416 0.08312852
+L7_4 0.08053193 0.08365051 0.08158416 0.08267619 0.08375458
+L7_5 0.08195210 0.08496496 0.08312852 0.08375458 0.08528291
+lavaan (0.5-23.1097) converged normally after  46 iterations
 
   Number of observations                           402
 
-  Estimator                                       DWLS      Robust
-  Minimum Function Test Statistic               17.530      23.472
+  Estimator                                         ML      Robust
+  Minimum Function Test Statistic               17.454      15.006
   Degrees of freedom                                 9           9
-  P-value (Chi-square)                           0.041       0.005
-  Scaling correction factor                                  0.763
-  Shift parameter                                            0.494
-    for simple second-order correction (Mplus variant)
+  P-value (Chi-square)                           0.042       0.091
+  Scaling correction factor                                  1.163
+    for the Satorra-Bentler correction
 
 Model test baseline model:
 
-  Minimum Function Test Statistic              316.335     279.349
+  Minimum Function Test Statistic              157.063     134.032
   Degrees of freedom                                15          15
   P-value                                        0.000       0.000
 
 User model versus baseline model:
 
-  Comparative Fit Index (CFI)                    0.972       0.945
-  Tucker-Lewis Index (TLI)                       0.953       0.909
+  Comparative Fit Index (CFI)                    0.940       0.950
+  Tucker-Lewis Index (TLI)                       0.901       0.916
 
-  Robust Comparative Fit Index (CFI)                            NA
-  Robust Tucker-Lewis Index (TLI)                               NA
+  Robust Comparative Fit Index (CFI)                         0.950
+  Robust Tucker-Lewis Index (TLI)                            0.917
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3349.671   -3349.671
+  Loglikelihood unrestricted model (H1)      -3340.944   -3340.944
+
+  Number of free parameters                         18          18
+  Akaike (AIC)                                6735.343    6735.343
+  Bayesian (BIC)                              6807.279    6807.279
+  Sample-size adjusted Bayesian (BIC)         6750.163    6750.163
 
 Root Mean Square Error of Approximation:
 
-  RMSEA                                          0.049       0.063
-  90 Percent Confidence Interval          0.010  0.082       0.032  0.095
-  P-value RMSEA &lt;= 0.05                          0.478       0.212
+  RMSEA                                          0.048       0.041
+  90 Percent Confidence Interval          0.009  0.082       0.000  0.073
+  P-value RMSEA &lt;= 0.05                          0.483       0.638
 
-  Robust RMSEA                                                  NA
-  90 Percent Confidence Interval                                NA     NA
+  Robust RMSEA                                               0.044
+  90 Percent Confidence Interval                             0.000  0.082
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.044       0.044
-
-Weighted Root Mean Square Residual:
-
-  WRMR                                           0.592       0.592
+  SRMR                                           0.035       0.035
            L4_1       L4_2       L4_3       L4_4       L4_5
-L4_1 0.04355314 0.04586877 0.04307072 0.04525098 0.04440422
-L4_2 0.04586877 0.04857012 0.04538105 0.04776211 0.04688444
-L4_3 0.04307072 0.04538105 0.04269872 0.04475074 0.04392379
-L4_4 0.04525098 0.04776211 0.04475074 0.04706571 0.04618538
-L4_5 0.04440422 0.04688444 0.04392379 0.04618538 0.04534706</code></pre>
+L4_1 0.02081797 0.02050228 0.01986052 0.01856292 0.02017797
+L4_2 0.02050228 0.02029829 0.01959779 0.01829681 0.01990392
+L4_3 0.01986052 0.01959779 0.01902963 0.01774583 0.01930484
+L4_4 0.01856292 0.01829681 0.01774583 0.01661935 0.01801959
+L4_5 0.02017797 0.01990392 0.01930484 0.01801959 0.01966904</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -805,16 +807,16 @@ textual =~ x4 + x5 + x6
 <p>Now, the correlation matrix between the predicted latents is</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29yKGxhdGVudHMpXG5cbmBgYCJ9 -->
-<pre class="r"><code>cor(latents)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGF0ZW50cyA8LSBzZWxlY3QoUkFJU0UsIGMoTDksIEwxMCwgTDQsIEw3KSlcbmNvcihsYXRlbnRzKVxuYGBgIn0= -->
+<pre class="r"><code>latents &lt;- select(RAISE, c(L9, L10, L4, L7))
+cor(latents)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICBMOSAgICAgICBMMTAgICAgICAgIEw0ICAgICAgICBMN1xuTDkgIDEuMDAwMDAwMCAwLjY0Mjk5NjAgMC42ODg0MDI1IDAuNTY1MTMyOVxuTDEwIDAuNjQyOTk2MCAxLjAwMDAwMDAgMC43MTU2ODI1IDAuNzEyNjIzNFxuTDQgIDAuNjg4NDAyNSAwLjcxNTY4MjUgMS4wMDAwMDAwIDAuNzA0MjY3OVxuTDcgIDAuNTY1MTMyOSAwLjcxMjYyMzQgMC43MDQyNjc5IDEuMDAwMDAwMFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICBMOSAgICAgICBMMTAgICAgICAgIEw0ICAgICAgICBMN1xuTDkgIDEuMDAwMDAwMCAwLjY0MTUyMTEgMC43MDA0MjI4IDAuNTUzNjM1MFxuTDEwIDAuNjQxNTIxMSAxLjAwMDAwMDAgMC43MDcwMTk1IDAuNjg5MDg5N1xuTDQgIDAuNzAwNDIyOCAwLjcwNzAxOTUgMS4wMDAwMDAwIDAuNjc4MDI5NVxuTDcgIDAuNTUzNjM1MCAwLjY4OTA4OTcgMC42NzgwMjk1IDEuMDAwMDAwMFxuIn0= -->
 <pre><code>           L9       L10        L4        L7
-L9  1.0000000 0.6429960 0.6884025 0.5651329
-L10 0.6429960 1.0000000 0.7156825 0.7126234
-L4  0.6884025 0.7156825 1.0000000 0.7042679
-L7  0.5651329 0.7126234 0.7042679 1.0000000</code></pre>
+L9  1.0000000 0.6415211 0.7004228 0.5536350
+L10 0.6415211 1.0000000 0.7070195 0.6890897
+L4  0.7004228 0.7070195 1.0000000 0.6780295
+L7  0.5536350 0.6890897 0.6780295 1.0000000</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -828,44 +830,29 @@ L7  0.5651329 0.7126234 0.7042679 1.0000000</code></pre>
 <p>I don’t know if Sisi wants to do cross validation or bootstrap, but if she does, that would be step 0</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIGx2Lm1vZGVsMiA8LSAnTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkJcbiAgICAgICAgICAgICBMMTAgPX4gU1JGMDA0LkIgKyBTUkYwMTAuQiArIFNSRjAzMy5CICsgU1JGMDM1LkIgKyBTUkYwMDIuQlxuICAgICAgICAgICAgIEw3ID1+IFNSRjAxOC5CICsgU1JGMDMyLkIgKyBTUkYwMDEuQiArIFNSRjAzOS5CICsgU1JGMDY0LkIgKyBTUkYwNzEuQlxuICAgICAgICAgICAgIEw0ID1+IFNSRjA2MS5CICsgU1JGMDIwLkIgKyBTUkYwMDMuQiArIFNSRjAzOC5CICsgU1JGMDcwLkIgKyBTUkYwNjUuQlxuICAgICAgICAgICAgTDkgfn4gLjExOCpMMTBcbiAgICAgICAgICAgIEw5IH5+IDAuMDg0Kkw0XG4gICAgICAgICAgICBMOSB+fiAwLjEwMSpMN1xuICAgICAgICAgICAgTDEwIH5+IC4wNDgqTDRcbiAgICAgICAgICAgIEwxMCB+fiAuMDcxKkw3XG4gICAgICAgICAgICBMNCB+fiAuMDQ3Kkw3XG4gICAgICAgICAgICBMOSB+fiAuMzI5Kkw5XG4gICAgICAgICAgICBMNCB+fiAuMDQ1Kkw0XG4gICAgICAgICAgICBMMTAgfn4gLjEwNCpMMTBcbiAgICAgICAgICAgIEw3IH5+IDAuMDk3Kkw3XG4gICAgICAgICAgICAnXG4gICAgICAgICAgICBsaWJyYXJ5KGxhdmFhbilcbmZpdHMgPC0gYyhcbmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbMV1dKSxcbmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbMl1dKSxcbmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbNF1dKSxcbmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbM11dKSxcbmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbNV1dKVxuKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIGx2Lm1vZGVsMiA8LSAnTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkJcbiAgICAgICAgICAgICAgIEw3ID1+IFNSRjAxOC5CICsgU1JGMDMyLkIgKyBTUkYwMDEuQiArIFNSRjAzOS5CICsgU1JGMDY0LkIgKyBTUkYwNzEuQlxuICAgICAgICAgICAgICAnXG5maXRzIDwtIGMoXG5jZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzFdXSksXG5jZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzJdXSksXG5jZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzRdXSksXG5jZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzNdXSksXG5jZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzVdXSlcbilcbmluc3BlY3QoZml0c1tbMV1dLFwiY29yLmx2XCIpXG5gYGAifQ== -->
 <pre class="r"><code> lv.model2 &lt;- 'L9 =~ SRF026.B + SRF006.B + SRF022.B + SRF030.B + SRF072.B + SRF062.B + SRF063.B
-             L10 =~ SRF004.B + SRF010.B + SRF033.B + SRF035.B + SRF002.B
-             L7 =~ SRF018.B + SRF032.B + SRF001.B + SRF039.B + SRF064.B + SRF071.B
-             L4 =~ SRF061.B + SRF020.B + SRF003.B + SRF038.B + SRF070.B + SRF065.B
-            L9 ~~ .118*L10
-            L9 ~~ 0.084*L4
-            L9 ~~ 0.101*L7
-            L10 ~~ .048*L4
-            L10 ~~ .071*L7
-            L4 ~~ .047*L7
-            L9 ~~ .329*L9
-            L4 ~~ .045*L4
-            L10 ~~ .104*L10
-            L7 ~~ 0.097*L7
-            '
-            library(lavaan)
+               L7 =~ SRF018.B + SRF032.B + SRF001.B + SRF039.B + SRF064.B + SRF071.B
+              '
 fits &lt;- c(
 cfa(lv.model2, data = mice.imp[[1]]),
 cfa(lv.model2, data = mice.imp[[2]]),
 cfa(lv.model2, data = mice.imp[[4]]),
 cfa(lv.model2, data = mice.imp[[3]]),
 cfa(lv.model2, data = mice.imp[[5]])
-)</code></pre>
+)
+inspect(fits[[1]],&quot;cor.lv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibGF2YWFuIFdBUk5JTkc6IDE4MyBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDE4MiBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDE4MSBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDE4MyBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpbGF2YWFuIFdBUk5JTkc6IDE4MiBiaXZhcmlhdGUgdGFibGVzIGhhdmUgZW1wdHkgY2VsbHM7IHRvIHNlZSB0aGVtLCB1c2U6XG4gICAgICAgICAgICAgICAgICBsYXZJbnNwZWN0KGZpdCwgXCJ6ZXJvLmNlbGwudGFibGVzXCIpXG4ifQ== -->
-<pre><code>lavaan WARNING: 183 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 182 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 181 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 183 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)lavaan WARNING: 182 bivariate tables have empty cells; to see them, use:
-                  lavInspect(fit, &quot;zero.cell.tables&quot;)</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiICAgTDkgICAgTDcgICBcbkw5IDEuMDAwICAgICAgXG5MNyAwLjk0NiAxLjAwMFxuIn0= -->
+<pre><code>   L9    L7   
+L9 1.000      
+L7 0.946 1.000</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiBQcmVkaWN0aW5nIExhdGVudHMgaW4gdGhlIFJBSVNFIERhdGFzZXQKYXV0aG9yOiBBbGV4YW5kZXIgUml4CmRhdGU6ICJOb3ZlbWJlciAxNiwgMjAxNyIKb3V0cHV0OiAKICBodG1sX25vdGVib29rOgogICAgdG9jOiB0cnVlCi0tLQoKIyMgSW50cm8KCldlIGFyZSBpbnRlcmVzdGVkIGluIGRldGVybWluaW5nIHRoZSBmb2xsb3dpbmcgbGF0ZW50czogTDQsIEw3LCBMOSwgYW5kIEwxMAoKIVsgXShTUkZfbGF0LnBuZykKClRoZXJlIGFyZSB0d28gcHJvYmxlbXMgYXQgaGFuZAoKMS4gVGhlcmUgYXJlIG1pc3NpbmcgdmFsdWVzIGluIHRoaXMgZGF0YXNldCB0aGF0IG5lZWQgdG8gYmUgZGVhbHQgd2l0aAoyLiBUaGVuIHRoZSBsYXRlbnRzIG5lZWQgdG8gYmUgcHJlZGljdGVkIGJ5IHRoZSBgbGF2YWFuYCBwYWNrYWdlIGluIGBSYC4gV2UgaGF2ZSBhIGNvdXBsZSBvcHRpb25zIGhlcmUsIGFuZCBwb3RlbnRpYWxseSBzb21lIHByb2JsZW1zLgoKIyMgTG9va2luZyBhdCB0aGUgbWlzc2luZyB2YWx1ZXMKCmBgYHtyLCBlY2hvID0gVH0Kc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKApsaWJyYXJ5KHRpZHl2ZXJzZSkKKQpzZXR3ZCgifi93b3JrL1JBSVNFIikKYGBgCmBgYHtyfQpSQUlTRSA8LSBzdXBwcmVzc01lc3NhZ2VzKApyZWFkX2NzdigiLi9hbGxkYXRhLmNzdiIsIHByb2dyZXNzID0gRikKKQojIHR1cm4gTmFOcyBpbnRvIE5BcwpsaWJyYXJ5KCJwYXJhbGxlbCIpClJBSVNFIDwtICBhcy5kYXRhLmZyYW1lKAogIG1jbGFwcGx5KFJBSVNFLCBmdW5jdGlvbih4KSB7aWZlbHNlKGlzLm5hbih4KSwgTkEsIHgpfQogICkKKQpgYGAKCkkgdGhpbmsgdGhlIGZpcnN0IHRoaW5nIHRvIGRvIGlzIHRvIHRoZSBtaXNzaW5nIGRhdGEgcGF0dGVybiBpbiB0aGUgdmFyaWFibGVzIG9mIGludGVyZXN0LgpgYGB7ciBmaWcxLCBmaWcud2lkdGg9MTEsIGZpZy5oZWlnaHQ9NS41LCBvdXQud2lkdGg9MTEsIG91dC5oZWlnaHQ9NS41fQpWQVJTX1dFX0NBUkVfQUJPVVQgPC0gc2VsZWN0KFJBSVNFLCBjKFNSRjAyNi5CLCBTUkYwMDYuQiwgU1JGMDIyLkIsIFNSRjAzMC5CLCBTUkYwNzIuQiwgU1JGMDYyLkIsIFNSRjA2My5CLCBTUkYwMDQuQiwgU1JGMDEwLkIsIFNSRjAzMy5CLCBTUkYwMzUuQiwgU1JGMDAyLkIgLCBTUkYwMTguQiwgU1JGMDMyLkIsIFNSRjAwMS5CLCBTUkYwMzkuQiwgU1JGMDY0LkIsIFNSRjA3MS5CLCBTUkYwNjEuQiwgU1JGMDIwLkIsIFNSRjAwMy5CLCBTUkYwMzguQiwgU1JGMDcwLkIsIFNSRjA2NS5CKSkKCmxpYnJhcnkoVklNKQphZ2dyKFZBUlNfV0VfQ0FSRV9BQk9VVCwgY29sPWMoJ3doaXRlJywncmVkJyksIG51bWJlcnMgPSBULCBzb3J0VmFycyA9IFQsIGxhYmVscyA9IG5hbWVzKFZBUlNfV0VfQ0FSRV9BQk9VVCksIHByb3AgPSBGLCAKICAgIGNleC5heGlzID0gMSwgZ2FwID0gMiwgeWxhYiA9IGMoIkhpc3RvZ3JhbSBvZiBtaXNzaW5nIGRhdGEiLCJQYXR0ZXJuIG9mIG1pc3NpbmcgZGF0YSIpKQpgYGAKCldlIGNhbiBnbGVhbiBhIGNvdXBsZSB0aGluZ3MgZnJvbSB0aGlzIGRhdGEuIAoKMS4gMzY3IG9mIHRoZSA0MDQgb2JzZXJ2YXRpb25zIGFyZSBjb21wbGV0ZSB3aXRoIHJlc3BlY3QgdG8gc3Vic2V0IG9mIHZhcmlhYmxlcyBhcmUgd29ya2luZyB3aXRoLiBTbywgYWJvdXQgOTAlIG9mIG91ciBkYXRhIGlzIGNvbXBsZXRlLgoyLiBUaGVyZSBhcmUgMiBvYnNlcnZhdGlvbnMgdGhhdCBhcmUgY29tcGxldGVseSBtaXNzaW5nLiBJIGFtIGdvaW5nIHRvIGRyb3AgdGhlc2Ugb2JzZXJ2YXRpb25zLgoKCmBgYHtyfQojIGhhY2sgdG8gZHJvcCB0aG9zZSBtaXNzaW5nIG9icyBmcm9tIHRoZSBkYXRhc2V0KHMpClJBSVNFIDwtIFJBSVNFICU+JSBkcm9wX25hKFNSRjAzMi5CKQpWQVJTX1dFX0NBUkVfQUJPVVQgPC0gVkFSU19XRV9DQVJFX0FCT1VUICU+JSBkcm9wX25hKFNSRjAzMi5CKQpgYGAKCk5vdywgd2UgaGF2ZSB0d28gb3B0aW9ucyB0byBkZWFsIHdpdGggdGhlIHJlc3Qgb2YgdGhlIG1pc3NpbmcgZGF0YS4gT21pdHRpbmcgdGhlIHJvd3Mgd2l0aCBtaXNzaW5nIGRhdGEgc2VlbXMgdW53aXNlIHRvIG1lLCBzaW5jZSB3ZSBkb24ndCBoYXZlIHRoYXQgbWFueSBzYW1wbGVzIHRvIHdvcmsgd2l0aC4gVGhhdCBsZWF2ZXMgdXMgdGhlIG9wdGlvbiB0byBpbXB1dGUsIG9yIHBlcmZvcm0gQ0ZBIG9ubHkgb24gY29tcGxldGUgcm93cy4gVGhlIG1pc3NpbmcgZGF0YSBwYXR0ZXJuIGltcGxpZXMgdGhlIGRhdGEgaXMgYWN0dWFsbHkgYWxtb3N0IGNvbXBsZXRlLi4uCmBgYHtyfQoxIC0gc3VtKGlzLm5hKFZBUlNfV0VfQ0FSRV9BQk9VVCkpLyg0MDIqMjQpCmBgYAoKUmVsYXRpdmVseSBmZXcgZW50cmllcyBhcmUgbWlzc2luZy4gU28sIEkgdGhpbmsgaW1wdXRpbmcgd2lsbCBwZXJmb3JtIHdlbGwgaGVyZS4KCmBgYHtyfQojIGxhdmFhbiB3b3VsZCBsaWtlIHRoZXNlIHRvIGJlIGtlcHQgYXMgb3JkZXJlZCB2YXJpYWJsZXMgaW5zdGVhZCBvZiBjb250aW51b3VzClZBUlNfV0VfQ0FSRV9BQk9VVCA8LSBhcy5kYXRhLmZyYW1lKAogIG1jbGFwcGx5KFZBUlNfV0VfQ0FSRV9BQk9VVCwgZnVuY3Rpb24oeCkge2FzLm9yZGVyZWQoeCl9CiAgKQopCiMgVGhpcyB2YXJpYWJsZSBpcyBhbiBpbnRlZ2VyIGZyb20gMS0xMDAgKHJlYWxseSBpdHMgMS01OSkuIAojIEl0IGlzIG9uIHRoZSBkaWZmZXJlbnQgc2NhbGUgdGhlbiB0aGUgcmVzdCwgc28gSSdtIGdvaW5nIHRvIG5vcm1hbGl6ZSBpdCBhZnRlciBJIGltcHV0ZSBpdApWQVJTX1dFX0NBUkVfQUJPVVQkU1JGMDcyLkIgPC0gYXMuZG91YmxlKFZBUlNfV0VfQ0FSRV9BQk9VVCRTUkYwNzIuQikKCmxpYnJhcnkobWljZSkKUkFJU0VfaW1wIDwtIG1pY2UoVkFSU19XRV9DQVJFX0FCT1VULCBtID0gNSwgcHJpbnRGbGFnID0gRiApCm1pY2UuaW1wIDwtIE5VTEwKCmZvciAoaSBpbiAxOjUpIHsKICBtaWNlLmltcFtbaV1dIDwtIGNvbXBsZXRlKFJBSVNFX2ltcCwgaSwgaW5jPUZBTFNFKSAgCiAgbXUgPC0gbWVhbihtaWNlLmltcFtbaV1dJFNSRjA3Mi5CKQogIHNkIDwtIHNkKG1pY2UuaW1wW1tpXV0kU1JGMDcyLkIpCiAgbWljZS5pbXBbW2ldXSRTUkYwNzIuQiA8LSAxL3NkICogKG1pY2UuaW1wW1tpXV0kU1JGMDcyLkIgLSBtdSkgCn0Kcm0obXUsIHNkKSAgCgoKYGBgCiMjIyBQZXJmb3JtaW5nIENGQSB3aXRoIGBsYXZhYW5gCk5vdywgd2UgbmVlZCB0byBzcGVjaWZ5IHRoZSBsYXRlbnQgdmFyaWFibGUgbW9kZWwgZ2l2ZW4gYnkgRXJpY2gncyBncmFwaC4gSW4gYGxhdmFhbmAsIHRoZSBzeW50YXggaXMKYGBge3J9Cmx2Lm1vZGVsIDwtICdMOSA9fiBTUkYwMjYuQiArIFNSRjAwNi5CICsgU1JGMDIyLkIgKyBTUkYwMzAuQiArIFNSRjA3Mi5CICsgU1JGMDYyLkIgKyBTUkYwNjMuQgogICAgICAgICAgICAgTDEwID1+IFNSRjAwNC5CICsgU1JGMDEwLkIgKyBTUkYwMzMuQiArIFNSRjAzNS5CICsgU1JGMDAyLkIKICAgICAgICAgICAgIEw3ID1+IFNSRjAxOC5CICsgU1JGMDMyLkIgKyBTUkYwMDEuQiArIFNSRjAzOS5CICsgU1JGMDY0LkIgKyBTUkYwNzEuQgogICAgICAgICAgICAgTDQgPX4gU1JGMDYxLkIgKyBTUkYwMjAuQiArIFNSRjAwMy5CICsgU1JGMDM4LkIgKyBTUkYwNzAuQiArIFNSRjA2NS5CCiAgICAgICAgICAgICcKYGBgCk5vdywgd2UgYXJlIHJlYWR5IHRvIGZpdCB0aGUgbW9kZWxzCmBgYHtyfQpsaWJyYXJ5KGxhdmFhbikKZml0cyA8LSBjKApjZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMV1dKSwKY2ZhKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzJdXSksCmNmYShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s0XV0pLApjZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbM11dKSwKY2ZhKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzVdXSkKKQpgYGAKQXMgd2UgY2FuIHNlZSwgdGhlcmUgaXMgYW4gZXJyb3Igd2hlbiBgbGF2YWFuYCBmaXRzIGEgQ0ZBIG9uIGFsbCB0aGVzZSBpbXB1dGVkIGRhdGFzZXRzLiAoSSdtIHByZXR0eSBzdXJlIHRoZSB6ZXJvLnRhYmxlLmNlbGxzIGlzIHVuaW1wb3J0YW50KS4gVGhlIGNvdmFyaWFuY2UgLyBjb3JyZWxhdGlvbiBtYXRyaWNlcyBhcmUgbm90IHBvc2l0aXZlLWRlZmluaXRlLiBOb3csIGBsYXZhYW5gIHJlZnVzZXMgdG8gbWFrZSBwcmVkaWN0aW9ucyB3aGVuIHRoaXMgaGFwcGVucywgc28gc3RyaWN0bHkgc3BlYWtpbmcsIHdlIG5lZWQgdG8gbG9vayBhdCB3aGF0IGBsYXZhYW5gIHRoaW5rcyB0aGUgY292YXJpYW5jZS9jb3JyZWxhdGlvbiBtYXRyaWNlcyBhcmUuCgpgYGB7cn0KaW5zcGVjdChmaXRzW1sxXV0sICJjb3YubHYiKQojIG5vdCBnb29kCmVpZ2VuKGluc3BlY3QoZml0c1tbMV1dLCAiY292Lmx2IikpJHZhbHVlcwojIG5vdGljZSBob3cgZXN0aW1hdGVkIGNvcnJlbGF0aW9uIG1hdHJpeCBoYXMgdmFsdWVzID4gMQppbnNwZWN0KGZpdHNbWzFdXSwgImNvci5sdiIpCmBgYAoKQXNzdW1pbmcgYWxsIHRoZSB2YXJpYWJsZSBhcmUgYWN0dWFsbHkgY29udGludW91cyBpbnN0ZWFkIG9mIG9yZGVyZWQgd2lsbCBhbGxvdyBgbGF2YWFuYCB0byBtYWtlIHByZWRpY3Rpb25zIChBbHNvOiB0aGVyZSBpcyBhIHBhcGVyIEkgbmVlZCB0byByZWFkIHRoYXQgc2VlbXMgdG8gc3VnZ2VzdCBJIF9jYW5fIGRvIHRoaXMpLCBidXQgdGhlIHByb2JsZW0gb2Ygbm9uIHBvc2l0aXZlIGRlZmluaXRlbmVzcyByZW1haW5zLCBzbyBJIGRvIG5vdCB0cnVzdCB0aGUgcHJlZGljdGlvbnMuCgpJIGRvbid0IGtub3cgYSB3aG9sZSBsb3QgYWJvdXQgQ0ZBcywgb3IgU0VNLCBidXQgZnJvbSB3aGF0IEknbSByZWFkaW5nIG9uIHRoZSBpbnRlcm5ldCwgaXQgc2VlbXMgbGlrZSB0aGUgbW9kZWwgaXNuJ3QgY29ycmVjdGx5IHNwZWNpZmllZC4gSSBkb24ndCBrbm93IGlmIHRoYXQgbWVhbnMgdGhhdCB3ZSBuZWVkIHRvIHNwZWNpZnkgdGhlIGNvdmFyaWFuY2VzIGJldHdlZW4gbGF0ZW50cywgb3IgaWYgdGhlcmUncyBzb21ldGhpbmcgb2ZmIGVsc2V3aGVyZS4KCiMjIFRyeWluZyB0byB3b3JrIGFyb3VuZCB0aGUgZXJyb3JzCkFmdGVyIHRhbGtpbmcgdG8gRXJpY2gsIGhlIHN1Z2dlc3RlZCB0byB0cnkgZml0dGluZyB3aXRoIGBzZW0oKWAgaW5zdGVhZCBvZiBgY2ZhKClgLCBhbmQgdHJ5IHRvIGZpdCBlYWNoIGluZGVwZW5kZW50bHkuCiMjIyBGaXR0aW5nIFNFTSBpbnN0ZWFkIG9mIGEgQ0ZBCmBgYHtyfQpmaXRzIDwtIGMoCnNlbShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1sxXV0pLApzZW0obHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMl1dKSwKc2VtKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzRdXSksCnNlbShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1szXV0pLApzZW0obHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbNV1dKQopCmBgYApObyBkaWNlISAKCiMjIyBGaXR0aW5nIGVhY2ggbGF0ZW50IG1vZGVsIHNlcGFyYXRlbHkuCgpgYGB7cn0KbW9kZWxzIDwtIGMoCidMOSA9fiBTUkYwMjYuQiArIFNSRjAwNi5CICsgU1JGMDIyLkIgKyBTUkYwMzAuQiArIFNSRjA3Mi5CICsgU1JGMDYyLkIgKyBTUkYwNjMuQicsCidMMTAgPX4gU1JGMDA0LkIgKyBTUkYwMTAuQiArIFNSRjAzMy5CICsgU1JGMDM1LkIgKyBTUkYwMDIuQicsCidMNyA9fiBTUkYwMTguQiArIFNSRjAzMi5CICsgU1JGMDAxLkIgKyBTUkYwMzkuQiArIFNSRjA2NC5CICsgU1JGMDcxLkInLAonTDQgPX4gU1JGMDYxLkIgKyBTUkYwMjAuQiArIFNSRjAwMy5CICsgU1JGMDM4LkIgKyBTUkYwNzAuQiArIFNSRjA2NS5CJwopCgpmaXRzIDwtIGMoCmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbMV1dKSwKY2ZhKG1vZGVsc1sxXSwgZGF0YSA9IG1pY2UuaW1wW1syXV0pLApjZmEobW9kZWxzWzFdLCBkYXRhID0gbWljZS5pbXBbWzRdXSksCmNmYShtb2RlbHNbMV0sIGRhdGEgPSBtaWNlLmltcFtbM11dKSwKY2ZhKG1vZGVsc1sxXSwgZGF0YSA9IG1pY2UuaW1wW1s1XV0pCikKCmxhdGVudF9lc3RpbWF0ZSA8LSBjKCkKZm9yICggZml0IGluIGZpdHMpIHsKbGF0ZW50X2VzdGltYXRlIDwtIGNiaW5kKGxhdGVudF9lc3RpbWF0ZSwgcHJlZGljdChmaXQpKQp9CmBgYApTbywgd2UgZ2V0IG5vIGVycm9ycyBub3cuIFRoZSBxdWVzdGlvbiBvZiBob3cgdG8gcG9vbCB0aGUgcmVzdWx0cyByZW1haW5zLiBJIHRoaW5rIHdlIHNob3VsZCB0YWtlIGEgbG9vayB0aGUgY292YXJpYW5jZSBtYXRyaXggb2YgaW1wdXRlZCBtb2RlbHMuCgpgYGB7cn0KY29sbmFtZXMobGF0ZW50X2VzdGltYXRlKSA9IHBhc3RlKGNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZSksICJfIiAsIHNlcSgxOjUpICwgc2VwID0gIiIpCmNvdihsYXRlbnRfZXN0aW1hdGUpCmBgYApBcyB3ZSBjYW4gc2VlLCB0aGUgcHJlZGljdGlvbnMgdGhlbXNlbHZlcyBhcmUgc28gY2xvc2UgdGhhdCB3ZSBjYW4ganVzdCBhdmVyYWdlIHRoZW0gKG9yIHdlIGNvdWxkIHBpY2sgb25lKS4gVGhlIG1vc3QgY29ycmVjdCB3b3VsZCBiZSB0byBwb29sIHRoZSBjb3ZhcmlhbmNlIG1hdHJpY2VzIGdlbmVyYXRlZCBieSBgbGF2YWFuYCwgYnV0IEkgZG8gbm90IHRoaW5rIHRoYXQgaXMgbmVjZXNzYXJ5IGdpdmVuIGhvdyBjbG9zZSBldmVyeXRoaW5nIGlzLgoKIyMjIFNvbWUgY29kZSBhbmQgc29tZSBjb21tZW50cwpUaGlzIGNvZGUgZml0cyA0IDEtZmFjdG9yIG1vZGVscyAoaXMgdGhpcyB0aGUgY29ycmVjdCB3YXkgdG8gc2F5IGl0PykgYW5kIGFwcGVuZHMgdGhlbSB0byBSQUlTRS4gSXQgcHJpbnRzIG91dCB0aGUgZml0IHN0YXRpc3RpY3MgKFthbiBleHBsYW5hdGlvbiBvZiB0aGVtIGNhbiBiZSBmb3VuZCBoZXJlXShodHRwOi8vZGF2aWRha2VubnkubmV0L2NtL2ZpdC5odG0pKSBvbiBlYWNoIG1vZGVsIGFuZCB0aGUgYWJvdmUgY292YXJpYW5jZSBtYXRyaXggZm9yIGxhdGVudC4gICoqQkUgU1VSRSBUTyBSRUFEIFRJTEwgVEhFIEVORCoqIApgYGB7cn0KbW9kZWxzIDwtIGMoCidMOSA9fiBTUkYwMjYuQiArIFNSRjAwNi5CICsgU1JGMDIyLkIgKyBTUkYwMzAuQiArIFNSRjA3Mi5CICsgU1JGMDYyLkIgKyBTUkYwNjMuQicsCidMMTAgPX4gU1JGMDA0LkIgKyBTUkYwMTAuQiArIFNSRjAzMy5CICsgU1JGMDM1LkIgKyBTUkYwMDIuQicsCidMNyA9fiBTUkYwMTguQiArIFNSRjAzMi5CICsgU1JGMDAxLkIgKyBTUkYwMzkuQiArIFNSRjA2NC5CICsgU1JGMDcxLkInLAonTDQgPX4gU1JGMDYxLkIgKyBTUkYwMjAuQiArIFNSRjAwMy5CICsgU1JGMDM4LkIgKyBTUkYwNzAuQiArIFNSRjA2NS5CJwopCgpmb3IgKG1vZGVsIGluIG1vZGVscykgewogICMgcGVyZm9ybSBjZmEgb24gZWFjaCBpbXB1dGVkIGRhdGFzZXQgZm9yIHRoZSBnaXZlbiBtb2RlbHMKICBmaXRzIDwtIGMoCiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzFdXSksCiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzJdXSksCiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzRdXSksCiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzNdXSksCiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzVdXSkKICApCiAgIyBwcmVkaWN0IHZhbHVlIG9mIGxhdGVudHMgZnJvbSBlYWNoIGZpdAogIGxhdGVudF9lc3RpbWF0ZXMgPC0gYygpCiAgZm9yIChmaXQgaW4gZml0cykgewogIGxhdGVudF9lc3RpbWF0ZXMgPC0gY2JpbmQobGF0ZW50X2VzdGltYXRlcywgcHJlZGljdChmaXQpKQogIH0KICAjIGhhY2sgdG8gZ2V0IG5hbWUgb2YgbGF0ZW50CnZhcl9uYW1lIDwtIGNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpWzFdCmNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpIDwtIHBhc3RlKGNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpLCAiXyIgLCBzZXEoMTo1KSAsIHNlcCA9ICIiKQoKc3VtbWFyeShmaXQsIGZpdC5tZWFzdXJlcyA9IFQsIGVzdGltYXRlcyA9IEYpCgpwcmludChjb3YobGF0ZW50X2VzdGltYXRlcykpCgplc3RpbWF0ZSA8LSByb3dNZWFucyhsYXRlbnRfZXN0aW1hdGVzKQpSQUlTRVt2YXJfbmFtZV0gPC0gZXN0aW1hdGUKCndyaXRlX2NzdihSQUlTRSwgIlJBSVNFX0xBVC5jc3YiKQp9CmBgYApJIHdvdWxkIGxpa2UgdG8gcmVpdGVyYXRlIGZpdHRpbmcgNCAxLWZhY3RvciBtb2RlbHMgc2VlbXMgdG8gaW1wbHkgdGhhdCB0aGUgY292YXJpYW5jZSBtYXRyaXggYmV0d2VlbiB0aGUgbGF0ZW50cyBpcyAwIHdoZW4gb2ZmIHRoZSBkaWFnb25hbC4gTXkgcmVhc29uaW5nIGlzIGJhc2VkIG9mZiB0aGUgYGxhdmFhbmAgW3R1dG9yaWFsXShodHRwOi8vbGF2YWFuLnVnZW50LmJlL3R1dG9yaWFsL2NmYS5odG1sKSB3aGVyZSB0aGUgZml0IHRoaXMgbW9kZWwKCiFbXShjZmEtMS5wbmcpCgp3aXRoIHRoaXMgc3ludGF4CmBgYHtyfQogdmlzdWFsID1+IHgxICsgeDIgKyB4Mwp0ZXh0dWFsID1+IHg0ICsgeDUgKyB4NgogIHNwZWVkID1+IHg3ICsgeDggKyB4OQpgYGAgIApOb3csIHRoZSBjb3JyZWxhdGlvbiBtYXRyaXggYmV0d2VlbiB0aGUgcHJlZGljdGVkIGxhdGVudHMgaXMKYGBge3J9CmxhdGVudHMgPC0gc2VsZWN0KFJBSVNFLCBjKEw5LCBMMTAsIEw0LCBMNykpCmNvcihsYXRlbnRzKQpgYGAKU28sIGNsZWFybHkgdGhleSBjb3ZhcnkuIEkgdGhpbmsgdGFsa2luZyB0byBzb21lb25lIHdobyBpcyBmYW1pbGlhciB3aXRoIENGQSB3b3VsZCBiZSBhIGdvb2QgaWRlYS4gVGhleSBjb3VsZCBwcm9iYWJseSB0ZWxsIHVzIGlmIGRvaW5nIHRoaXMgdGhpbmcgaXMgb2theS4KQWxzbywgdGhlIGxhc3QgdGhpbmcgSSBzaG91bGQgbWVudGlvbiBpcyB0aGF0IEknbSBub3Qgc3VyZSBob3cgdG8gZGVhbCB3aXRoIHRoZSBvYnNlcnZhdGlvbnMgSSBpbXB1dGVkLiBUaGUgbW9zdCBjb3JyZWN0IHdheSB0byBkZWFsIHdpdGggdGhpcyBpcyBwcm9iYWJseQoKMS4gSW1wdXRlIHRoZSBtaXNzaW5nIGRhdGEgb24gdGhlIGZ1bGwgUkFJU0UgZGF0YXNldCAob3Igd2hhdGV2ZXIgU2lzaSB3YW50cyB0byBkbykKMi4gUHJlZGljdCBsYXRlbnRzIG9uIGVhY2ggc2V0CjMuIFNpc2kgZG9lcyBzb21lIHN0dWZmCjQuIFBvb2wgbW9kZWxzCgogSSBkb24ndCBrbm93IGlmIFNpc2kgd2FudHMgdG8gZG8gY3Jvc3MgdmFsaWRhdGlvbiBvciBib290c3RyYXAsIGJ1dCBpZiBzaGUgZG9lcywgdGhhdCB3b3VsZCBiZSBzdGVwIDAKIApgYGB7cn0KIGx2Lm1vZGVsMiA8LSAnTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkIKICAgICAgICAgICAgIEwxMCA9fiBTUkYwMDQuQiArIFNSRjAxMC5CICsgU1JGMDMzLkIgKyBTUkYwMzUuQiArIFNSRjAwMi5CCiAgICAgICAgICAgICBMNyA9fiBTUkYwMTguQiArIFNSRjAzMi5CICsgU1JGMDAxLkIgKyBTUkYwMzkuQiArIFNSRjA2NC5CICsgU1JGMDcxLkIKICAgICAgICAgICAgIEw0ID1+IFNSRjA2MS5CICsgU1JGMDIwLkIgKyBTUkYwMDMuQiArIFNSRjAzOC5CICsgU1JGMDcwLkIgKyBTUkYwNjUuQgogICAgICAgICAgICBMOSB+fiAuMCpMMTAKICAgICAgICAgICAgTDkgfn4gMCpMNAogICAgICAgICAgICBMOSB+fiAwKkw3CiAgICAgICAgICAgIEwxMCB+fiAwKkw0CiAgICAgICAgICAgIEwxMCB+fiAwKkw3CiAgICAgICAgICAgIEw0IH5+IDAqTDcKICAgICAgICAgICAgTDkgfn4gMCpMOQogICAgICAgICAgICBMNCB+fiAwKkw0CiAgICAgICAgICAgIEwxMCB+fiAwKkwxMAogICAgICAgICAgICBMNyB+fiBMNwogICAgICAgICAgICAnCiAgICAgICAgICAgIGxpYnJhcnkobGF2YWFuKQpmaXRzIDwtIGMoCmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbMV1dKSwKY2ZhKGx2Lm1vZGVsMiwgZGF0YSA9IG1pY2UuaW1wW1syXV0pLApjZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzRdXSksCmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbM11dKSwKY2ZhKGx2Lm1vZGVsMiwgZGF0YSA9IG1pY2UuaW1wW1s1XV0pCikKYGBg</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiBQcmVkaWN0aW5nIExhdGVudHMgaW4gdGhlIFJBSVNFIERhdGFzZXQKYXV0aG9yOiBBbGV4YW5kZXIgUml4CmRhdGU6ICJOb3ZlbWJlciAxNiwgMjAxNyIKb3V0cHV0OiAKICBodG1sX25vdGVib29rOgogICAgdG9jOiB0cnVlCi0tLQoKIyMgSW50cm8KCldlIGFyZSBpbnRlcmVzdGVkIGluIGRldGVybWluaW5nIHRoZSBmb2xsb3dpbmcgbGF0ZW50czogTDQsIEw3LCBMOSwgYW5kIEwxMAoKIVsgXShTUkZfbGF0LnBuZykKClRoZXJlIGFyZSB0d28gcHJvYmxlbXMgYXQgaGFuZAoKMS4gVGhlcmUgYXJlIG1pc3NpbmcgdmFsdWVzIGluIHRoaXMgZGF0YXNldCB0aGF0IG5lZWQgdG8gYmUgZGVhbHQgd2l0aAoyLiBUaGVuIHRoZSBsYXRlbnRzIG5lZWQgdG8gYmUgcHJlZGljdGVkIGJ5IHRoZSBgbGF2YWFuYCBwYWNrYWdlIGluIGBSYC4gV2UgaGF2ZSBhIGNvdXBsZSBvcHRpb25zIGhlcmUsIGFuZCBwb3RlbnRpYWxseSBzb21lIHByb2JsZW1zLgoKIyMgTG9va2luZyBhdCB0aGUgbWlzc2luZyB2YWx1ZXMKCmBgYHtyLCBlY2hvID0gVH0Kc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKApsaWJyYXJ5KHRpZHl2ZXJzZSkKKQpzZXR3ZCgifi93b3JrLy9JSEkvUkFJU0UiKQpgYGAKYGBge3J9ClJBSVNFIDwtIHN1cHByZXNzTWVzc2FnZXMoCnJlYWRfY3N2KCIuL2FsbGRhdGEuY3N2IiwgcHJvZ3Jlc3MgPSBGKQopCiMgdHVybiBOYU5zIGludG8gTkFzCmxpYnJhcnkoInBhcmFsbGVsIikKUkFJU0UgPC0gIGFzLmRhdGEuZnJhbWUoCiAgbWNsYXBwbHkoUkFJU0UsIGZ1bmN0aW9uKHgpIHtpZmVsc2UoaXMubmFuKHgpLCBOQSwgeCl9CiAgKQopCmBgYAoKSSB0aGluayB0aGUgZmlyc3QgdGhpbmcgdG8gZG8gaXMgdG8gdGhlIG1pc3NpbmcgZGF0YSBwYXR0ZXJuIGluIHRoZSB2YXJpYWJsZXMgb2YgaW50ZXJlc3QuCmBgYHtyIGZpZzEsIGZpZy53aWR0aD0xMSwgZmlnLmhlaWdodD01LjUsIG91dC53aWR0aD0xMSwgb3V0LmhlaWdodD01LjV9ClZBUlNfV0VfQ0FSRV9BQk9VVCA8LSBzZWxlY3QoUkFJU0UsIGMoU1JGMDI2LkIsIFNSRjAwNi5CLCBTUkYwMjIuQiwgU1JGMDMwLkIsIFNSRjA3Mi5CLCBTUkYwNjIuQiwgU1JGMDYzLkIsIFNSRjAwNC5CLCBTUkYwMTAuQiwgU1JGMDMzLkIsIFNSRjAzNS5CLCBTUkYwMDIuQiAsIFNSRjAxOC5CLCBTUkYwMzIuQiwgU1JGMDAxLkIsIFNSRjAzOS5CLCBTUkYwNjQuQiwgU1JGMDcxLkIsIFNSRjA2MS5CLCBTUkYwMjAuQiwgU1JGMDAzLkIsIFNSRjAzOC5CLCBTUkYwNzAuQiwgU1JGMDY1LkIpKQoKbGlicmFyeShWSU0pCmFnZ3IoVkFSU19XRV9DQVJFX0FCT1VULCBjb2w9Yygnd2hpdGUnLCdyZWQnKSwgbnVtYmVycyA9IFQsIHNvcnRWYXJzID0gVCwgbGFiZWxzID0gbmFtZXMoVkFSU19XRV9DQVJFX0FCT1VUKSwgcHJvcCA9IEYsIAogICAgY2V4LmF4aXMgPSAxLCBnYXAgPSAyLCB5bGFiID0gYygiSGlzdG9ncmFtIG9mIG1pc3NpbmcgZGF0YSIsIlBhdHRlcm4gb2YgbWlzc2luZyBkYXRhIikpCmBgYAoKV2UgY2FuIGdsZWFuIGEgY291cGxlIHRoaW5ncyBmcm9tIHRoaXMgZGF0YS4gCgoxLiAzNjcgb2YgdGhlIDQwNCBvYnNlcnZhdGlvbnMgYXJlIGNvbXBsZXRlIHdpdGggcmVzcGVjdCB0byBzdWJzZXQgb2YgdmFyaWFibGVzIGFyZSB3b3JraW5nIHdpdGguIFNvLCBhYm91dCA5MCUgb2Ygb3VyIGRhdGEgaXMgY29tcGxldGUuCjIuIFRoZXJlIGFyZSAyIG9ic2VydmF0aW9ucyB0aGF0IGFyZSBjb21wbGV0ZWx5IG1pc3NpbmcuIEkgYW0gZ29pbmcgdG8gZHJvcCB0aGVzZSBvYnNlcnZhdGlvbnMuCgoKYGBge3J9CiMgaGFjayB0byBkcm9wIHRob3NlIG1pc3Npbmcgb2JzIGZyb20gdGhlIGRhdGFzZXQocykKUkFJU0UgPC0gUkFJU0UgJT4lIGRyb3BfbmEoU1JGMDMyLkIpClZBUlNfV0VfQ0FSRV9BQk9VVCA8LSBWQVJTX1dFX0NBUkVfQUJPVVQgJT4lIGRyb3BfbmEoU1JGMDMyLkIpCmBgYAoKTm93LCB3ZSBoYXZlIHR3byBvcHRpb25zIHRvIGRlYWwgd2l0aCB0aGUgcmVzdCBvZiB0aGUgbWlzc2luZyBkYXRhLiBPbWl0dGluZyB0aGUgcm93cyB3aXRoIG1pc3NpbmcgZGF0YSBzZWVtcyB1bndpc2UgdG8gbWUsIHNpbmNlIHdlIGRvbid0IGhhdmUgdGhhdCBtYW55IHNhbXBsZXMgdG8gd29yayB3aXRoLiBUaGF0IGxlYXZlcyB1cyB0aGUgb3B0aW9uIHRvIGltcHV0ZSwgb3IgcGVyZm9ybSBDRkEgb25seSBvbiBjb21wbGV0ZSByb3dzLiBUaGUgbWlzc2luZyBkYXRhIHBhdHRlcm4gaW1wbGllcyB0aGUgZGF0YSBpcyBhY3R1YWxseSBhbG1vc3QgY29tcGxldGUuLi4KYGBge3J9CjEgLSBzdW0oaXMubmEoVkFSU19XRV9DQVJFX0FCT1VUKSkvKDQwMioyNCkKYGBgCgpSZWxhdGl2ZWx5IGZldyBlbnRyaWVzIGFyZSBtaXNzaW5nLiBTbywgSSB0aGluayBpbXB1dGluZyB3aWxsIHBlcmZvcm0gd2VsbCBoZXJlLgoKIyMjIFVQREFURSAxLzgvMjAxOC4gUmh1bXRlbGxhKDIwMTIpIHNlZW1zIHRvIGltcGx5IHRoYXQgdGhlc2UgdmFyYWlibGVzIGNhbiBiZSB0cmVhdGVkIGFzIGNvbnRpbnVvdXMKYGBge3J9CiMgbGF2YWFuIHdvdWxkIGxpa2UgdGhlc2UgdG8gYmUga2VwdCBhcyBvcmRlcmVkIHZhcmlhYmxlcyBpbnN0ZWFkIG9mIGNvbnRpbnVvdXMKI1ZBUlNfV0VfQ0FSRV9BQk9VVCA8LSBhcy5kYXRhLmZyYW1lKAojICBtY2xhcHBseShWQVJTX1dFX0NBUkVfQUJPVVQsIGZ1bmN0aW9uKHgpIHthcy5vcmRlcmVkKHgpfQojICApCiMpCiMgVGhpcyB2YXJpYWJsZSBpcyBhbiBpbnRlZ2VyIGZyb20gMS0xMDAgKHJlYWxseSBpdHMgMS01OSkuIAojIEl0IGlzIG9uIHRoZSBkaWZmZXJlbnQgc2NhbGUgdGhlbiB0aGUgcmVzdCwgc28gSSdtIGdvaW5nIHRvIG5vcm1hbGl6ZSBpdCBhZnRlciBJIGltcHV0ZSBpdAojVkFSU19XRV9DQVJFX0FCT1VUJFNSRjA3Mi5CIDwtIGFzLmRvdWJsZShWQVJTX1dFX0NBUkVfQUJPVVQkU1JGMDcyLkIpCgpub3JtYWxpemUgPC0gZnVuY3Rpb24oZGYpIHsKICBhcy5kYXRhLmZyYW1lKGFwcGx5KGRmLCAyLCBmdW5jdGlvbih4KSB7CiAgICBtdSA8LSBtZWFuKHgpCiAgICBzZCA8LSBzZCh4KQogICAgcmV0dXJuKCh4LW11KS9zZCkKICB9KSkKfQoKbGlicmFyeShtaWNlKQpSQUlTRV9pbXAgPC0gbWljZShWQVJTX1dFX0NBUkVfQUJPVVQsIG0gPSA1LCBwcmludEZsYWcgPSBGICkKbWljZS5pbXAgPC0gTlVMTAoKZm9yIChpIGluIDE6NSkgewogIG1pY2UuaW1wW1tpXV0gPC0gY29tcGxldGUoUkFJU0VfaW1wLCBpLCBpbmM9RkFMU0UpICAKICBtaWNlLmltcFtbaV1dIDwtIG5vcm1hbGl6ZShtaWNlLmltcFtbaV1dKSAKfQpgYGAKIyMjIFBlcmZvcm1pbmcgQ0ZBIHdpdGggYGxhdmFhbmAKTm93LCB3ZSBuZWVkIHRvIHNwZWNpZnkgdGhlIGxhdGVudCB2YXJpYWJsZSBtb2RlbCBnaXZlbiBieSBFcmljaCdzIGdyYXBoLiBJbiBgbGF2YWFuYCwgdGhlIHN5bnRheCBpcwpgYGB7cn0KbHYubW9kZWwgPC0gJ0w5ID1+IFNSRjAyNi5CICsgU1JGMDA2LkIgKyBTUkYwMjIuQiArIFNSRjAzMC5CICsgU1JGMDcyLkIgKyBTUkYwNjIuQiArIFNSRjA2My5CCiAgICAgICAgICAgICBMMTAgPX4gU1JGMDA0LkIgKyBTUkYwMTAuQiArIFNSRjAzMy5CICsgU1JGMDM1LkIgKyBTUkYwMDIuQgogICAgICAgICAgICAgTDcgPX4gU1JGMDE4LkIgKyBTUkYwMzIuQiArIFNSRjAwMS5CICsgU1JGMDM5LkIgKyBTUkYwNjQuQiArIFNSRjA3MS5CCiAgICAgICAgICAgICBMNCA9fiBTUkYwNjEuQiArIFNSRjAyMC5CICsgU1JGMDAzLkIgKyBTUkYwMzguQiArIFNSRjA3MC5CICsgU1JGMDY1LkIKICAgICAgICAgICAgJwpgYGAKTm93LCB3ZSBhcmUgcmVhZHkgdG8gZml0IHRoZSBtb2RlbHMKCiMjIyBVUERBVEUgMS84LzIwMTggUmh1bXRlbGxhKDIwMTIpIHN1Z2dlc3RzIHRoZSBNTE0gZXN0aW1hdG9yCgpgYGB7cn0KbGlicmFyeShsYXZhYW4pCmZpdHMgPC0gYygKY2ZhKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzFdXSwgZXN0aW1hdG9yID0gIk1MTSIpLApjZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMl1dLCBlc3RpbWF0b3IgPSAiTUxNIiksCmNmYShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1s0XV0sIGVzdGltYXRvciA9ICJNTE0iKSwKY2ZhKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzNdXSwgZXN0aW1hdG9yID0gIk1MTSIpLApjZmEobHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbNV1dLCBlc3RpbWF0b3IgPSAiTUxNIikKKQpzdW1tYXJ5KGZpdHNbWzFdXSwgZml0Lm1lYXN1cmVzID0gVCwgZXN0aW1hdGVzID0gRikKYGBgCkFzIHdlIGNhbiBzZWUsIHRoZXJlIGlzIGFuIGVycm9yIHdoZW4gYGxhdmFhbmAgZml0cyBhIENGQSBvbiBhbGwgdGhlc2UgaW1wdXRlZCBkYXRhc2V0cy4gKEknbSBwcmV0dHkgc3VyZSB0aGUgemVyby50YWJsZS5jZWxscyBpcyB1bmltcG9ydGFudCkuIFRoZSBjb3ZhcmlhbmNlIC8gY29ycmVsYXRpb24gbWF0cmljZXMgYXJlIG5vdCBwb3NpdGl2ZS1kZWZpbml0ZS4gTm93LCBgbGF2YWFuYCByZWZ1c2VzIHRvIG1ha2UgcHJlZGljdGlvbnMgd2hlbiB0aGlzIGhhcHBlbnMsIHNvIHN0cmljdGx5IHNwZWFraW5nLCB3ZSBuZWVkIHRvIGxvb2sgYXQgd2hhdCBgbGF2YWFuYCB0aGlua3MgdGhlIGNvdmFyaWFuY2UvY29ycmVsYXRpb24gbWF0cmljZXMgYXJlLgoKYGBge3J9Cmluc3BlY3QoZml0c1tbMV1dLCAiY292Lmx2IikKIyBub3QgZ29vZAplaWdlbihpbnNwZWN0KGZpdHNbWzFdXSwgImNvdi5sdiIpKSR2YWx1ZXMKIyBub3RpY2UgaG93IGVzdGltYXRlZCBjb3JyZWxhdGlvbiBtYXRyaXggaGFzIHZhbHVlcyA+IDEKaW5zcGVjdChmaXRzW1sxXV0sICJjb3IubHYiKQpgYGAKCiBUaGUgbm9uIHBvc2l0aXZlIGRlZmluaXRlbmVzcyBpcyBhIHByb2JsZW0sIHNvIEkgZG8gbm90IHRydXN0IHRoZSBwcmVkaWN0aW9ucy4KCkkgZG9uJ3Qga25vdyBhIHdob2xlIGxvdCBhYm91dCBDRkFzLCBvciBTRU0sIGJ1dCBmcm9tIHdoYXQgSSdtIHJlYWRpbmcgb24gdGhlIGludGVybmV0LCBpdCBzZWVtcyBsaWtlIHRoZSBtb2RlbCBpc24ndCBjb3JyZWN0bHkgc3BlY2lmaWVkLiBJIGRvbid0IGtub3cgaWYgdGhhdCBtZWFucyB0aGF0IHdlIG5lZWQgdG8gc3BlY2lmeSB0aGUgY292YXJpYW5jZXMgYmV0d2VlbiBsYXRlbnRzLCBvciBpZiB0aGVyZSdzIHNvbWV0aGluZyBvZmYgZWxzZXdoZXJlLgoKIyMgVHJ5aW5nIHRvIHdvcmsgYXJvdW5kIHRoZSBlcnJvcnMKQWZ0ZXIgdGFsa2luZyB0byBFcmljaCwgaGUgc3VnZ2VzdGVkIHRvIHRyeSBmaXR0aW5nIHdpdGggYHNlbSgpYCBpbnN0ZWFkIG9mIGBjZmEoKWAsIGFuZCB0cnkgdG8gZml0IGVhY2ggaW5kZXBlbmRlbnRseS4KIyMjIEZpdHRpbmcgU0VNIGluc3RlYWQgb2YgYSBDRkEKCmBgYHtyfQpmaXRzIDwtIGMoCnNlbShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1sxXV0sIGVzdGltYXRvciA9ICJNTE0iKSwKc2VtKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzJdXSwgZXN0aW1hdG9yID0gIk1MTSIpLApzZW0obHYubW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbNF1dLCBlc3RpbWF0b3IgPSAiTUxNIiksCnNlbShsdi5tb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1szXV0sIGVzdGltYXRvciA9ICJNTE0iKSwKc2VtKGx2Lm1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzVdXSwgZXN0aW1hdG9yID0gIk1MTSIpCikKYGBgCk5vIGRpY2UhIAoKIyMjIEZpdHRpbmcgZWFjaCBsYXRlbnQgbW9kZWwgc2VwYXJhdGVseS4KCmBgYHtyfQptb2RlbHMgPC0gYygKJ0w5ID1+IFNSRjAyNi5CICsgU1JGMDA2LkIgKyBTUkYwMjIuQiArIFNSRjAzMC5CICsgU1JGMDcyLkIgKyBTUkYwNjIuQiArIFNSRjA2My5CJywKJ0wxMCA9fiBTUkYwMDQuQiArIFNSRjAxMC5CICsgU1JGMDMzLkIgKyBTUkYwMzUuQiArIFNSRjAwMi5CJywKJ0w3ID1+IFNSRjAxOC5CICsgU1JGMDMyLkIgKyBTUkYwMDEuQiArIFNSRjAzOS5CICsgU1JGMDY0LkIgKyBTUkYwNzEuQicsCidMNCA9fiBTUkYwNjEuQiArIFNSRjAyMC5CICsgU1JGMDAzLkIgKyBTUkYwMzguQiArIFNSRjA3MC5CICsgU1JGMDY1LkInCikKCmZpdHMgPC0gYygKY2ZhKG1vZGVsc1sxXSwgZGF0YSA9IG1pY2UuaW1wW1sxXV0sIGVzdGltYXRvciA9ICJNTE0iKSwKY2ZhKG1vZGVsc1sxXSwgZGF0YSA9IG1pY2UuaW1wW1syXV0sIGVzdGltYXRvciA9ICJNTE0iKSwKY2ZhKG1vZGVsc1sxXSwgZGF0YSA9IG1pY2UuaW1wW1s0XV0sIGVzdGltYXRvciA9ICJNTE0iKSwKY2ZhKG1vZGVsc1sxXSwgZGF0YSA9IG1pY2UuaW1wW1szXV0sIGVzdGltYXRvciA9ICJNTE0iKSwKY2ZhKG1vZGVsc1sxXSwgZGF0YSA9IG1pY2UuaW1wW1s1XV0sIGVzdGltYXRvciA9ICJNTE0iKQopCgpsYXRlbnRfZXN0aW1hdGUgPC0gYygpCmZvciAoIGZpdCBpbiBmaXRzKSB7CmxhdGVudF9lc3RpbWF0ZSA8LSBjYmluZChsYXRlbnRfZXN0aW1hdGUsIHByZWRpY3QoZml0KSkKfQpgYGAKU28sIHdlIGdldCBubyBlcnJvcnMgbm93LiBUaGUgcXVlc3Rpb24gb2YgaG93IHRvIHBvb2wgdGhlIHJlc3VsdHMgcmVtYWlucy4gSSB0aGluayB3ZSBzaG91bGQgdGFrZSBhIGxvb2sgdGhlIGNvdmFyaWFuY2UgbWF0cml4IG9mIGltcHV0ZWQgbW9kZWxzLgoKYGBge3J9CmNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZSkgPSBwYXN0ZShjb2xuYW1lcyhsYXRlbnRfZXN0aW1hdGUpLCAiXyIgLCBzZXEoMTo1KSAsIHNlcCA9ICIiKQpjb3YobGF0ZW50X2VzdGltYXRlKQpgYGAKQXMgd2UgY2FuIHNlZSwgdGhlIHByZWRpY3Rpb25zIHRoZW1zZWx2ZXMgYXJlIHNvIGNsb3NlIHRoYXQgd2UgY2FuIGp1c3QgYXZlcmFnZSB0aGVtIChvciB3ZSBjb3VsZCBwaWNrIG9uZSkuIFRoZSBtb3N0IGNvcnJlY3Qgd291bGQgYmUgdG8gcG9vbCB0aGUgY292YXJpYW5jZSBtYXRyaWNlcyBnZW5lcmF0ZWQgYnkgYGxhdmFhbmAsIGJ1dCBJIGRvIG5vdCB0aGluayB0aGF0IGlzIG5lY2Vzc2FyeSBnaXZlbiBob3cgY2xvc2UgZXZlcnl0aGluZyBpcy4KCiMjIyBTb21lIGNvZGUgYW5kIHNvbWUgY29tbWVudHMKVGhpcyBjb2RlIGZpdHMgNCAxLWZhY3RvciBtb2RlbHMgKGlzIHRoaXMgdGhlIGNvcnJlY3Qgd2F5IHRvIHNheSBpdD8pIGFuZCBhcHBlbmRzIHRoZW0gdG8gUkFJU0UuIEl0IHByaW50cyBvdXQgdGhlIGZpdCBzdGF0aXN0aWNzIChbYW4gZXhwbGFuYXRpb24gb2YgdGhlbSBjYW4gYmUgZm91bmQgaGVyZV0oaHR0cDovL2RhdmlkYWtlbm55Lm5ldC9jbS9maXQuaHRtKSkgb24gZWFjaCBtb2RlbCBhbmQgdGhlIGFib3ZlIGNvdmFyaWFuY2UgbWF0cml4IGZvciBsYXRlbnQuICAqKkJFIFNVUkUgVE8gUkVBRCBUSUxMIFRIRSBFTkQqKiAKYGBge3J9Cm1vZGVscyA8LSBjKAonTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkInLAonTDEwID1+IFNSRjAwNC5CICsgU1JGMDEwLkIgKyBTUkYwMzMuQiArIFNSRjAzNS5CICsgU1JGMDAyLkInLAonTDcgPX4gU1JGMDE4LkIgKyBTUkYwMzIuQiArIFNSRjAwMS5CICsgU1JGMDM5LkIgKyBTUkYwNjQuQiArIFNSRjA3MS5CJywKJ0w0ID1+IFNSRjA2MS5CICsgU1JGMDIwLkIgKyBTUkYwMDMuQiArIFNSRjAzOC5CICsgU1JGMDcwLkIgKyBTUkYwNjUuQicKKQoKZm9yIChtb2RlbCBpbiBtb2RlbHMpIHsKICAjIHBlcmZvcm0gY2ZhIG9uIGVhY2ggaW1wdXRlZCBkYXRhc2V0IGZvciB0aGUgZ2l2ZW4gbW9kZWxzCiAgZml0cyA8LSBjKAogIGNmYShtb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1sxXV0sIGVzdGltYXRvciA9ICJNTE0iKSwKICBjZmEobW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbMl1dLCBlc3RpbWF0b3IgPSAiTUxNIiksCiAgY2ZhKG1vZGVsLCBkYXRhID0gbWljZS5pbXBbWzRdXSwgZXN0aW1hdG9yID0gIk1MTSIpLAogIGNmYShtb2RlbCwgZGF0YSA9IG1pY2UuaW1wW1szXV0sIGVzdGltYXRvciA9ICJNTE0iKSwKICBjZmEobW9kZWwsIGRhdGEgPSBtaWNlLmltcFtbNV1dLCBlc3RpbWF0b3IgPSAiTUxNIikKICApCiAgIyBwcmVkaWN0IHZhbHVlIG9mIGxhdGVudHMgZnJvbSBlYWNoIGZpdAogIGxhdGVudF9lc3RpbWF0ZXMgPC0gYygpCiAgZm9yIChmaXQgaW4gZml0cykgewogIGxhdGVudF9lc3RpbWF0ZXMgPC0gY2JpbmQobGF0ZW50X2VzdGltYXRlcywgcHJlZGljdChmaXQpKQogIH0KICAjIGhhY2sgdG8gZ2V0IG5hbWUgb2YgbGF0ZW50CnZhcl9uYW1lIDwtIGNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpWzFdCmNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpIDwtIHBhc3RlKGNvbG5hbWVzKGxhdGVudF9lc3RpbWF0ZXMpLCAiXyIgLCBzZXEoMTo1KSAsIHNlcCA9ICIiKQoKc3VtbWFyeShmaXQsIGZpdC5tZWFzdXJlcyA9IFQsIGVzdGltYXRlcyA9IEYpCgpwcmludChjb3YobGF0ZW50X2VzdGltYXRlcykpCgplc3RpbWF0ZSA8LSByb3dNZWFucyhsYXRlbnRfZXN0aW1hdGVzKQpSQUlTRVt2YXJfbmFtZV0gPC0gZXN0aW1hdGUKCndyaXRlX2NzdihSQUlTRSwgIlJBSVNFX0xBVC5jc3YiKQp9CmBgYApJIHdvdWxkIGxpa2UgdG8gcmVpdGVyYXRlIGZpdHRpbmcgNCAxLWZhY3RvciBtb2RlbHMgc2VlbXMgdG8gaW1wbHkgdGhhdCB0aGUgY292YXJpYW5jZSBtYXRyaXggYmV0d2VlbiB0aGUgbGF0ZW50cyBpcyAwIHdoZW4gb2ZmIHRoZSBkaWFnb25hbC4gTXkgcmVhc29uaW5nIGlzIGJhc2VkIG9mZiB0aGUgYGxhdmFhbmAgW3R1dG9yaWFsXShodHRwOi8vbGF2YWFuLnVnZW50LmJlL3R1dG9yaWFsL2NmYS5odG1sKSB3aGVyZSB0aGUgZml0IHRoaXMgbW9kZWwKCiFbXShjZmEtMS5wbmcpCgp3aXRoIHRoaXMgc3ludGF4CmBgYHtyfQogdmlzdWFsID1+IHgxICsgeDIgKyB4Mwp0ZXh0dWFsID1+IHg0ICsgeDUgKyB4NgogIHNwZWVkID1+IHg3ICsgeDggKyB4OQpgYGAgIApOb3csIHRoZSBjb3JyZWxhdGlvbiBtYXRyaXggYmV0d2VlbiB0aGUgcHJlZGljdGVkIGxhdGVudHMgaXMKYGBge3J9CmxhdGVudHMgPC0gc2VsZWN0KFJBSVNFLCBjKEw5LCBMMTAsIEw0LCBMNykpCmNvcihsYXRlbnRzKQpgYGAKU28sIGNsZWFybHkgdGhleSBjb3ZhcnkuIEkgdGhpbmsgdGFsa2luZyB0byBzb21lb25lIHdobyBpcyBmYW1pbGlhciB3aXRoIENGQSB3b3VsZCBiZSBhIGdvb2QgaWRlYS4gVGhleSBjb3VsZCBwcm9iYWJseSB0ZWxsIHVzIGlmIGRvaW5nIHRoaXMgdGhpbmcgaXMgb2theS4KQWxzbywgdGhlIGxhc3QgdGhpbmcgSSBzaG91bGQgbWVudGlvbiBpcyB0aGF0IEknbSBub3Qgc3VyZSBob3cgdG8gZGVhbCB3aXRoIHRoZSBvYnNlcnZhdGlvbnMgSSBpbXB1dGVkLiBUaGUgbW9zdCBjb3JyZWN0IHdheSB0byBkZWFsIHdpdGggdGhpcyBpcyBwcm9iYWJseQoKMS4gSW1wdXRlIHRoZSBtaXNzaW5nIGRhdGEgb24gdGhlIGZ1bGwgUkFJU0UgZGF0YXNldCAob3Igd2hhdGV2ZXIgU2lzaSB3YW50cyB0byBkbykKMi4gUHJlZGljdCBsYXRlbnRzIG9uIGVhY2ggc2V0CjMuIFNpc2kgZG9lcyBzb21lIHN0dWZmCjQuIFBvb2wgbW9kZWxzCgogSSBkb24ndCBrbm93IGlmIFNpc2kgd2FudHMgdG8gZG8gY3Jvc3MgdmFsaWRhdGlvbiBvciBib290c3RyYXAsIGJ1dCBpZiBzaGUgZG9lcywgdGhhdCB3b3VsZCBiZSBzdGVwIDAKIApgYGB7cn0KIGx2Lm1vZGVsMiA8LSAnTDkgPX4gU1JGMDI2LkIgKyBTUkYwMDYuQiArIFNSRjAyMi5CICsgU1JGMDMwLkIgKyBTUkYwNzIuQiArIFNSRjA2Mi5CICsgU1JGMDYzLkIKICAgICAgICAgICAgICAgTDcgPX4gU1JGMDE4LkIgKyBTUkYwMzIuQiArIFNSRjAwMS5CICsgU1JGMDM5LkIgKyBTUkYwNjQuQiArIFNSRjA3MS5CCiAgICAgICAgICAgICAgJwoKZml0cyA8LSBjKApjZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzFdXSksCmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbMl1dKSwKY2ZhKGx2Lm1vZGVsMiwgZGF0YSA9IG1pY2UuaW1wW1s0XV0pLApjZmEobHYubW9kZWwyLCBkYXRhID0gbWljZS5pbXBbWzNdXSksCmNmYShsdi5tb2RlbDIsIGRhdGEgPSBtaWNlLmltcFtbNV1dKQopCmluc3BlY3QoZml0c1tbMV1dLCJjb3IubHYiKQpgYGA=</div>
 
 
 

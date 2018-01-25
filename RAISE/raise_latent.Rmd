@@ -24,7 +24,7 @@ There are two problems at hand
 suppressPackageStartupMessages(
 library(tidyverse)
 )
-setwd("~/work/RAISE")
+setwd("~/work//IHI/RAISE")
 ```
 ```{r}
 RAISE <- suppressMessages(
@@ -66,15 +66,24 @@ Now, we have two options to deal with the rest of the missing data. Omitting the
 
 Relatively few entries are missing. So, I think imputing will perform well here.
 
+### UPDATE 1/8/2018. Rhumtella(2012) seems to imply that these varaibles can be treated as continuous
 ```{r}
 # lavaan would like these to be kept as ordered variables instead of continuous
-VARS_WE_CARE_ABOUT <- as.data.frame(
-  mclapply(VARS_WE_CARE_ABOUT, function(x) {as.ordered(x)}
-  )
-)
+#VARS_WE_CARE_ABOUT <- as.data.frame(
+#  mclapply(VARS_WE_CARE_ABOUT, function(x) {as.ordered(x)}
+#  )
+#)
 # This variable is an integer from 1-100 (really its 1-59). 
 # It is on the different scale then the rest, so I'm going to normalize it after I impute it
-VARS_WE_CARE_ABOUT$SRF072.B <- as.double(VARS_WE_CARE_ABOUT$SRF072.B)
+#VARS_WE_CARE_ABOUT$SRF072.B <- as.double(VARS_WE_CARE_ABOUT$SRF072.B)
+
+normalize <- function(df) {
+  as.data.frame(apply(df, 2, function(x) {
+    mu <- mean(x)
+    sd <- sd(x)
+    return((x-mu)/sd)
+  }))
+}
 
 library(mice)
 RAISE_imp <- mice(VARS_WE_CARE_ABOUT, m = 5, printFlag = F )
@@ -82,13 +91,8 @@ mice.imp <- NULL
 
 for (i in 1:5) {
   mice.imp[[i]] <- complete(RAISE_imp, i, inc=FALSE)  
-  mu <- mean(mice.imp[[i]]$SRF072.B)
-  sd <- sd(mice.imp[[i]]$SRF072.B)
-  mice.imp[[i]]$SRF072.B <- 1/sd * (mice.imp[[i]]$SRF072.B - mu) 
+  mice.imp[[i]] <- normalize(mice.imp[[i]]) 
 }
-rm(mu, sd)  
-
-
 ```
 ### Performing CFA with `lavaan`
 Now, we need to specify the latent variable model given by Erich's graph. In `lavaan`, the syntax is
@@ -100,15 +104,19 @@ lv.model <- 'L9 =~ SRF026.B + SRF006.B + SRF022.B + SRF030.B + SRF072.B + SRF062
             '
 ```
 Now, we are ready to fit the models
+
+### UPDATE 1/8/2018 Rhumtella(2012) suggests the MLM estimator
+
 ```{r}
 library(lavaan)
 fits <- c(
-cfa(lv.model, data = mice.imp[[1]]),
-cfa(lv.model, data = mice.imp[[2]]),
-cfa(lv.model, data = mice.imp[[4]]),
-cfa(lv.model, data = mice.imp[[3]]),
-cfa(lv.model, data = mice.imp[[5]])
+cfa(lv.model, data = mice.imp[[1]], estimator = "MLM"),
+cfa(lv.model, data = mice.imp[[2]], estimator = "MLM"),
+cfa(lv.model, data = mice.imp[[4]], estimator = "MLM"),
+cfa(lv.model, data = mice.imp[[3]], estimator = "MLM"),
+cfa(lv.model, data = mice.imp[[5]], estimator = "MLM")
 )
+summary(fits[[1]], fit.measures = T, estimates = F)
 ```
 As we can see, there is an error when `lavaan` fits a CFA on all these imputed datasets. (I'm pretty sure the zero.table.cells is unimportant). The covariance / correlation matrices are not positive-definite. Now, `lavaan` refuses to make predictions when this happens, so strictly speaking, we need to look at what `lavaan` thinks the covariance/correlation matrices are.
 
@@ -120,20 +128,21 @@ eigen(inspect(fits[[1]], "cov.lv"))$values
 inspect(fits[[1]], "cor.lv")
 ```
 
-Assuming all the variable are actually continuous instead of ordered will allow `lavaan` to make predictions (Also: there is a paper I need to read that seems to suggest I _can_ do this), but the problem of non positive definiteness remains, so I do not trust the predictions.
+ The non positive definiteness is a problem, so I do not trust the predictions.
 
 I don't know a whole lot about CFAs, or SEM, but from what I'm reading on the internet, it seems like the model isn't correctly specified. I don't know if that means that we need to specify the covariances between latents, or if there's something off elsewhere.
 
 ## Trying to work around the errors
 After talking to Erich, he suggested to try fitting with `sem()` instead of `cfa()`, and try to fit each independently.
 ### Fitting SEM instead of a CFA
+
 ```{r}
 fits <- c(
-sem(lv.model, data = mice.imp[[1]]),
-sem(lv.model, data = mice.imp[[2]]),
-sem(lv.model, data = mice.imp[[4]]),
-sem(lv.model, data = mice.imp[[3]]),
-sem(lv.model, data = mice.imp[[5]])
+sem(lv.model, data = mice.imp[[1]], estimator = "MLM"),
+sem(lv.model, data = mice.imp[[2]], estimator = "MLM"),
+sem(lv.model, data = mice.imp[[4]], estimator = "MLM"),
+sem(lv.model, data = mice.imp[[3]], estimator = "MLM"),
+sem(lv.model, data = mice.imp[[5]], estimator = "MLM")
 )
 ```
 No dice! 
@@ -149,11 +158,11 @@ models <- c(
 )
 
 fits <- c(
-cfa(models[1], data = mice.imp[[1]]),
-cfa(models[1], data = mice.imp[[2]]),
-cfa(models[1], data = mice.imp[[4]]),
-cfa(models[1], data = mice.imp[[3]]),
-cfa(models[1], data = mice.imp[[5]])
+cfa(models[1], data = mice.imp[[1]], estimator = "MLM"),
+cfa(models[1], data = mice.imp[[2]], estimator = "MLM"),
+cfa(models[1], data = mice.imp[[4]], estimator = "MLM"),
+cfa(models[1], data = mice.imp[[3]], estimator = "MLM"),
+cfa(models[1], data = mice.imp[[5]], estimator = "MLM")
 )
 
 latent_estimate <- c()
@@ -182,11 +191,11 @@ models <- c(
 for (model in models) {
   # perform cfa on each imputed dataset for the given models
   fits <- c(
-  cfa(model, data = mice.imp[[1]]),
-  cfa(model, data = mice.imp[[2]]),
-  cfa(model, data = mice.imp[[4]]),
-  cfa(model, data = mice.imp[[3]]),
-  cfa(model, data = mice.imp[[5]])
+  cfa(model, data = mice.imp[[1]], estimator = "MLM"),
+  cfa(model, data = mice.imp[[2]], estimator = "MLM"),
+  cfa(model, data = mice.imp[[4]], estimator = "MLM"),
+  cfa(model, data = mice.imp[[3]], estimator = "MLM"),
+  cfa(model, data = mice.imp[[5]], estimator = "MLM")
   )
   # predict value of latents from each fit
   latent_estimates <- c()
@@ -234,21 +243,9 @@ Also, the last thing I should mention is that I'm not sure how to deal with the 
  
 ```{r}
  lv.model2 <- 'L9 =~ SRF026.B + SRF006.B + SRF022.B + SRF030.B + SRF072.B + SRF062.B + SRF063.B
-             L10 =~ SRF004.B + SRF010.B + SRF033.B + SRF035.B + SRF002.B
-             L7 =~ SRF018.B + SRF032.B + SRF001.B + SRF039.B + SRF064.B + SRF071.B
-             L4 =~ SRF061.B + SRF020.B + SRF003.B + SRF038.B + SRF070.B + SRF065.B
-            L9 ~~ .0*L10
-            L9 ~~ 0*L4
-            L9 ~~ 0*L7
-            L10 ~~ 0*L4
-            L10 ~~ 0*L7
-            L4 ~~ 0*L7
-            L9 ~~ 0*L9
-            L4 ~~ 0*L4
-            L10 ~~ 0*L10
-            L7 ~~ L7
-            '
-            library(lavaan)
+               L7 =~ SRF018.B + SRF032.B + SRF001.B + SRF039.B + SRF064.B + SRF071.B
+              '
+
 fits <- c(
 cfa(lv.model2, data = mice.imp[[1]]),
 cfa(lv.model2, data = mice.imp[[2]]),
@@ -256,4 +253,5 @@ cfa(lv.model2, data = mice.imp[[4]]),
 cfa(lv.model2, data = mice.imp[[3]]),
 cfa(lv.model2, data = mice.imp[[5]])
 )
+inspect(fits[[1]],"cor.lv")
 ```

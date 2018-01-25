@@ -1,0 +1,80 @@
+Tue Dec 05 14:32:56 CST 2017
+
+Statistics:
+
+AP = Adjacency Precision
+AR = Adjacency Recall
+AHP = Arrowhead precision
+AHR = Arrowhead recall
+
+Simulations:
+
+Simulation 1: Load data sets and graphs from a directory: Linear, Gaussian SEM simulation using Graph constructed by adding random forward edges
+
+Number of measured variables = 10.0
+Number of latent variables = 0.0
+Average degree of graph = 2.0
+The maximum degree of the graph = 100.0
+Maximum indegree of graph = 100.0
+Maximum outdegree of graph = 100.0
+Yes if graph should be connected = false
+Minimum number of categories = 2.0
+Maximum number of categories = 2.0
+The number runs = 100
+Yes if a different graph should be used for each run = false
+Sample size = 10000.0
+Please add a description to ParamDescriptions for graphsDropdownPreference = Random Foward DAG
+Please add a description to ParamDescriptions for simulationsDropdownPreference = Structural Equation Model
+Low end of coefficient range = 0.5
+High end of coefficient range = 1.5
+Low end of covariance range = 0.5
+High end of covariance range = 1.5
+Low end of variance range = 1.0
+High end of variance range = 3.0
+Yes if negative coefficient values should be considered = true
+Yes if negative covariance values should be considered = true
+Yes if the data should be standardized = false
+Additive measurement noise variance = 0.0
+
+Algorithms:
+
+1. PC-Stable ("Peter and Clark" Stable), Priority Rule, using Fisher Z test, alpha = 0.01
+2. CPC-Stable (Conservative "Peter and Clark" Stable), Priority Rule, using Fisher Z test, alpha = 0.01
+
+Sorting by utility, high to low.
+
+Weighting of statistics:
+
+U = 
+
+...normed to range between 0 and 1.
+
+Note that f for each statistic is a function that maps the statistic to the 
+interval [0, 1], with higher being better.
+
+Graphs are being compared to the PAG of the true DAG.
+
+AVERAGE STATISTICS
+
+All edges
+
+  Alg    AP    AR   AHP   AHR  U
+    1  1.00  0.99  0.81  0.84  �
+    2  1.00  0.99  0.99  0.97  �
+
+STANDARD DEVIATIONS
+
+All edges
+
+  Alg    AP    AR   AHP   AHR  U
+    1  0.02  0.03  0.22  0.21  �
+    2  0.02  0.03  0.04  0.09  �
+
+WORST CASE
+
+All edges
+
+  Alg    AP    AR   AHP   AHR  U
+    1  0.90  0.80  0.33  0.43  �
+    2  0.90  0.80  0.71  0.71  �
+

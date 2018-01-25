@@ -15,7 +15,7 @@ levels(df$Alg) <- c("FGES, MVPBIC", "PC-S, FZ(a = .01)", "GFCI, FZ(a = .01)\nand
 df$Vars <- as.factor(df$numMeasures)
 
 
-ggplot(df, aes( x = sampleSize, y = AP, color = Alg)) + geom_line() + 
+ggplot(df, aes( x = sampleSize, y = log(E), color = Alg)) + geom_line() + 
   facet_wrap(~Vars, labeller = label_both) +
   labs(title = "Comparison of Hillclimbing to Various Causal Discovery Algorithms", color = "Algorithm") +
   theme(legend.key.size = unit(1.5, "lines"))

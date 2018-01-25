@@ -11,24 +11,27 @@ source("bnlearntotetrad.R")
 
 dir <- "../sim_framework/generate/ss100nv25/save/1/data/"
 files <- list.files(dir)
-
+print(files)
+file.create("hc.log")
 times <-mcMap(files, mc.cores = 8, f = function(file) {
   # read in dataset
   suppressMessages(
     data <- read_delim(paste(dir, file, sep = ""), "\t", escape_double = FALSE, trim_ws = TRUE)
   )
   # run  boostrapped hc
-  time <- unname(system.time(
-  bs <- boot.strength(data, R = 100, algorithm = "hc", algorithm.args = list(restart = 5, perturb = 10), debug = TRUE)
-  )[1])
-  agg_hc <- averaged.network(bs[bs$strength > .85 & bs$direction > .5,])
   # time <- unname(system.time(
-  # hc <- hc(data, restart = 5, perturb = 10)
+  # bs <- boot.strength(data, R = 100, algorithm = "hc", algorithm.args = list(restart = 5, perturb = 10), debug = TRUE)
   # )[1])
+  # agg_hc <- averaged.network(bs[bs$strength > .85 & bs$direction > .5,])
+  time <- unname(system.time(
+  hc <- hc(data, restart = 5, perturb = 10)
+  )[1])
   # export learned bn graph to tetrad compatible format
   output_file <- paste("hc_graphs/", sub("data", "graph", file), sep = "")
-  export_bnlearn_object_to_tetrad(output_file, agg_hc)
-  #export_bnlearn_object_to_tetrad(output_file, hc)
+  # export_bnlearn_object_to_tetrad(output_file, agg_hc)
+  
+  cat(sprintf("Hillclimbing on datset %s Complete", file), "hc.log")
+  export_bnlearn_object_to_tetrad(output_file, hc)
   return(time)
 })
 dir <- "../sim_framework/generate/ss100nv25/save/1/graph/"
